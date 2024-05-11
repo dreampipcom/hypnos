@@ -1,23 +1,22 @@
 // nexus/chat/index.ts
-import type { Server as ISocket } from 'socket.io'
-import type { Socket as INetSocket } from 'net'
-import type { Server as IHTTPServer } from 'http'
-import type { NextApiRequest, NextApiResponse } from "next"
-import type { IChatMessage } from "@types"
+import type { Server as ISocket } from 'socket.io';
+import type { Socket as INetSocket } from 'net';
+import type { Server as IHTTPServer } from 'http';
+import type { NextApiRequest, NextApiResponse } from 'next';
+import type { IChatMessage } from '@types';
 import { Server } from 'socket.io';
 import { addUser, getUser, getUsersInRoom } from './users';
 
-
 interface SocketServer extends IHTTPServer {
-  io?: ISocket | undefined
+  io?: ISocket | undefined;
 }
 
 interface SocketWithIO extends INetSocket {
-  server: SocketServer
+  server: SocketServer;
 }
 
 interface NextResponseWithSocket extends NextApiResponse {
-  socket: SocketWithIO
+  socket: SocketWithIO;
 }
 
 export const config = {

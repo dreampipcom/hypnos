@@ -1,9 +1,9 @@
 {
-  "name": "patterns-next",
+  "name": "@dreampipcom/hypnos",
   "version": "1.0.0",
   "private": true,
-  "author": "varsnothing",
-  "license": "copyright",
+  "author": "Angelo Reale",
+  "license": "EPL3-ECO-AND-ANC",
   "scripts": {
     "dev:schema": "NEXUS_SCHEMA=true next dev",
     "dev": "next dev",
@@ -15,12 +15,9 @@
     "format:fix": "next lint --fix && prettier --write --ignore-path .gitignore --ignore-path .prettierignore ."
   },
   "dependencies": {
-    "@mui/base": "5.0.0-beta.33",
-    "clsx": "2.1.0",
     "next": "14.0.4",
     "react": "18",
-    "react-dom": "18",
-    "socket.io-client": "^4.7.4"
+    "react-dom": "18"
   },
   "devDependencies": {
     "@babel/core": "7.23.7",
@@ -28,8 +25,7 @@
     "@next-auth/mongodb-adapter": "1.1.3",
     "@types/json-schema": "7.0.15",
     "@types/node": "20",
-    "@types/react": "18",
-    "@types/react-dom": "18",
+    "@types/react": "18.3.2",
     "@types/uuid": "9.0.8",
     "@typescript-eslint/eslint-plugin": "6.19.0",
     "eslint": "8",

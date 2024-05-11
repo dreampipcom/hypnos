@@ -1,5 +1,5 @@
 // users.ts
-import type { IChatOperation, IChatConnection } from "@types"
+import type { IChatOperation, IChatConnection } from '@types';
 
 interface IUserSet extends Set<string> {
   addUser?: (value: IChatConnection) => IChatOperation;
@@ -144,9 +144,4 @@ const getUsersInRoom = ({ room }): IChatOperation => {
   }
 };
 
-export {
-  addUser,
-  removeUser,
-  getUser,
-  getUsersInRoom,
-};
+export { addUser, removeUser, getUser, getUsersInRoom };

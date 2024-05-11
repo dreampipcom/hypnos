@@ -6,10 +6,10 @@ export interface IChatConnection {
 }
 
 export interface IChatMessage extends IChatConnection {
-	 text: string;
+  text: string;
 }
 
 export interface IChatOperation {
-	error: string;
-	ans: IChatConnection[];
+  error: string;
+  ans: IChatConnection[];
 }
