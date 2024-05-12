@@ -33,3 +33,6 @@ export type {
 
 // system
 export type { Tposition, TpositionX, TpositionY, Tsize, Tthemes } from './atoms';
+
+// sockets
+export type { IClientToServerEvents, IServerToClientEvents, IInterServerEvents, ISocketData } from './sockets';

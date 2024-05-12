@@ -3,7 +3,13 @@ import type { Server as ISocket } from 'socket.io';
 import type { Socket as INetSocket } from 'net';
 import type { Server as IHTTPServer } from 'http';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import type { IChatMessage } from '@types';
+import type {
+  IChatMessage,
+  IClientToServerEvents,
+  IServerToClientEvents,
+  IInterServerEvents,
+  ISocketData,
+} from '@types';
 import { Server } from 'socket.io';
 import { addUser, getUser, getUsersInRoom } from './users';
 
@@ -26,28 +32,34 @@ export const config = {
 };
 
 const handler = (req: NextApiRequest, res: NextResponseWithSocket) => {
-  const io = new Server(res.socket.server);
+  const io = new Server<IClientToServerEvents, IServerToClientEvents, IInterServerEvents, ISocketData>(
+    res.socket.server,
+  );
   io.on('connection', (socket) => {
     if (!res.socket.server.io) {
-      const sendAll = ({ room, username, text }: IChatMessage) => {
+      const sendAll = ({ room, username, text, id }: IChatMessage) => {
         const { ans: users } = getUsersInRoom({ room });
-        const sockets = users.map((user) => user.id);
-        if (sockets.length) {
-          sockets.forEach((_socket) => {
-            try {
-              io.sockets[_socket].emit('Message', {
-                text,
-                username,
-                date: new Date().toLocaleTimeString({ locale: 'en-US' }),
-              });
-            } catch (e) {
-              return;
-            }
-          });
+        if (users?.length) {
+          const sockets = users?.map((user) => user.id);
+          if (sockets?.length) {
+            sockets.forEach(() => {
+              try {
+                io.emit('message', {
+                  id,
+                  room,
+                  text,
+                  username,
+                  date: new Date().toISOString(),
+                });
+              } catch (e) {
+                return;
+              }
+            });
+          }
         }
       };
 
-      io.on('join', ({ username, room }, callback) => {
+      socket.on('join', ({ username, room }, callback) => {
         const { error } = addUser({ id: socket.id, username, room });
         if (error) {
           return callback(error);
@@ -56,9 +68,10 @@ const handler = (req: NextApiRequest, res: NextResponseWithSocket) => {
         sendAll({ room, username, text: 'Dude joined.' });
       });
 
-      socket.on('Send', (data) => {
+      socket.on('message', (data: IChatMessage) => {
         const { text, username } = data;
-        const { room } = getUser({ username });
+        const { ans } = getUser({ username });
+        const room = ans[0].room;
         sendAll({ room, username, text });
       });
 

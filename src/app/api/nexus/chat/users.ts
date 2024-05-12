@@ -2,19 +2,19 @@
 import type { IChatOperation, IChatConnection } from '@types';
 
 interface IUserSet extends Set<string> {
-  addUser?: (value: IChatConnection) => IChatOperation;
-  removeUser?: (value: IChatConnection) => IChatOperation;
-  findUser?: (value: IChatConnection) => IChatOperation;
-  getRoom?: (value: IChatConnection) => IChatOperation;
+  addUser: (value: IChatConnection) => IChatOperation;
+  removeUser: (value: IChatConnection) => IChatOperation;
+  findUser: (value: IChatConnection) => IChatOperation;
+  getRoom: (value: IChatConnection) => IChatOperation;
 }
 
-const UserSet: IUserSet = new Set([]);
+const UserSet = new Set([]) as unknown as IUserSet;
 const User: IChatConnection[] = [] as IChatConnection[];
 
-UserSet.addUser = ({ id, room, username }): IChatOperation => {
-  const response = { error: undefined, ans: undefined };
+UserSet.addUser = ({ id, room, username }: IChatConnection): IChatOperation => {
+  const response: IChatOperation = { error: undefined, ans: [] };
   try {
-    if (!UserSet.has(username)) {
+    if (!!username && !UserSet.has(username)) {
       const userToAdd = {
         username,
         id,
@@ -22,7 +22,7 @@ UserSet.addUser = ({ id, room, username }): IChatOperation => {
       };
       UserSet.add(username);
       User.push(userToAdd);
-      response.user = userToAdd;
+      response.ans = [userToAdd];
     } else {
       response.error = 'User already in the list';
     }
@@ -32,16 +32,16 @@ UserSet.addUser = ({ id, room, username }): IChatOperation => {
   return response;
 };
 
-UserSet.removeUser = ({ username }): IChatOperation => {
+UserSet.removeUser = ({ username }: IChatConnection): IChatOperation => {
+  const response: IChatOperation = { error: undefined, ans: [] };
   try {
-    const response = { error: undefined, ans: undefined };
-    if (UserSet.has(username)) {
+    if (!!username && !UserSet.has(username)) {
       const uIndex = User.findIndex((user) => {
         return user.username === username;
       });
       const userToDelete = User[uIndex];
-      response.user = userToDelete;
-      UserSet.remove(username);
+      response.ans = [userToDelete];
+      UserSet.delete(username);
       if (uIndex >= 0) User.splice(uIndex, 1);
     } else {
       response.error = 'User not in the chat';
@@ -49,18 +49,20 @@ UserSet.removeUser = ({ username }): IChatOperation => {
   } catch (e) {
     throw new Error(`Generic: couldn't delete ans: ${e}`);
   }
+
+  return response;
 };
 
-UserSet.findUser = ({ username }): IChatOperation => {
-  const response = { error: undefined, ans: undefined };
+UserSet.findUser = ({ username }: IChatConnection): IChatOperation => {
+  const response: IChatOperation = { error: undefined, ans: [] };
   try {
-    if (UserSet.has(username)) {
+    if (!!username && !UserSet.has(username)) {
       const uIndex = User.findIndex((user) => {
         return user.username === username;
       });
       const foundUser = User[uIndex];
 
-      response.user = foundUser;
+      response.ans = [foundUser];
     } else {
       response.error = 'User not found';
     }
@@ -71,8 +73,8 @@ UserSet.findUser = ({ username }): IChatOperation => {
   return response;
 };
 
-UserSet.getRoom = ({ room }) => {
-  const response = { error: undefined, ans: undefined };
+UserSet.getRoom = ({ room }: IChatConnection): IChatOperation => {
+  const response: IChatOperation = { error: undefined, ans: [] };
   try {
     if (room) {
       const roomList = User.filter((user) => {
@@ -88,50 +90,39 @@ UserSet.getRoom = ({ room }) => {
   return response;
 };
 
-const addUser = ({ id, username, room }) => {
+const addUser = ({ id, username, room }: IChatConnection): IChatOperation => {
   try {
     if (!id) throw new Error('Socket error');
-    if (!room) return { error: new Error('Room Name is required'), ans: undefined };
-    if (!username) return { error: new Error('Username is required!'), ans: undefined };
-    if (UserSet.has(username)) return { error: new Error('Username Already In Use'), ans: undefined };
-    const opResult = UserSet.addUser({ id, room, username });
-    return { error: opResult.error, ans: opResult.user };
+    if (!room) throw new Error('Room Name is required');
+    if (!username) throw new Error('Username is required!');
+    if (UserSet.has(username)) throw new Error('Username already in use');
+
+    const opResult: IChatOperation = UserSet.addUser({ id, room, username });
+
+    return { error: opResult.error, ans: opResult.ans };
   } catch (e) {
-    if (!e) return { error: "exit 1: generic error: couldn't add user to the room", ans: undefined };
-    else return { error: e, ans: undefined };
+    if (!e) return { error: "exit 1: generic error: couldn't add user to the room", ans: [] };
+    else return { error: `Generic error, couldn't search ans: ${e}`, ans: [] };
   }
 };
 
-const removeUser = ({ id, username }) => {
+const removeUser = ({ id, username }: IChatConnection): IChatOperation => {
   try {
-    if (!id) return { error: new Error('Socket error'), ans: undefined };
-    if (!username) return { error: new Error('Need to specify an user to delete.'), ans: undefined };
-    const opResult = UserSet.removeUser({ username });
-    return { error: opResult.error, ans: opResult.user };
+    if (!id) throw new Error('Socket error');
+    if (!username) throw new Error('Need to specify an user to delete.');
+
+    const opResult: IChatOperation = UserSet.removeUser({ username });
+
+    return { error: opResult.error, ans: opResult.ans };
   } catch (e) {
-    return { error: e, ans: undefined };
+    return { error: `Generic error, couldn't search ans: ${e}`, ans: [] };
   }
 };
 
-const getUser = ({ username }) => {
+const getUser = ({ username }: IChatConnection): IChatOperation => {
   console.log('init get user');
   try {
-    const opRes = UserSet.findUser({ username });
-    return {
-      ...opRes.user,
-      error: opRes.error,
-    };
-  } catch (e) {
-    return {
-      error: `Generic error, couldn't search ans: ${e}`,
-      ans: undefined,
-    };
-  }
-};
-
-const getUsersInRoom = ({ room }): IChatOperation => {
-  try {
-    const opRes = UserSet.getRoom({ room });
+    const opRes: IChatOperation = UserSet.findUser({ username });
     return {
       ans: opRes.ans,
       error: opRes.error,
@@ -139,7 +130,22 @@ const getUsersInRoom = ({ room }): IChatOperation => {
   } catch (e) {
     return {
       error: `Generic error, couldn't search ans: ${e}`,
-      ans: undefined,
+      ans: [],
+    };
+  }
+};
+
+const getUsersInRoom = ({ room }: IChatConnection): IChatOperation => {
+  try {
+    const opRes: IChatOperation = UserSet.getRoom({ room });
+    return {
+      ans: opRes.ans,
+      error: opRes.error,
+    };
+  } catch (e) {
+    return {
+      error: `Generic error, couldn't search ans: ${e}`,
+      ans: [],
     };
   }
 };
