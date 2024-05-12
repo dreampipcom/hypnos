@@ -1,8 +1,16 @@
 // actions.d.ts
 import type { Context } from 'react';
-export type ActionT = 'init' | 'login' | 'logout' | 'hydrate' | 'update_db' | 'schema-enforcing';
-export type ActionTypes = 'init' | 'auth' | 'rickmorty' | string;
-export type ActionAuthNames =
+export type _NexusActionTypes = 'update_db' | 'schema-enforcing';
+export type NexusActionTypes = 'init' | 'login' | 'logout' | 'hydrate';
+export type CommonIAction = 'like';
+export type RMActionTypes = CommonIAction<'like'>;
+export type IActionTypes = NexusActionTypes | RMActionTypes;
+
+export type NexusActionContexts = 'init' | 'auth' | 'ubiquity' | 'database';
+export type ServicesActionContexts = 'rickmorty' | 'image-uploader';
+export type ActionContexts = NexusActionContexts | ServicesActionContexts;
+
+export type ActionAuthVerbs =
   | 'load user'
   | 'load user meta'
   | 'unload user'
@@ -10,20 +18,23 @@ export type ActionAuthNames =
   | 'load services'
   | 'parse features'
   | 'load abilities'
-  | 'parse abilities'
-  | 'load characters'
-  | 'unload characters'
-  | 'decorate characters'
-  | 'add char to favorites';
+  | 'parse abilities';
+export type ActionDBVerbs = 'load database' | 'load collection' | 'define relations' | 'connect to database';
+export type ActionRMVerbs = 'load characters' | 'unload characters' | 'decorate characters' | 'add char to favorites';
 
-export type ActionDBNames = 'database' | 'collection' | 'relations' | 'connect';
+export type ActionVerbs = ActionAuthVerbs | ActionRMVerbs | ActionDBVerbs;
+
+export interface IAction {
+  action: IActionTypes;
+  type: ActionContexts;
+}
 
 export type ISupportedContexts = IAuthContext | IRMContext | ILogContext;
 
 export interface ILogContext {
-  action?: ActionT;
-  type?: ActionTypes;
-  verb?: ActionAuthNames | ActionDBNames;
+  action?: IActionTypes;
+  type?: ActionContexts;
+  verb?: ActionVerbs;
   status?: string;
   message?: string;
   category?: string;
@@ -52,7 +63,7 @@ export interface IActionBack extends ILogContext {
   context: Context<ISupportedContexts>;
 }
 
-export interface IAction {
+export interface IActionDispatch {
   cb?: Array<() => void>;
 }
 
@@ -73,6 +84,9 @@ export interface IALoginPayload {
 export interface IDAddToFavPayload {
   email: string;
   cid: number;
+  type?: string;
+  query?: unknown;
+  value?: unknown;
 }
 
 export interface IACharacterPayload {
@@ -81,7 +95,7 @@ export interface IACharacterPayload {
   cid?: number;
 }
 
-export type ICreateAction = (options: IActionBack) => (_options: IAction) => [boolean | undefined, IDispatch];
+export type ICreateAction = (options: IActionBack) => (_options: IActionDispatch) => [boolean | undefined, IDispatch];
 
 export type IAPayload = IALoginPayload | IACharacterPayload;
 export type IDPayload = IDAddToFavPayload;

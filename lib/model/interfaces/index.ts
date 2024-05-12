@@ -3,7 +3,6 @@
 /* mdb-ifaces */
 
 /* const */
-export { DATABASE_STRING, DATABASE_USERS_STRING, DATABASE_ORGS_STRING } from './constants';
 
 // default methods
 export { NexusInterface } from './mdb-init-interface';
@@ -12,7 +11,7 @@ export { NexusInterface } from './mdb-init-interface';
 export { getUserMeta } from './mdb-get-interface';
 
 // write
-export { addToFavorites, initUser } from './mdb-update-interface';
+export { commitUpdate, initSignUpUser } from './mdb-update-interface';
 
 /* rm */
 
