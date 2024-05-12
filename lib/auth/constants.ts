@@ -3,7 +3,7 @@ import type { AuthOptions } from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
 import EmailProvider from 'next-auth/providers/email';
 import InstagramProvider from 'next-auth/providers/instagram';
-import { initSignUpUser } from '@controller';
+import { initUser } from '@controller';
 
 export const authOptions: AuthOptions = {
   // Configure one or more authentication providers

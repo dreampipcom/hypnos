@@ -12,6 +12,12 @@ export type { UserCustom, User, UserDecoration, DUserOrgAmbiRelation } from './u
 // orgs
 export type { OrgDecoration } from './orgs';
 
+// model
+export type { UserSchema, User, UserDecoration, OrgDecoration, IFeature } from './model';
+
+// chat
+export type { IChatConnection, IChatOperation, IChatMessage } from './chat';
+
 // actions
 export type {
   IAction,
@@ -43,3 +49,6 @@ export type { IFeature, IFeatureSet, IProject, IServiceUserAmbiRelation } from '
 
 // system
 export type { Tposition, TpositionX, TpositionY, Tsize, Tthemes } from './atoms';
+
+// sockets
+export type { IClientToServerEvents, IServerToClientEvents, IInterServerEvents, ISocketData } from './sockets';

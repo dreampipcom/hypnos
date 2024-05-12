@@ -6,6 +6,7 @@ import type { INCharacter } from "@types";
 import type { ObjectID } from "mongodb";
 import type { PostalAddress } from "@types/json-schmea";
 
+
 export { User };
 
 /* nexus db */
@@ -59,6 +60,7 @@ export interface IBillingData {}
 
 export enum EBillingCycles {
   /* core */
+<<<<<<< HEAD
   "1M" = 0,
   "1H" = 1,
   "1D" = 2,
@@ -76,6 +78,25 @@ export enum EBillingCycles {
   "4Y" = 13,
   "5Y" = 14,
   "10Y" = 15,
+=======
+  '1M' = 0,
+  '1H' = 1,
+  '1D' = 2,
+  '1W' = 3,
+  '2W' = 4,
+  '1M' = 5,
+  '2M' = 6,
+  '1Q' = 7,
+  '2Q' = 8,
+  '3Q' = 9,
+  '1Y' = 10,
+  /* pending */
+  '2Y' = 11,
+  '3Y' = 12,
+  '4Y' = 13,
+  '5Y' = 14,
+  '10Y' = 15,
+>>>>>>> a855969635f37653011d0cc6da7c07e74b8a9db3
 }
 
 /* org db: projects collection */
@@ -331,6 +352,7 @@ export enum ETraditionalCurrencies {
 
 /* crypto */
 export enum ECryptoCurrencies {
+<<<<<<< HEAD
   ADA = "Cardano",
   ALGO = "Algorand",
   ATOM = "Cosmos",
@@ -416,6 +438,7 @@ export interface OrgSchema {
   rickmorty: {
     favorites: {
       characters: INCharacter["id"][];
+
     };
   };
 }

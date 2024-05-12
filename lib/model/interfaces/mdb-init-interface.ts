@@ -27,7 +27,6 @@ import {
   defaultProjects,
 } from '@schema';
 import { UserSchema } from '@schema/user';
-
 import { patience } from './helpers';
 
 import { dbLog } from '@log';
@@ -207,6 +206,7 @@ async function prepare<DB extends keyof typeof EDBs>(name: (typeof EDBs)[DB]): P
   const db = await db_conn.db(name);
   return db;
 }
+
 
 // IMPORTANT: to-do: to enforce on existing docs (not on insert only)
 const createSchemaQuery = () => {

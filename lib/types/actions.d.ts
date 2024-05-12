@@ -89,6 +89,7 @@ export interface IACharacterPayload {
 
 export type ICreateAction = (options: IActionBack) => (_options: IActionDispatch) => [boolean | undefined, IDispatch];
 
+
 export type IAPayload = IALoginPayload | IACharacterPayload;
 export type IDPayload = IDAddToFavPayload;
 export type _IPayload = IAPayload | IDPayload;
