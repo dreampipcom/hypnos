@@ -6,7 +6,7 @@
   "license": "HPL3-ECO-AND-ANC",
   "scripts": {
     "dev:schema": "NEXUS_SCHEMA=true next dev",
-    "dev": "next dev",
+    "dev": "next dev -p 3001",
     "build": "next build",
     "start:schema": "NEXUS_SCHEMA=true next start",
     "start": "next start",
