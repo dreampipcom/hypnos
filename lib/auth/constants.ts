@@ -40,8 +40,8 @@ export const authOptions: AuthOptions = {
       // extra sign-in checks
       return true;
     },
-    async redirect({ url, baseUrl }) {
-      return url.startsWith(baseUrl) ? Promise.resolve(url) : Promise.resolve(baseUrl);
+    async redirect() {
+      return `${process.env.MAIN_URL}`;
     },
     async jwt({ user, token }) {
       if (user) {
