@@ -33,7 +33,7 @@ jobs:
           EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
 
   run-lint:
-    name: lint
+    name: hypnos::checks::lint
     runs-on: ubuntu-latest
 
     steps:
