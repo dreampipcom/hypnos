@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "author": "Angelo Reale",
-  "license": "EPL3-ECO-AND-ANC",
+  "license": "HPL3-ECO-AND-ANC",
   "scripts": {
     "dev:schema": "NEXUS_SCHEMA=true next dev",
     "dev": "next dev",
