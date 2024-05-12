@@ -12,9 +12,6 @@ export type { UserCustom, User, UserDecoration, DUserOrgAmbiRelation } from './u
 // orgs
 export type { OrgDecoration } from './orgs';
 
-// model
-export type { UserSchema, User, UserDecoration, OrgDecoration, IFeature } from './model';
-
 // chat
 export type { IChatConnection, IChatOperation, IChatMessage } from './chat';
 

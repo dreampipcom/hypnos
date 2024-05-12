@@ -207,7 +207,6 @@ async function prepare<DB extends keyof typeof EDBs>(name: (typeof EDBs)[DB]): P
   return db;
 }
 
-
 // IMPORTANT: to-do: to enforce on existing docs (not on insert only)
 const createSchemaQuery = () => {
   // use $exists: false

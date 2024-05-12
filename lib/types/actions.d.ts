@@ -10,7 +10,15 @@ export type NexusActionContexts = 'init' | 'auth' | 'ubiquity' | 'database';
 export type ServicesActionContexts = 'rickmorty' | 'image-uploader';
 export type ActionContexts = NexusActionContexts | ServicesActionContexts;
 
-export type ActionAuthVerbs = 'load user' | 'load user meta' | 'unload user';
+export type ActionAuthVerbs =
+  | 'load user'
+  | 'load user meta'
+  | 'unload user'
+  | 'load orgs'
+  | 'load services'
+  | 'parse features'
+  | 'load abilities'
+  | 'parse abilities';
 export type ActionDBVerbs = 'load database' | 'load collection' | 'define relations' | 'connect to database';
 export type ActionRMVerbs = 'load characters' | 'unload characters' | 'decorate characters' | 'add char to favorites';
 
@@ -88,7 +96,6 @@ export interface IACharacterPayload {
 }
 
 export type ICreateAction = (options: IActionBack) => (_options: IActionDispatch) => [boolean | undefined, IDispatch];
-
 
 export type IAPayload = IALoginPayload | IACharacterPayload;
 export type IDPayload = IDAddToFavPayload;
