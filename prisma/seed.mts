@@ -49,7 +49,7 @@ if (seedType === 'private') {
 
       /*
         ~~~~ PRIVATE ~~~~
-    */
+      */
 
       const user1 = await pvtPrisma.users.create({ data: mockUser });
       const user2 = await pvtPrisma.users.create({ data: mockUser2 });
