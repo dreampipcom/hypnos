@@ -259,7 +259,7 @@ if (seedType === 'private') {
         data = getSeedData();
       }
 
-      const { community, user, offer, audience, model, term, ad, listingTerm, review } = data;
+      const { community, user, model, term } = data;
 
       const pubListing1 = await pubPrisma.publicListings.create({
         data: createMockPubListing({
