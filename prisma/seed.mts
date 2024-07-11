@@ -198,25 +198,7 @@ if (seedType === 'private') {
         return facader;
       };
 
-      const facadeOffer = facadeEntry([
-        'id',
-        'name',
-        'description',
-        'cost',
-        'currency',
-        'subcharges',
-        'discounts',
-        'status',
-        'launch',
-      ]);
-
-      const facadeAudience = facadeEntry(['id', 'name', 'description', 'status']);
-
-      const facadeModel = facadeEntry(['id', 'name', 'description', 'status', 'type', 'taxonomies', 'remarks']);
-
       const facadeTaxonomy = facadeEntry(['id', 'name', 'description', 'status', 'type', 'nature', 'audiencesIds']);
-
-      const facadeAd = facadeEntry(['id', 'name', 'description', 'status']);
 
       // const decorateAd = facadeEntry([
       //   'userFits',
@@ -236,8 +218,6 @@ if (seedType === 'private') {
         'scheduledOn',
         'sentOn',
       ]);
-
-      const facadeReview = facadeEntry(['id', 'name', 'message', 'rating', 'impression', 'user', 'community', 'listing']);
 
       const facadeUser = facadeEntry(['id', 'image', 'firstName']);
 
