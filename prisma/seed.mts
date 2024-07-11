@@ -3,8 +3,8 @@
 import fs from 'node:fs';
 import execSync from 'node:child_process';
 import { faker } from '@faker-js/faker';
-import { PrismaClient as PrivatePrisma } from '@huntydev/db-private/prisma-client';
-import { PrismaClient as PublicPrisma } from '@huntydev/db-public/prisma-client';
+import { PrismaClient as PrivatePrisma } from '@dreampipcom/db-private/prisma-client';
+import { PrismaClient as PublicPrisma } from '@dreampipcom/db-public/prisma-client';
 
 import { mockUser, mockUser2, mockUser3 } from './mock/user.mts';
 import { mockCommunity, mockCommunity2, mockCommunity3 } from './mock/communities.mts';
@@ -265,13 +265,7 @@ if (seedType === 'private') {
         data: createMockPubListing({
           community: facadeCommunity(community),
           user: facadeUser(user),
-          offers: [facadeOffer(offer)],
-          audiences: [facadeAudience(audience)],
-          model: facadeModel(model),
           taxonomies: [facadeTaxonomy(term)],
-          ads: [facadeAd(ad)],
-          listingTaxonomies: [facadeTaxonomy(listingTerm)],
-          reviews: [facadeReview(review)],
         }),
       });
 
@@ -279,13 +273,7 @@ if (seedType === 'private') {
         data: createMockPubListing({
           community: facadeCommunity(community),
           user: facadeUser(user),
-          offers: [facadeOffer(offer)],
-          audiences: [facadeAudience(audience)],
-          model: facadeModel(model),
           taxonomies: [facadeTaxonomy(term)],
-          ads: [facadeAd(ad)],
-          listingTaxonomies: [facadeTaxonomy(listingTerm)],
-          reviews: [facadeReview(review)],
         }),
       });
 
@@ -293,13 +281,7 @@ if (seedType === 'private') {
         data: createMockPubListing({
           community: facadeCommunity(community),
           user: facadeUser(user),
-          offers: [facadeOffer(offer)],
-          audiences: [facadeAudience(audience)],
-          model: facadeModel(model),
           taxonomies: [facadeTaxonomy(term)],
-          ads: [facadeAd(ad)],
-          listingTaxonomies: [facadeTaxonomy(listingTerm)],
-          reviews: [facadeReview(review)],
         }),
       });
 
