@@ -1,0 +1,671 @@
+generator client {
+  provider = "prisma-client-js"
+  output = "../node_modules/@huntydev/db-private/prisma-client"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGODB_PRIVATE_URI")
+}
+
+model Accounts {
+  id                 String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId             String
+  providerType       String
+  providerId         String
+  providerAccountId  String
+  refreshToken       String?
+  accessToken        String?
+  accessTokenExpires DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  user               Users     @relation(fields: [userId], references: [id])
+
+  @@unique([providerId, providerAccountId])
+
+  @@map("accounts")
+}
+
+model Sessions {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String
+  expires      DateTime
+  sessionToken String   @unique
+  accessToken  String   @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         Users    @relation(fields: [userId], references: [id])
+
+  @@map("sessions")
+}
+
+model Communities {
+  id                    String            @id @default(auto()) @map("_id") @db.ObjectId
+  users                 Users[]           @relation(fields: [usersIds], references: [id])
+  usersIds              String[]          @db.ObjectId
+  status                ECommunitiestatus
+
+  name                  String
+  description           String
+  urls                  String[]
+  image                 String?
+
+  audiences             Audiences[]       @relation("communityAudiences", fields: [audiencesIds], references: [id])
+  audiencesIds          String[]          @db.ObjectId
+
+  orders                Orders[]          @relation("communityOrders")
+  ordersIds             String[]          @db.ObjectId
+  favorites             Listings[]        @relation("communityFavorites", fields: [favoritesIds], references: [id])
+  favoritesIds          String[]          @db.ObjectId
+
+  preferences           Taxonomies[]      @relation("communityPreferences", fields: [preferencesIds], references: [id])
+  preferencesIds        String[]          @db.ObjectId
+
+  ownedListings         Listings[]        @relation("listingCommunityOwner")
+  createdListings       Listings[]        @relation("listingCommunityCreator")
+
+  ownedTaxonomies       Taxonomies[]      @relation("taxonomyCommunityOwner")
+  createdTaxonomies     Taxonomies[]      @relation("taxonomyCommunityCreator")
+
+  ownedMessages         Messages[]        @relation("messageCommunityOwner")
+  createdMessages       Messages[]        @relation("messageCommunityCreator")
+
+  roles                 Roles[]           @relation("communityRoles", fields: [rolesIds], references: [id])
+  rolesIds              String[]          @db.ObjectId
+
+  messagesSent          Messages[]        @relation("communityMessagesSent")
+  messagesSentIds       String[]          @db.ObjectId
+
+  messagesReceived      Messages[]        @relation("communityMessagesReceived", fields: [messagesReceivedIds], references: [id])
+  messagesReceivedIds   String[]          @db.ObjectId
+
+  userOwner             Users?             @relation("ownedCommunities", fields: [userOwnerId], references: [id])
+  userOwnerId           String?            @db.ObjectId
+
+  userCreator           Users?             @relation("createdCommunities", fields: [userCreatorId], references: [id])
+  userCreatorId         String?            @db.ObjectId
+
+  @@map("communities")
+}
+
+model Listings {
+  // static
+  id                  String            @id @default(auto()) @map("_id") @db.ObjectId
+  title               ILocaleString     //model title
+  description         ILocaleString     //model description
+  status              EListingStatus
+  location            ILocation
+
+  taxonomies          Taxonomies[]      @relation("listingTaxonomies", fields: [taxonomiesIds], references: [id])
+  taxonomiesIds       String[]          @db.ObjectId
+
+  // foreign
+  // from audiences to communities and users who favorited
+  messages            Messages[]        @relation("listingMessagesReceived", fields: [messagesIds], references: [id])
+  messagesIds         String[]          @db.ObjectId
+  
+  favorited           Users[]           @relation("favorites", fields: [favoritedIds], references: [id])
+  favoritedIds        String[]          @db.ObjectId
+
+  communityFavorited      Communities[]          @relation("communityFavorites", fields: [communityFavoritedIds], references: [id])
+  communityFavoritedIds   String[]          @db.ObjectId
+
+  communityOwner          Communities?            @relation("listingCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId        String?            @db.ObjectId
+
+  userOwner           Users?            @relation("listingUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId         String?            @db.ObjectId
+
+  userCreator         Users?             @relation("listingUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId       String?            @db.ObjectId
+
+  communityCreator        Communities?            @relation("listingCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId      String?            @db.ObjectId
+
+  @@map("listings")
+}
+
+model Taxonomies {
+  id                  String            @id @default(auto()) @map("_id") @db.ObjectId
+  name                ILocaleString
+  description         ILocaleString
+
+  status              ETaxonomyStatus
+  type                ETaxonomyType
+  nature              ETaxonomyNature
+
+  targetUsers         Users[]           @relation("preferences", fields: [usersIds], references: [id])
+  usersIds            String[]          @db.ObjectId
+
+  targetCommunities        Communities[]          @relation("communityPreferences", fields: [communitiesIds], references: [id])
+  communitiesIds           String[]          @db.ObjectId
+
+  listings            Listings[]        @relation("listingTaxonomies", fields: [listingIds], references: [id])
+  listingIds          String[]          @db.ObjectId
+
+  userOwner           Users?             @relation("taxonomyUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId         String?            @db.ObjectId
+
+  communityOwner          Communities?            @relation("taxonomyCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId        String?            @db.ObjectId
+
+  userCreator         Users?             @relation("taxonomyUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId       String?            @db.ObjectId
+
+  communityCreator        Communities?            @relation("taxonomyCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId      String?            @db.ObjectId
+
+  @@map("taxonomies")
+}
+
+model Messages {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  description       ILocaleString
+
+  type              EMessageType
+  status            EMessageStatus
+  nature            EMessageNature
+  cadence           ECadence
+  channels          EMessageChannel[]
+
+  title             ILocaleString
+  body              ILocaleString
+
+  queuedOn          DateTime            @db.Date
+  scheduledOn       DateTime            @db.Date
+  sentOn            DateTime            @db.Date
+
+  fromUser          Users?              @relation("userMessagesSent", fields: [fromUserId], references: [id])
+  fromUserId        String?              @db.ObjectId
+
+  fromCommunity         Communities?             @relation("communityMessagesSent", fields: [fromCommunityId], references: [id])
+  fromCommunityId       String?              @db.ObjectId
+
+  toUsers           Users[]             @relation("userMessagesReceived", fields: [toUsersIds], references: [id])
+  toUsersIds        String[]            @db.ObjectId
+
+  toCommunities          Communities[]            @relation("communityMessagesReceived", fields: [toCommunitiesIds], references: [id])
+  toCommunitiesIds       String[]            @db.ObjectId
+
+  toListings        Listings[]          @relation("listingMessagesReceived", fields: [toCommunitiesIds], references: [id])
+  toListingsIds     String[]            @db.ObjectId
+
+  userOwner         Users?              @relation("messageUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("messageCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       Users?              @relation("messageUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("messageCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("messages")
+}
+
+model Roles {
+  id                String          @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  status            ERoleStatus
+  type              ERoleType
+  nature            ERoleNature
+  abilities         ERoleAbilites[]
+
+  users             Users[]         @relation("roles", fields: [usersIds], references: [id])
+  usersIds          String[]        @db.ObjectId
+  communities            Communities[]        @relation("communityRoles", fields: [communitiesIds], references: [id])
+  communitiesIds         String[]        @db.ObjectId
+
+  @@map("roles")
+}
+
+model Users {
+  id                    String            @id @default(auto()) @map("_id") @db.ObjectId
+  email                 String
+  emailVerified         Boolean
+  image                 String?
+  createdAt             DateTime          @default(now())
+  updatedAt             DateTime          @updatedAt
+  accounts              Accounts[]
+  sessions              Sessions[]
+
+  name                  String
+  firstName             String
+  lastName              String
+
+  audiences             Audiences[]       @relation("userAudiences", fields: [audiencesIds], references: [id])
+  audiencesIds          String[]         @db.ObjectId
+
+  birthday              DateTime          @db.Date
+  communities                Communities[]          @relation(fields: [communitiesIds], references: [id])
+  communitiesIds             String[]          @db.ObjectId
+
+  location              ILocation
+
+  preferences           Taxonomies[]      @relation("preferences", fields: [preferencesIds], references: [id])
+  preferencesIds        String[]          @db.ObjectId
+
+  // settings           String
+  favorites             Listings[]        @relation("favorites", fields: [favoritesIds], references: [id])
+  favoritesIds          String[]          @db.ObjectId
+
+  messagesSent          Messages[]        @relation("userMessagesSent")
+  messagesSentIds       String[]          @db.ObjectId
+
+  messagesReceived      Messages[]        @relation("userMessagesReceived", fields: [messagesReceivedIds], references: [id])
+  messagesReceivedIds   String[]          @db.ObjectId
+
+  roles                 Roles[]           @relation("roles", fields: [rolesIds], references: [id])
+  rolesIds              String[]          @db.ObjectId
+
+  // user generated content
+
+  ownedCommunities           Communities[]          @relation("ownedCommunities")
+  createdCommunities         Communities[]          @relation("createdCommunities")
+
+  ownedListings         Listings[]        @relation("listingUserOwner")
+  createdListings       Listings[]        @relation("listingUserCreator")
+
+  ownedTaxonomies       Taxonomies[]      @relation("taxonomyUserOwner")
+  createdTaxonomies     Taxonomies[]      @relation("taxonomyUserCreator")
+
+  ownedMessages         Messages[]        @relation("messageUserOwner")
+  createdMessages       Messages[]        @relation("messageUserCreator")
+
+  @@map("users")
+}
+
+model Moods {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]          @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         Users?              @relation("messageUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("messageCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       Users?              @relation("messageUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("messageCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("messages")
+}
+
+model Actions {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]          @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         Users?              @relation("messageUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("messageCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       Users?              @relation("messageUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("messageCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("messages")
+}
+
+model Thoughts {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]            @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         Users?              @relation("messageUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("messageCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       Users?              @relation("messageUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("messageCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("messages")
+}
+
+model Projects {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  ticker            String
+
+  createdOn         DateTime            @db.Date
+  updatedOn         DateTime[]          @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         Users?              @relation("messageUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("messageCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       Users?              @relation("messageUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("messageCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("messages")
+}
+
+model Investments {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  placedOn          DateTime            @db.Date
+  issuedOn          DateTime            @db.Date
+  settledOn         DateTime            @db.Date
+
+  ticker            Projects?           @relation("ticker", fields: [tickerId], references: [id])
+  tickerId          String?             @db.ObjectId
+
+  purchaseValue     Double
+  settledValue      Double
+
+  userOwner         Users?              @relation("messageUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("messageCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       Users?              @relation("messageUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("messageCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("messages")
+}
+
+
+// globals
+
+type ILocaleString {
+  es        String?
+  ca        String?
+  ga        String?
+  eu        String?
+  en        String?
+  cy        String?
+  mt        String?
+  is        String?
+  it        String?
+  pt        String?
+  de        String?
+  fr        String?
+  pl        String?
+  et        String?
+  cz        String?
+  sv        String?
+  da        String?
+  nl        String?
+  nb        String?
+  nn        String?
+  ro        String?
+  sr        String?
+  sl        String?
+  lv        String?
+  lt        String?
+  hr        String?
+  el        String?
+  hu        String?
+  bg        String?
+  bs        String?
+  sq        String?
+}
+
+
+enum ERating {
+  ZERO
+  ONE
+  TWO
+  THREE
+  FOUR
+  FIVE
+  SIX
+  SEVEN
+  EIGHT
+  NINE
+  TEN
+}
+
+enum EImpression {
+  POSITIVE
+  NEGATIVE
+  NEUTRAL
+}
+
+enum ECurrency {
+  EUR
+  NOK
+  SEK
+  CHF
+  GBP
+  CZK
+  PLZ
+  USD
+}
+
+enum ECadence {
+  MINUTE
+  HALF_HOUR
+  HOURLY
+  FOUR_HOURS
+  EIGHT_HOURS
+  TWELVE_HOURS
+  DAILY
+  TWO_DAYS
+  THREE_DAYS
+  WORK_DAYS
+  WEEKENDS
+  WEEKLY
+  BI_WEEKLY
+  MONTHLY
+  BI_MONTHLY
+  QUARTERLY
+  BI_QUARTERLY
+  SEMESTER
+  YEARLY
+  TWO_YEARS
+  THREE_YEARS
+  FIVE_YEARS
+}
+
+// taxonomies
+
+enum ETaxonomyStatus {
+  ACTIVE
+  PENDING
+  INACTIVE
+  DELETED
+}
+
+enum ETaxonomyType {
+  TAG
+  ANOTHER_TAG
+}
+
+enum ETaxonomyNature {
+  SEGMENTED
+  PUBLIC
+}
+
+
+// offers
+
+enum EOfferStatus {
+  ACTIVE
+  PENDING
+  INACTIVE
+  DELETED
+}
+
+type ITaxesAndFees {
+  taxes       Float
+  fees        Float
+  shipping    Float
+}
+
+// communities
+
+enum ECommunitiestatus {
+  ACTIVE
+  PENDING
+  INACTIVE
+  DELETED
+}
+
+
+// listing
+
+enum EListingStatus {
+  ACTIVE
+  PENDING
+  INACTIVE
+  DELETED
+}
+
+
+// messages
+
+enum EMessageType {
+  ANNOUNCEMENT
+  CAMPAIGN
+  REVIEW
+  CHAT
+  SUPPORT
+}
+
+enum EMessageStatus {
+  SCHEDULED
+  PENDING
+  DELIVERED
+  VIEWED
+}
+
+enum EMessageNature {
+  PRIVATE
+  SEMI_PRIVATE
+  PUBLIC
+}
+
+enum EMessageChannel {
+  PUSH_NOTIFICATION
+  EMAIL
+  CHAT
+  SUPPORT_PANEL
+  Community_CHAT
+}
+
+
+// roles
+enum ERoleStatus {
+  ACTIVE
+  PENDING
+  INACTIVE
+  DELETED
+}
+
+enum ERoleNature {
+  INTERNAL
+  PUBLIC
+}
+
+enum ERoleType {
+  ADMIN
+  USER
+  Community
+  CUSTOMER
+  PROVIDER
+  INTERNAL_DEV
+  INTERNAL_MKT
+  INTERNAL_SALES
+  INTERNAL_HR
+  INTERNAL_LEAD
+  INTERNAL_OPS
+}
+
+enum ERoleAbilites {
+  SUDO
+  VIEW_PRIVATE
+  EDIT_PRIVATE
+  DELETE_PRIVATE
+  CREATE_PRIVATE
+  CREATE_MESSAGE
+  CREATE_BROADCAST
+  CREATE_LISTING
+  MANAGE_TAXONOMIES
+  MANAGE_Community
+  MANAGE_USER
+  MANAGE_REVIEWS
+  MANAGE_ROLES
+}
+
+// users
+
+type IPosix {
+  lat    Float
+  lng    Float
+  radius Float
+}
+
+type IAddress {
+  street         String
+  additional     String
+  number         String
+  city           String
+  province       String
+  country        String
+  zipCode        String
+  phone          String
+}
+
+type ILocation {
+  geo            IPosix?
+  address        IAddress?
+  name           String
+}
