@@ -1,15 +1,9 @@
 // communities.ts
 import { faker } from '@faker-js/faker';
 import { createMockUser } from './user.mts';
-import { createMockAudience } from './audiences.mts';
 import { createMockListing } from './listings.mts';
 import { createMockMessage } from './messages.mts';
-import { createMockOrder } from './orders.mts';
-import { createMockOffer } from './offers.mts';
 import { createMockTerm } from './taxonomies.mts';
-import { createMockCatalogueItem } from './catalogue.mts';
-import { createMockReview } from './reviews.mts';
-import { createMockCampaign } from './campaigns.mts';
 import { createMockRole } from './roles.mts';
 
 export const createMockCommunity = (): any => {

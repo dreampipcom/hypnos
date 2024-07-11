@@ -2,14 +2,9 @@
 import type { ITenant } from './types';
 import { faker } from '@faker-js/faker';
 import { createMockUser } from './user.mts';
-import { createMockAudience, mockAudience, mockAudience2 } from './audiences.mts';
 import { createMockMessage, mockMessage } from './messages.mts';
-import { createMockOffer, mockOffer } from './offers.mts';
-import { createMockOrder, mockOrder } from './orders.mts';
 import { createMockCommunity, mockCommunity } from './communities.mts';
 import { createMockTerm, mockTerm } from './taxonomies.mts';
-import { createMockReview, mockReview } from './reviews.mts';
-import { createMockCatalogueItem } from './catalogue.mts';
 
 import { HOMock } from './helpers.mts';
 

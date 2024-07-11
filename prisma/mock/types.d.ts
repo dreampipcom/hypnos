@@ -52,25 +52,6 @@ export interface ITaxesAndFees {
   shipping: number;
 }
 
-export enum EOfferStatus {
-  ACTIVE,
-  PENDING,
-  INACTIVE,
-  DELETED,
-}
-
-export interface IOfferFacade {
-  id: string;
-  name: ILocaleString;
-  description: ILocaleString;
-  cost: number;
-  currency: ECurrency;
-  surcharges: ITaxesAndFees[];
-  discounts: number;
-  status: EOfferStatus;
-  launch: Date;
-}
-
 export interface ITenant {
   community?: string;
   user?: string;
@@ -83,20 +64,6 @@ export enum ECampaignStatus {
   DELETED,
 }
 
-export interface IAudienceFacade {
-  id: string;
-  name: ILocaleString;
-  status: ECampaignStatus;
-}
-
-export interface IAdsDecorator {
-  id: string;
-  name: ILocaleString;
-  status: ECampaignStatus;
-  userFits: boolean;
-  communityFits: boolean;
-}
-
 // pvt:taxonomies
 
 export enum ETaxonomyStatus {
@@ -107,8 +74,8 @@ export enum ETaxonomyStatus {
 }
 
 export enum ETaxonomyType {
-  MODALIDADES,
-  ESPECIES,
+  TAG,
+  ANOTHER_TAG,
 }
 
 export enum ETaxonomyNature {
@@ -123,7 +90,6 @@ export interface ITaxonomiesFacade {
   status: ETaxonomyStatus;
   type: ETaxonomyType;
   nature: ETaxonomyNature;
-  targetAudiences: IAudienceFacade;
 }
 
 // pvt:messages
@@ -185,54 +151,10 @@ export interface ICommunityFacade {
   status: ECommunitiestatus;
 }
 
-// pvt:reviews
-export enum EReviewStatus {
-  ACTIVE,
-  PENDING,
-  INACTIVE,
-  DELETED,
-}
-
 export enum EImpression {
   POSITIVE,
   NEGATIVE,
   NEUTRAL,
-}
-
-export interface IReviewFacade {
-  id: string;
-  status: EReviewStatus;
-  message: IMessageFacade;
-  rating: number;
-  impression: EImpression;
-  user: IUserFacade;
-  community: ICommunityFacade;
-  listing: string;
-}
-
-// pvt:catalogue
-
-export enum ECatalogueItemType {
-  SERVICE,
-  FEE,
-  SUBSCRIPTION,
-}
-
-export enum ECatalogueItemStatus {
-  ACTIVE,
-  PENDING,
-  INACTIVE,
-  DELETED,
-}
-
-export interface ICatalogueFacade {
-  id: string;
-  name: ILocaleString;
-  description: ILocaleString;
-  remarks: ILocaleString;
-  status: ECatalogueItemStatus;
-  type: ECatalogueItemType;
-  taxonomies: ITaxonomiesFacade[];
 }
 
 // public_listings

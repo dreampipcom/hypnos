@@ -4,8 +4,6 @@ import { faker } from '@faker-js/faker';
 import { createMockUser, _mockUser, mockUser, mockUser2 } from './user.mts';
 import { mockCommunity, mockCommunity2, mockCommunity3 } from './communities.mts';
 import { mockListing, mockListing2 } from './listings.mts';
-import { mockAudience, mockAudience2 } from './audiences.mts';
-import { createMockCampaign, mockCampaign, mockCampaign2 } from './campaigns.mts';
 import { createMockReview } from './reviews.mts';
 
 import { HOMock } from './helpers.mts';

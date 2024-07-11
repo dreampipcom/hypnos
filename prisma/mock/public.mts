@@ -42,18 +42,11 @@ export const createMockPubListing = ({
       es: 'Lorem ipsum description',
     },
     status: 'ACTIVE',
-    seatsAvailable: 1,
-    totalSeats: 10,
     location: mockLocation,
     listingRemarks: {
       es: 'Hola, esto es un remark',
     },
-    offers,
-    audiences,
     taxonomies,
-    listingTaxonomies,
-    ads,
-    model,
   };
 
   return data;
