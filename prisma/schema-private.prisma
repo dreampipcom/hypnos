@@ -51,6 +51,7 @@ model VerificationToken {
   expires    DateTime
  
   @@unique([identifier, token])
+  @@map("verificationToken")
 }
 
 // Optional for WebAuthn support
@@ -67,6 +68,7 @@ model Authenticator {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
  
   @@unique([userId, credentialID])
+  @@map("authenticator")
 }
 
 model User {

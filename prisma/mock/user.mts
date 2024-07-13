@@ -24,7 +24,6 @@ export const createMockUser = () => ({
   name: faker.person.fullName(),
   email: faker.internet.email(),
   image: faker.image.avatar(),
-  emailVerified: false,
   firstName: 'Vars',
   lastName: 'Nothing',
   birthday: new Date(),

@@ -13,7 +13,7 @@ export const createMockMessage = ({
   user,
   fromUser,
   fromCommunity,
-  toUsers,
+  toUser,
   toCommunities,
   toListings,
   toAudiences,
@@ -39,8 +39,8 @@ export const createMockMessage = ({
     queuedOn: new Date(),
     scheduledOn: new Date(),
     sentOn: new Date(),
-    toUsers: {
-      connect: toUsers,
+    toUser: {
+      connect: toUser,
     },
     toCommunities: {
       connect: toCommunities,
