@@ -20,7 +20,7 @@
     "schema:generate:public": "npx prisma generate --no-engine --schema=./prisma/schema-public.prisma",
     "schema:generate:all": "npm run schema:generate:private && npm run schema:generate:public",
     "dev": "npm run schema:generate:all && next dev -p 3001",
-    "build": " && next build",
+    "build": "npm run schema:generate:all && next build",
     "start": "next start",
     "lint": "next lint",
     "format": "next lint && prettier --check --ignore-path .gitignore --ignore-path .prettierignore .",
