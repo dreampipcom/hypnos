@@ -6,46 +6,34 @@ import GoogleProvider from 'next-auth/providers/google';
 import AppleProvider from 'next-auth/providers/apple';
 import FacebookProvider from 'next-auth/providers/facebook';
 import EmailProvider from 'next-auth/providers/email';
-import { PrismaAdapter } from '@auth/prisma-adapter';
-import { PrismaClient as PrivatePrisma } from '@dreampipcom/db-private/prisma-client';
 // import InstagramProvider from 'next-auth/providers/instagram';
 
-const providers = [
-  EmailProvider({
-    server: process.env.EMAIL_SERVER as string,
-    from: process.env.EMAIL_FROM as string,
-    // maxAge: 24 * 60 * 60, // How long email links are valid for (default 24h)
-  }),
-  GithubProvider({
-    clientId: process.env.GITHUB_ID as string,
-    clientSecret: process.env.GITHUB_SECRET as string,
-  }),
-  GoogleProvider({
-    clientId: process.env.GOOGLE_CLIENT_ID as string,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-  }),
-  AppleProvider({
-    clientId: process.env.APPLE_CLIENT_ID as string,
-    clientSecret: process.env.APPLE_CLIENT_SECRET as string,
-  }),
-  FacebookProvider({
-    clientId: process.env.FACEBOOK_CLIENT_ID as string,
-    clientSecret: process.env.FACEBOOK_CLIENT_SECRET as string,
-  }),
-];
-
-export const providerMap = providers.map((provider) => {
-  if (typeof provider === 'function') {
-    const providerData = provider();
-    return { id: providerData.id, name: providerData.name };
-  } else {
-    return { id: provider.id, name: provider.name };
-  }
-});
-
-export const authOptions = {
-  providers,
-  adapter: PrismaAdapter(PrivatePrisma),
+export const { auth, handlers, signIn, signOut }: AuthOptions = NextAuth({
+  adapter: PrismaAdapter(prisma),
+  providers: [
+    EmailProvider({
+      server: process.env.EMAIL_SERVER as string,
+      from: process.env.EMAIL_FROM as string,
+      // maxAge: 24 * 60 * 60, // How long email links are valid for (default 24h)
+    }),
+    GithubProvider({
+      clientId: process.env.GITHUB_ID as string,
+      clientSecret: process.env.GITHUB_SECRET as string,
+    }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    }),
+    AppleProvider({
+      clientId: process.env.APPLE_CLIENT_ID as string,
+      clientSecret: process.env.APPLE_CLIENT_SECRET as string,
+    }),
+    FacebookProvider({
+      clientId: process.env.FACEBOOK_CLIENT_ID as string,
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET as string,
+    }),
+    // ...add more providers here
+  ],
   session: {
     strategy: 'jwt',
   },
@@ -91,6 +79,4 @@ export const authOptions = {
     verifyRequest: '/verify', // (used for check email message)
     // newUser: '/' // New users will be directed here on first sign in (leave the property out if not of interest)
   },
-};
-
-export const { auth, handlers, signIn, signOut }: AuthOptions = NextAuth(authOptions);
+});

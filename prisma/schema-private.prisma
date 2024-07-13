@@ -10,21 +10,23 @@ datasource db {
 }
 
 model Accounts {
-  id                 String    @id @default(auto()) @map("_id") @db.ObjectId
-  userId             String
-  providerType       String
-  providerId         String
-  providerAccountId  String
-  refreshToken       String?
-  accessToken        String?
-  accessTokenExpires DateTime?
-  createdAt          DateTime  @default(now())
-  updatedAt          DateTime  @updatedAt
-  user               Users     @relation(fields: [userId], references: [id])
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String
+  token_type        String?
+  refresh_token     String? @db.String
+  access_token      String? @db.String
+  id_token          String? @db.String
+  scope             String?
+  session_state     String?
+  expires_at        Int?
 
-  @@unique([providerId, providerAccountId])
+  user   Users   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @db.ObjectId
 
-  @@map("accounts")
+  @@unique([provider, providerAccountId])
+  @@map("account")
 }
 
 model Sessions {
@@ -38,6 +40,74 @@ model Sessions {
   user         Users    @relation(fields: [userId], references: [id])
 
   @@map("sessions")
+}
+
+model Users {
+  id                    String            @id @default(auto()) @map("_id") @db.ObjectId
+  email                 String
+  emailVerified         Boolean
+  image                 String?
+  createdAt             DateTime          @default(now())
+  updatedAt             DateTime          @updatedAt
+  accounts              Accounts[]
+  sessions              Sessions[]
+
+  name                  String
+  firstName             String
+  lastName              String
+
+  birthday              DateTime          @db.Date
+  communities                Communities[]          @relation(fields: [communitiesIds], references: [id])
+  communitiesIds             String[]          @db.ObjectId
+
+  location              ILocation
+
+  preferences           Taxonomies[]      @relation("preferences", fields: [preferencesIds], references: [id])
+  preferencesIds        String[]          @db.ObjectId
+
+  // settings           String
+  favorites             Listings[]        @relation("favorites", fields: [favoritesIds], references: [id])
+  favoritesIds          String[]          @db.ObjectId
+
+  messagesSent          Messages[]        @relation("userMessagesSent")
+  messagesSentIds       String[]          @db.ObjectId
+
+  messagesReceived      Messages[]        @relation("userMessagesReceived", fields: [messagesReceivedIds], references: [id])
+  messagesReceivedIds   String[]          @db.ObjectId
+
+  roles                 Roles[]           @relation("roles", fields: [rolesIds], references: [id])
+  rolesIds              String[]          @db.ObjectId
+
+  // user generated content
+
+  ownedCommunities           Communities[]          @relation("ownedCommunities")
+  createdCommunities         Communities[]          @relation("createdCommunities")
+
+  ownedListings         Listings[]        @relation("listingUserOwner")
+  createdListings       Listings[]        @relation("listingUserCreator")
+
+  ownedTaxonomies       Taxonomies[]      @relation("taxonomyUserOwner")
+  createdTaxonomies     Taxonomies[]      @relation("taxonomyUserCreator")
+
+  ownedMessages         Messages[]        @relation("messageUserOwner")
+  createdMessages       Messages[]        @relation("messageUserCreator")
+
+  ownedMoods           Moods[]          @relation("moodUserOwner")
+  createdMoods         Moods[]          @relation("moodUserCreator")
+
+  ownedActions           Actions[]          @relation("actionUserOwner")
+  createdActions         Actions[]          @relation("actionUserCreator")
+
+  ownedThoughts           Thoughts[]          @relation("thoughtUserOwner")
+  createdThoughts         Thoughts[]          @relation("thoughtUserCreator")
+
+  ownedProjects           Projects[]          @relation("projectUserOwner")
+  createdProjects         Projects[]          @relation("projectUserCreator")
+
+  ownedInvestments           Investments[]          @relation("investmentUserOwner")
+  createdInvestments         Investments[]          @relation("investmentUserCreator")
+
+  @@map("users")
 }
 
 model Communities {
@@ -230,74 +300,6 @@ model Roles {
   communitiesIds         String[]        @db.ObjectId
 
   @@map("roles")
-}
-
-model Users {
-  id                    String            @id @default(auto()) @map("_id") @db.ObjectId
-  email                 String
-  emailVerified         Boolean
-  image                 String?
-  createdAt             DateTime          @default(now())
-  updatedAt             DateTime          @updatedAt
-  accounts              Accounts[]
-  sessions              Sessions[]
-
-  name                  String
-  firstName             String
-  lastName              String
-
-  birthday              DateTime          @db.Date
-  communities                Communities[]          @relation(fields: [communitiesIds], references: [id])
-  communitiesIds             String[]          @db.ObjectId
-
-  location              ILocation
-
-  preferences           Taxonomies[]      @relation("preferences", fields: [preferencesIds], references: [id])
-  preferencesIds        String[]          @db.ObjectId
-
-  // settings           String
-  favorites             Listings[]        @relation("favorites", fields: [favoritesIds], references: [id])
-  favoritesIds          String[]          @db.ObjectId
-
-  messagesSent          Messages[]        @relation("userMessagesSent")
-  messagesSentIds       String[]          @db.ObjectId
-
-  messagesReceived      Messages[]        @relation("userMessagesReceived", fields: [messagesReceivedIds], references: [id])
-  messagesReceivedIds   String[]          @db.ObjectId
-
-  roles                 Roles[]           @relation("roles", fields: [rolesIds], references: [id])
-  rolesIds              String[]          @db.ObjectId
-
-  // user generated content
-
-  ownedCommunities           Communities[]          @relation("ownedCommunities")
-  createdCommunities         Communities[]          @relation("createdCommunities")
-
-  ownedListings         Listings[]        @relation("listingUserOwner")
-  createdListings       Listings[]        @relation("listingUserCreator")
-
-  ownedTaxonomies       Taxonomies[]      @relation("taxonomyUserOwner")
-  createdTaxonomies     Taxonomies[]      @relation("taxonomyUserCreator")
-
-  ownedMessages         Messages[]        @relation("messageUserOwner")
-  createdMessages       Messages[]        @relation("messageUserCreator")
-
-  ownedMoods           Moods[]          @relation("moodUserOwner")
-  createdMoods         Moods[]          @relation("moodUserCreator")
-
-  ownedActions           Actions[]          @relation("actionUserOwner")
-  createdActions         Actions[]          @relation("actionUserCreator")
-
-  ownedThoughts           Thoughts[]          @relation("thoughtUserOwner")
-  createdThoughts         Thoughts[]          @relation("thoughtUserCreator")
-
-  ownedProjects           Projects[]          @relation("projectUserOwner")
-  createdProjects         Projects[]          @relation("projectUserCreator")
-
-  ownedInvestments           Investments[]          @relation("investmentUserOwner")
-  createdInvestments         Investments[]          @relation("investmentUserCreator")
-
-  @@map("users")
 }
 
 model Moods {
