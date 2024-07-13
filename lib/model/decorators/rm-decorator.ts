@@ -1,7 +1,7 @@
 // rm-decorator.ts input: rm meta; output: decorated rm meta;
 'use server';
 import type { IDCharacter, INCharacter, UserDecoration } from '@types';
-import { getUserMeta } from '@controller';
+// import { getUserMeta } from '@controller';
 
 /* private */
 const decorateCharacter = (character: INCharacter, uMeta: UserDecoration): IDCharacter => {
@@ -14,7 +14,8 @@ const decorateCharacter = (character: INCharacter, uMeta: UserDecoration): IDCha
 
 /* public */
 export const decorateRMCharacters = async (characters: INCharacter[], uid: string): Promise<IDCharacter[]> => {
-  const uMeta: UserDecoration = await getUserMeta({ email: uid });
+  // const uMeta: UserDecoration = await getUserMeta({ email: uid });
+  const uMeta = { uid };
   console.log({ uMeta: uMeta.rickmorty });
   const decd: IDCharacter[] = characters.map((char) => decorateCharacter(char, uMeta));
   return decd;
