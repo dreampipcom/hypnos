@@ -39,6 +39,7 @@
       "@constants": ["./lib/types/constants"],
       "@constants/*": ["./lib/types/constants/*"],
       "@auth": ["./lib/auth"],
+      "@auth/config": ["./lib/auth/config"],
       "@auth/adapter": ["./src/app/api/auth/[...nextauth]"],
       "@auth/adapter/*": ["./src/app/api/auth/[...nextauth]/*"],
       "@state/*": ["./lib/state/*"],

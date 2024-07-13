@@ -1,2 +1,2 @@
 // index.ts
-export { authOptions, auth, handlers } from './constants';
+export { auth, handlers, authConfig } from './constants';
