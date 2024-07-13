@@ -55,6 +55,12 @@
       "@helpers": ["./lib/helpers"],
     },
   },
+  "ts-node": {
+    "maxOldSpaceSize": 8196,
+    "experimentalSpecifierResolution": "node",
+    "transpileOnly": true,
+    "esm": true
+  },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules", "**/nsx/**/*", "**/system/**/*", "**/mock/**/*"],
 }
