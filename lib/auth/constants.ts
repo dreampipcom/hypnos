@@ -1,5 +1,4 @@
 // constants.ts TS-Doc?
-import type { AuthOptions } from 'next-auth';
 import { PrivatePrisma } from '@model';
 import NextAuth from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
@@ -94,4 +93,4 @@ export const providerMap = providers.map((provider) => {
   }
 });
 
-export const { auth, handlers, signIn, signOut, config }: AuthOptions = NextAuth(authConfig);
+export const { auth, handlers, signIn, signOut, config } = NextAuth(authConfig);
