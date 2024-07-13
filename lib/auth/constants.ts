@@ -1,4 +1,5 @@
 // constants.ts TS-Doc?
+import { PrivatePrisma } from '@model';
 import type { AuthOptions } from 'next-auth';
 import NextAuth from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
@@ -7,8 +8,13 @@ import AppleProvider from 'next-auth/providers/apple';
 import FacebookProvider from 'next-auth/providers/facebook';
 import EmailProvider from 'next-auth/providers/email';
 import { PrismaAdapter } from '@auth/prisma-adapter';
-import { PrismaClient as PrivatePrisma } from '@dreampipcom/db-private/prisma-client';
-// import InstagramProvider from 'next-auth/providers/instagram';
+// import { PrismaClient as PrivatePrisma } from '@dreampipcom/db-private/prisma-client/edge';
+// import { withAccelerate } from "@prisma/extension-accelerate";
+
+// const prisma = new PrivatePrisma().$extends(withAccelerate());
+// // import InstagramProvider from 'next-auth/providers/instagram';
+
+// console.log({prisma})
 
 const providers = [
   EmailProvider({

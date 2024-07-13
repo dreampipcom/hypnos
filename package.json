@@ -6,6 +6,9 @@
   "author": "Angelo Reale",
   "license": "HPL3-ECO-AND-ANC",
   "scripts": {
+    "schema:migrate:private": "npx prisma migrate dev --schema prisma/schema-private.prisma",
+    "schema:migrate:public": "npx prisma migrate dev --schema prisma/schema-public.prisma",
+    "schema:migrate:all": "npm run schema:migrate:private && npm run schema:migrate:public",
     "schema:push:private": "npx prisma db push --schema prisma/schema-private.prisma",
     "schema:pull:private": "npx prisma db pull --schema prisma/schema-private.prisma",
     "schema:push:public": "npx prisma db push --schema prisma/schema-public.prisma",
