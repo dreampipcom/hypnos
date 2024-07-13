@@ -1,6 +1,6 @@
 generator client {
   provider = "prisma-client-js"
-  output = "../node_modules/@huntydev/db-private/prisma-client"
+  output = "../node_modules/@dreampipcom/db-private/prisma-client"
 }
 
 datasource db {

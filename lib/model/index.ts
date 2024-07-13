@@ -15,3 +15,7 @@ export {
 
 /* rm-decorators */
 export { decorateRMCharacters } from './decorators';
+
+/* prisma */
+export { default as PrivatePrisma } from './prisma-private-connector';
+export { default as PublicPrisma } from './prisma-public-connector';

@@ -1,5 +1,5 @@
 // getSeeds.ts
-import { PrismaClient as PrivatePrisma } from '@huntydev/db-private/prisma-client';
+import { PrismaClient as PrivatePrisma } from '@dreampipcom/db-private/prisma-client';
 
 import fs from 'node:fs';
 
