@@ -30,7 +30,7 @@ if (seedType === 'private') {
   console.log('~ SEEDING PRIVATE DB ~');
 
   const pvtPrisma = new PrivatePrisma({
-    datasourceUrl: process.env.MONGODB_PRIVATE_URI,
+    datasourceUrl: process.env.PRISMA_PRIVATE_URI,
   });
 
   const main = async () => {
@@ -160,11 +160,11 @@ if (seedType === 'private') {
   console.log('~ SEEDING PUBLIC DB ~');
 
   const pvtPrisma = new PrivatePrisma({
-    datasourceUrl: process.env.MONGODB_PRIVATE_URI,
+    datasourceUrl: process.env.PRISMA_PRIVATE_URI,
   });
 
   const pubPrisma = new PublicPrisma({
-    datasourceUrl: process.env.MONGODB_PUBLIC_URI,
+    datasourceUrl: process.env.PRISMA_PUBLIC_URI,
   });
 
   const main = async () => {

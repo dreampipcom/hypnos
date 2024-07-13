@@ -8,7 +8,7 @@ const main = async () => {
     console.log('~ GETTING STUB PRIVATE SEEDED METADATA ~');
 
     const pvtPrisma = new PrivatePrisma({
-      datasourceUrl: process.env.MONGODB_PRIVATE_URI,
+      datasourceUrl: process.env.PRISMA_PRIVATE_URI,
     });
 
     const user = await pvtPrisma.users.findFirst({});
