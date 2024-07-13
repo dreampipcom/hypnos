@@ -1,4 +1,5 @@
 // constants.ts TS-Doc?
+import type { NextAuthConfig } from 'next-auth';
 import { PrivatePrisma } from '@model';
 import NextAuth from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
@@ -9,7 +10,7 @@ import FacebookProvider from 'next-auth/providers/facebook';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 // import { authConfig } from './config';
 
-export const providers = [
+export const providers: any[] = [
   // EmailProvider({
   //   server: process.env.EMAIL_SERVER as string,
   //   from: process.env.EMAIL_FROM as string,
@@ -82,9 +83,9 @@ export const authConfig = {
     verifyRequest: '/verify', // (used for check email message)
     // newUser: '/' // New users will be directed here on first sign in (leave the property out if not of interest)
   },
-};
+} satisfies NextAuthConfig;
 
-export const providerMap = providers.map((provider) => {
+export const providerMap = providers.map((provider: any) => {
   if (typeof provider === 'function') {
     const providerData = provider();
     return { id: providerData.id, name: providerData.name };
@@ -93,4 +94,4 @@ export const providerMap = providers.map((provider) => {
   }
 });
 
-export const { auth, handlers, signIn, signOut, config } = NextAuth(authConfig);
+export const { auth, handlers, signIn, signOut } = NextAuth(authConfig);

@@ -1,6 +1,7 @@
 {
   "name": "@dreampipcom/hypnos",
   "description": "DreamPip's Serverless Micro-services Hub.",
+  "type": "module",
   "version": "1.0.0",
   "private": true,
   "author": "Angelo Reale",

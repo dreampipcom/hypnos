@@ -1,5 +1,4 @@
-/** @type {import('next').NextConfig} */
-const { PrismaPlugin } = require('@prisma/nextjs-monorepo-workaround-plugin');
+import { PrismaPlugin } from '@prisma/nextjs-monorepo-workaround-plugin';
 
 // const headers = [
 //   'Accept',
@@ -62,7 +61,7 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+export default nextConfig;
 
 // Injected content via Sentry wizard below
 
