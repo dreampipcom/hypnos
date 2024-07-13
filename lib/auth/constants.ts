@@ -1,6 +1,6 @@
 // constants.ts TS-Doc?
-import { PrivatePrisma } from '@model';
 import type { AuthOptions } from 'next-auth';
+import { PrivatePrisma } from '@model';
 import NextAuth from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
