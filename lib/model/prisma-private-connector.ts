@@ -1,7 +1,8 @@
 import { PrismaClient as PrivatePrisma } from '@dreampipcom/db-private/prisma-client';
+import { withAccelerate } from '@prisma/extension-accelerate'
 
 const prismaClientSingleton = () => {
-  return new PrivatePrisma();
+  return new PrivatePrisma().$extends(withAccelerate());
 };
 
 declare const globalThis: {
