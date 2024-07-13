@@ -30,7 +30,7 @@ if (seedType === 'private') {
   console.log('~ SEEDING PRIVATE DB ~');
 
   const pvtPrisma = new PrivatePrisma({
-    datasourceUrl: process.env.MONGODB_PRIVATE_URI,
+    datasourceUrl: process.env.PRISMA_PRIVATE_URI,
   });
 
   const main = async () => {
@@ -53,9 +53,9 @@ if (seedType === 'private') {
         ~~~~ PRIVATE ~~~~
       */
 
-      const user1 = await pvtPrisma.users.create({ data: mockUser });
-      const user2 = await pvtPrisma.users.create({ data: mockUser2 });
-      const user3 = await pvtPrisma.users.create({ data: mockUser3 });
+      const user1 = await pvtPrisma.user.create({ data: mockUser });
+      const user2 = await pvtPrisma.user.create({ data: mockUser2 });
+      const user3 = await pvtPrisma.user.create({ data: mockUser3 });
 
       // communities
       const community1 = await pvtPrisma.communities.create({ data: mockCommunity });
@@ -105,7 +105,7 @@ if (seedType === 'private') {
           user: user2.id,
           listings: [{ id: listing1.id }],
           targetCommunities: [{ id: community2.id }],
-          targetUsers: [{ id: user2.id }],
+          targetUser: [{ id: user2.id }],
         }),
       });
       const term2 = await pvtPrisma.taxonomies.create({
@@ -114,7 +114,7 @@ if (seedType === 'private') {
           user: user2.id,
           listings: [{ id: listing2.id }],
           targetCommunities: [{ id: community3.id }],
-          targetUsers: [{ id: user3.id }],
+          targetUser: [{ id: user3.id }],
         }),
       });
 
@@ -124,7 +124,7 @@ if (seedType === 'private') {
           community: community3.id,
           user: user2.id,
           fromUser: { id: user3.id },
-          toUsers: [{ id: user1.id }, { id: user2.id }],
+          toUser: [{ id: user1.id }, { id: user2.id }],
           toCommunities: [],
           toListings: [],
         }),
@@ -134,7 +134,7 @@ if (seedType === 'private') {
           community: community3.id,
           user: user2.id,
           fromUser: { id: user2.id },
-          toUsers: [],
+          toUser: [],
           toCommunities: [{ id: community2.id }, { id: community3.id }],
           toListings: [{ id: listing1.id }, { id: listing2.id }],
         }),
@@ -144,7 +144,7 @@ if (seedType === 'private') {
           community: community3.id,
           user: user2.id,
           fromCommunity: { id: community3.id },
-          toUsers: [],
+          toUser: [],
           toCommunities: [],
           toListings: [],
         }),
@@ -160,11 +160,11 @@ if (seedType === 'private') {
   console.log('~ SEEDING PUBLIC DB ~');
 
   const pvtPrisma = new PrivatePrisma({
-    datasourceUrl: process.env.MONGODB_PRIVATE_URI,
+    datasourceUrl: process.env.PRISMA_PRIVATE_URI,
   });
 
   const pubPrisma = new PublicPrisma({
-    datasourceUrl: process.env.MONGODB_PUBLIC_URI,
+    datasourceUrl: process.env.PRISMA_PUBLIC_URI,
   });
 
   const main = async () => {

@@ -12,7 +12,7 @@ export const createMockTerm = ({
   community,
   targetCommunities,
   targetAudiences,
-  targetUsers,
+  targetUser,
   listings,
   models,
 }: any): any => {
@@ -26,8 +26,8 @@ export const createMockTerm = ({
     status: 'ACTIVE',
     type: 'TAG',
     nature: 'SEGMENTED',
-    targetUsers: {
-      connect: targetUsers,
+    targetUser: {
+      connect: targetUser,
     },
     targetCommunities: {
       connect: targetCommunities,
