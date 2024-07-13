@@ -176,7 +176,6 @@ model Messages {
   type              EMessageType
   status            EMessageStatus
   nature            EMessageNature
-  cadence           ECadence
   channels          EMessageChannel[]
 
   title             ILocaleString

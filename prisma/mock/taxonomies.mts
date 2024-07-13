@@ -24,7 +24,7 @@ export const createMockTerm = ({
       es: 'Lorem ipsum dolor sit amet consectetur',
     },
     status: 'ACTIVE',
-    type: 'MODALIDADES',
+    type: 'TAG',
     nature: 'SEGMENTED',
     targetUsers: {
       connect: targetUsers,

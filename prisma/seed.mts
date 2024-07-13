@@ -24,6 +24,8 @@ export const cleanupDatabase = () => {
 
 const seedType = process.argv[2];
 
+let func
+
 if (seedType === 'private') {
   console.log('~ SEEDING PRIVATE DB ~');
 
@@ -85,7 +87,6 @@ if (seedType === 'private') {
           user: user1.id,
           community: community1.id,
           communityFavorited: [{ id: community2.id }, { id: community3.id }],
-          model: model1.id,
         }),
       });
       const listing2 = await pvtPrisma.listings.create({
@@ -154,6 +155,7 @@ if (seedType === 'private') {
       throw error;
     }
   };
+  func = main
 } else {
   console.log('~ SEEDING PUBLIC DB ~');
 
@@ -270,8 +272,9 @@ if (seedType === 'private') {
       throw error;
     }
   };
+  func = main
 }
 
-main().catch((err) => {
+func().catch((err) => {
   console.warn('Error While generating Seed: \n', err);
 });

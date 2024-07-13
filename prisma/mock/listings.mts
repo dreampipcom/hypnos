@@ -35,9 +35,6 @@ export const createMockListing = ({ community, user, communityFavorited, favorit
     description: {
       es: 'Lorem ipsum dolor sit amet consectetur',
     },
-    remarks: {
-      es: 'Lorem ipsum',
-    },
     status: 'ACTIVE',
     location: mockLocation,
     favorited: {
