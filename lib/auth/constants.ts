@@ -8,7 +8,6 @@ import AppleProvider from 'next-auth/providers/apple';
 import FacebookProvider from 'next-auth/providers/facebook';
 import EmailProvider from 'next-auth/providers/email';
 import { PrismaAdapter } from '@auth/prisma-adapter';
-// import { authConfig } from './config';
 
 export const providers: any[] = [
   EmailProvider({
