@@ -50,11 +50,6 @@ model Communities {
   urls                  String[]
   image                 String?
 
-  audiences             Audiences[]       @relation("communityAudiences", fields: [audiencesIds], references: [id])
-  audiencesIds          String[]          @db.ObjectId
-
-  orders                Orders[]          @relation("communityOrders")
-  ordersIds             String[]          @db.ObjectId
   favorites             Listings[]        @relation("communityFavorites", fields: [favoritesIds], references: [id])
   favoritesIds          String[]          @db.ObjectId
 
@@ -69,6 +64,21 @@ model Communities {
 
   ownedMessages         Messages[]        @relation("messageCommunityOwner")
   createdMessages       Messages[]        @relation("messageCommunityCreator")
+
+  ownedMoods           Moods[]          @relation("moodCommunityOwner")
+  createdMoods         Moods[]          @relation("moodCommunityCreator")
+
+  ownedActions           Actions[]          @relation("actionCommunityOwner")
+  createdActions         Actions[]          @relation("actionCommunityCreator")
+
+  ownedThoughts           Thoughts[]          @relation("thoughtCommunityOwner")
+  createdThoughts         Thoughts[]          @relation("thoughtCommunityCreator")
+
+  ownedProjects           Projects[]          @relation("projectCommunityOwner")
+  createdProjects         Projects[]          @relation("projectCommunityCreator")
+
+  ownedInvestments           Investments[]          @relation("investmentCommunityOwner")
+  createdInvestments         Investments[]          @relation("investmentCommunityCreator")
 
   roles                 Roles[]           @relation("communityRoles", fields: [rolesIds], references: [id])
   rolesIds              String[]          @db.ObjectId
@@ -236,9 +246,6 @@ model Users {
   firstName             String
   lastName              String
 
-  audiences             Audiences[]       @relation("userAudiences", fields: [audiencesIds], references: [id])
-  audiencesIds          String[]         @db.ObjectId
-
   birthday              DateTime          @db.Date
   communities                Communities[]          @relation(fields: [communitiesIds], references: [id])
   communitiesIds             String[]          @db.ObjectId
@@ -275,6 +282,21 @@ model Users {
   ownedMessages         Messages[]        @relation("messageUserOwner")
   createdMessages       Messages[]        @relation("messageUserCreator")
 
+  ownedMoods           Moods[]          @relation("moodUserOwner")
+  createdMoods         Moods[]          @relation("moodUserCreator")
+
+  ownedActions           Actions[]          @relation("actionUserOwner")
+  createdActions         Actions[]          @relation("actionUserCreator")
+
+  ownedThoughts           Thoughts[]          @relation("thoughtUserOwner")
+  createdThoughts         Thoughts[]          @relation("thoughtUserCreator")
+
+  ownedProjects           Projects[]          @relation("projectUserOwner")
+  createdProjects         Projects[]          @relation("projectUserCreator")
+
+  ownedInvestments           Investments[]          @relation("investmentUserOwner")
+  createdInvestments         Investments[]          @relation("investmentUserCreator")
+
   @@map("users")
 }
 
@@ -290,19 +312,19 @@ model Moods {
   loggedFor         DateTime[]          @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         Users?              @relation("messageUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         Users?              @relation("moodUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("messageCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("moodCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       Users?              @relation("messageUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       Users?              @relation("moodUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("messageCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("moodCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("messages")
+  @@map("moods")
 }
 
 model Actions {
@@ -317,19 +339,19 @@ model Actions {
   loggedFor         DateTime[]          @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         Users?              @relation("messageUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         Users?              @relation("actionUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("messageCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("actionCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       Users?              @relation("messageUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       Users?              @relation("actionUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("messageCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("messages")
+  @@map("actions")
 }
 
 model Thoughts {
@@ -344,19 +366,19 @@ model Thoughts {
   loggedFor         DateTime[]            @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         Users?              @relation("messageUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         Users?              @relation("thoughtUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("messageCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("thoughtCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       Users?              @relation("messageUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       Users?              @relation("thoughtUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("messageCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("thoughtCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("messages")
+  @@map("thoughts")
 }
 
 model Projects {
@@ -369,23 +391,26 @@ model Projects {
 
   ticker            String
 
+  investments         Investments[]           @relation("ticker")
+  investmentsIds            String[]          @db.ObjectId
+
   createdOn         DateTime            @db.Date
   updatedOn         DateTime[]          @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         Users?              @relation("messageUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         Users?              @relation("projectUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("messageCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("projectCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       Users?              @relation("messageUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       Users?              @relation("projectUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("messageCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("projectCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("messages")
+  @@map("projects")
 }
 
 model Investments {
@@ -403,22 +428,22 @@ model Investments {
   ticker            Projects?           @relation("ticker", fields: [tickerId], references: [id])
   tickerId          String?             @db.ObjectId
 
-  purchaseValue     Double
-  settledValue      Double
+  purchaseValue     Float
+  settledValue      Float
 
-  userOwner         Users?              @relation("messageUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         Users?              @relation("investmentUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("messageCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("investmentCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       Users?              @relation("messageUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       Users?              @relation("investmentUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("messageCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("investmentCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("messages")
+  @@map("investments")
 }
 
 
