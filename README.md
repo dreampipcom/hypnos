@@ -14,4 +14,4 @@ npm run dev
 
 Documentation: TBD
 
-Dev API: TBD
+Dev API: https://alpha.dreampip.com/api/v1
