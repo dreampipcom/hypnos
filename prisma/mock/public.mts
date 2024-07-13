@@ -43,9 +43,6 @@ export const createMockPubListing = ({
     },
     status: 'ACTIVE',
     location: mockLocation,
-    listingRemarks: {
-      es: 'Hola, esto es un remark',
-    },
     taxonomies,
   };
 

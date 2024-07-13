@@ -1,7 +1,7 @@
 // seed.ts
 // @ts-nocheck
 import fs from 'node:fs';
-import execSync from 'node:child_process';
+import { execSync } from 'node:child_process';
 import { faker } from '@faker-js/faker';
 import { PrismaClient as PrivatePrisma } from '@dreampipcom/db-private/prisma-client';
 import { PrismaClient as PublicPrisma } from '@dreampipcom/db-public/prisma-client';

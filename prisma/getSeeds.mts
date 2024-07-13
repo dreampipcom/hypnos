@@ -13,22 +13,12 @@ const main = async () => {
 
     const user = await pvtPrisma.users.findFirst({});
     const community = await pvtPrisma.communities.findFirst({});
-    const model = await pvtPrisma.catalogue.findFirst({});
     const term = await pvtPrisma.taxonomies.findFirst({});
-    const ad = await pvtPrisma.campaigns.findFirst({});
-    const listingTerm = await pvtPrisma.taxonomies.findFirst({});
-    const review = await pvtPrisma.reviews.findFirst({});
 
     const stubData = {
       user,
       community,
-      offer,
-      audience,
-      model,
       term,
-      ad,
-      listingTerm,
-      review,
     };
 
     fs.writeFileSync('stub.json', JSON.stringify(stubData));
