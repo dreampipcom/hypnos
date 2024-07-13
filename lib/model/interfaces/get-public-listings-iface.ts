@@ -7,6 +7,7 @@ const getPublicListings = async ({ page = 0, offset = 0, limit = PAGE_SIZE, filt
   const adaptQuery: any = {
     skip: page * (limit + offset),
     take: limit,
+    cacheStrategy: { ttl: 90 },
   };
 
   if (filters?.length) {
