@@ -7,8 +7,6 @@ import { finalAuth } from '@auth/adapter';
 type CombineRequest = NextRequest & NextApiRequest;
 type CombineResponse = NextResponse & NextApiResponse;
 
-export const runtime = 'edge';
-
 const auth = async (req: CombineRequest, ctx: CombineResponse) => {
   req.headers.set('x-forwarded-host', process.env.NEXTAUTH_URL || '');
   return await NextAuth(req, ctx, finalAuth);

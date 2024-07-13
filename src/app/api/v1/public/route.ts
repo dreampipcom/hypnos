@@ -5,8 +5,6 @@ import { NextResponse } from 'next/server';
 import { GetPublicListings } from '@controller';
 type CombineRequest = NextRequest & NextApiRequest;
 
-export const runtime = 'edge';
-
 const generateErrorResponse = (e: any, status: number) => {
   return {
     ok: false,

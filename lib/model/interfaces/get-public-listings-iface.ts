@@ -45,6 +45,8 @@ const getPublicListings = async ({ page = 0, offset = 0, limit = PAGE_SIZE, filt
         return acc;
       }, {});
 
+      console.log({ query })
+
       adaptQuery.where = {
         ...query,
       };
@@ -54,6 +56,8 @@ const getPublicListings = async ({ page = 0, offset = 0, limit = PAGE_SIZE, filt
   }
 
   const response = await PublicPrisma.publicListings.findMany(adaptQuery);
+
+  console.log({ response })
 
   return response;
 };
