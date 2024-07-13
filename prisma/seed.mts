@@ -24,7 +24,7 @@ export const cleanupDatabase = () => {
 
 const seedType = process.argv[2];
 
-let func
+let func;
 
 if (seedType === 'private') {
   console.log('~ SEEDING PRIVATE DB ~');
@@ -155,7 +155,7 @@ if (seedType === 'private') {
       throw error;
     }
   };
-  func = main
+  func = main;
 } else {
   console.log('~ SEEDING PUBLIC DB ~');
 
@@ -272,7 +272,7 @@ if (seedType === 'private') {
       throw error;
     }
   };
-  func = main
+  func = main;
 }
 
 func().catch((err) => {
