@@ -1,5 +1,5 @@
 import { PrismaClient as PrivatePrisma } from '@dreampipcom/db-private/prisma-client/edge';
-import { withAccelerate } from '@prisma/extension-accelerate'
+import { withAccelerate } from '@prisma/extension-accelerate';
 
 const prismaClientSingleton = () => {
   return new PrivatePrisma().$extends(withAccelerate());
