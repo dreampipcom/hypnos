@@ -14,6 +14,8 @@ const getPrivateAbilities = async ({
   limit = PAGE_SIZE,
   filters = [],
 }: any) => {
+  console.log('ability', { name });
+
   const loggedUser = user || (await whoAmI());
 
   const adaptQuery: any = {
@@ -58,7 +60,7 @@ const getPrivateAbilities = async ({
     }
   }
 
-  const response = await PrivatePrisma.services.findMany(adaptQuery);
+  const response = await PrivatePrisma.abilities.findMany(adaptQuery);
 
   return response;
 };
