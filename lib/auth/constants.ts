@@ -16,6 +16,7 @@ import {
   GetPrivateCommonAbilities,
 } from '@controller';
 
+// schema sanitizer
 const allUsersSideEffects = async ({ user }: any) => {
   const services = await GetPrivateCommonServices({});
   const abilities = await GetPrivateCommonAbilities({});
