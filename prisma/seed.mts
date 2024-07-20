@@ -80,6 +80,65 @@ if (seedType === 'private') {
         }),
       });
 
+      // // abilities
+      const ability1 = await pvtPrisma.abilities.create({
+        data: createMockAbility({
+          user: user1.id,
+          group: group1.id,
+          roles: [{ id: role1.id }, { id: role2.id }],
+          refUsers: [{ id: user1.id }],
+          refGroups: [{ id: group1.id }],
+        }),
+      });
+      const ability2 = await pvtPrisma.abilities.create({
+        data: createMockAbility({
+          user: user1.id,
+          group: group1.id,
+          roles: [{ id: role1.id }, { id: role2.id }],
+          refUsers: [{ id: user1.id }, { id: user2.id }, { id: user3.id }],
+          refGroups: [{ id: group2.id }, { id: group3.id }],
+        }),
+      });
+
+      // // features
+      const feature1 = await pvtPrisma.features.create({
+        data: createMockFeature({
+          user: user1.id,
+          group: group1.id,
+          abilities: [{ id: ability1.id }],
+          refUsers: [{ id: user1.id }],
+          refGroups: [{ id: group1.id }],
+        }),
+      });
+      const feature2 = await pvtPrisma.features.create({
+        data: createMockFeature({
+          user: user1.id,
+          group: group1.id,
+          abilities: [{ id: ability2.id }],
+          refUsers: [{ id: user2.id }, { id: user3.id }],
+          refGroups: [{ id: group2.id }, { id: group3.id }],
+        }),
+      });
+
+      // // services
+      const service1 = await pvtPrisma.services.create({
+        data: createMockService({
+          user: user1.id,
+          group: group1.id,
+          features: [{ id: feature1.id }, { id: feature2.id }],
+          refUsers: [{ id: user1.id }],
+          refGroups: [{ id: group1.id }],
+        }),
+      });
+      const service2 = await pvtPrisma.services.create({
+        data: createMockService({
+          user: user1.id,
+          group: group1.id,
+          refUsers: [{ id: user2.id }, { id: user3.id }],
+          refGroups: [{ id: group2.id }, { id: group3.id }],
+        }),
+      });
+
       // // listings
       const listing1 = await pvtPrisma.listings.create({
         data: createMockListing({
