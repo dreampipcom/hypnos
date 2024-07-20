@@ -91,7 +91,6 @@ model User {
   birthday              DateTime?          @db.Date
   communities                Communities[]          @relation(fields: [communitiesIds], references: [id])
   communitiesIds             String[]          @db.ObjectId
-
   location              ILocation?
 
   preferences           Taxonomies[]      @relation("preferences", fields: [preferencesIds], references: [id])
@@ -114,7 +113,7 @@ model User {
   messagesReceivedIds   String[]          @db.ObjectId
 
   roles                 Roles[]           @relation("roles", fields: [rolesIds], references: [id])
-  rolesIds              String[]          @db.ObjectId
+  rolesIds              String[]          @db.ObjectId 
 
   // user generated content
 

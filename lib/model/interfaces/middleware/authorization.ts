@@ -8,7 +8,6 @@ export const canI = async ({ name }: any) => {
     // to-do add authorization/validation checks
     const yes = session?.user?.abilities?.includes(ability[0]?.id);
     // return the capacity
-    console.log({ yes, session, ability });
     return yes;
   } catch (e) {
     throw new Error(`Code 003: Missing results: ${e}`);

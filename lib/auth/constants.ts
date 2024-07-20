@@ -22,6 +22,8 @@ const allUsersSideEffects = async ({ user }: any) => {
   const abilities = await GetPrivateCommonAbilities({});
   const commonServices = services.map((service) => service?.id).map((el) => el);
   const commonAbilities = abilities.map((ability) => ability?.id).map((el) => el);
+
+  console.log({ services, abilities, user });
   await UpdatePrivateUserServices({ user, services: [...commonServices, ...user.servicesIds], upsert: false });
   await UpdatePrivateUserAbilities({ user, abilities: [...commonAbilities, ...user.abilitiesIds], upsert: false });
 };
@@ -60,6 +62,7 @@ export const authConfig = {
   events: {
     async signIn(props) {
       const { user, isNewUser } = props;
+      console.log({ isNewUser, props });
       try {
         if (isNewUser) {
           await allUsersSideEffects({ user });
@@ -108,7 +111,6 @@ export const authConfig = {
         favorites: user.favoritesIds,
       };
       session.user = facadedUser;
-      console.log({ facadedUser, user });
       // if (token?.user) {
       //   // Note that this if condition is needed
       //   session.user = token.user;
