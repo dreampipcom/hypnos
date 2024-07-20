@@ -9,12 +9,20 @@ import AppleProvider from 'next-auth/providers/apple';
 import FacebookProvider from 'next-auth/providers/facebook';
 import EmailProvider from 'next-auth/providers/email';
 import { PrismaAdapter } from '@auth/prisma-adapter';
-import { UpdatePrivateUserServices, GetPrivateCommonServices } from '@controller';
+import {
+  UpdatePrivateUserServices,
+  GetPrivateCommonServices,
+  UpdatePrivateUserAbilities,
+  GetPrivateCommonAbilities,
+} from '@controller';
 
 const allUsersSideEffects = async ({ user }: any) => {
-  const service = await GetPrivateCommonServices({});
-  const commonIds = service.map((service) => service?.id).map((el) => el);
-  await UpdatePrivateUserServices({ user, services: commonIds, upsert: true });
+  const services = await GetPrivateCommonServices({});
+  const abilities = await GetPrivateCommonAbilities({});
+  const commonServices = services.map((service) => service?.id).map((el) => el);
+  const commonAbilities = abilities.map((ability) => ability?.id).map((el) => el);
+  await UpdatePrivateUserServices({ user, services: [...commonServices, ...user.servicesIds], upsert: false });
+  await UpdatePrivateUserAbilities({ user, abilities: [...commonAbilities, ...user.abilitiesIds], upsert: false });
 };
 
 export const providers: any[] = [
@@ -96,8 +104,10 @@ export const authConfig = {
         roles: user.rolesIds,
         services: user.servicesIds,
         abilities: user.abilitiesIds,
+        favorites: user.favoritesIds,
       };
       session.user = facadedUser;
+      console.log({ facadedUser, user });
       // if (token?.user) {
       //   // Note that this if condition is needed
       //   session.user = token.user;

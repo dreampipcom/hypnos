@@ -7,7 +7,7 @@ const getPrivateCommonServices = async ({ page = 0, offset = 0, limit = PAGE_SIZ
   // to-do: move, this will be a middleware
   const adaptQuery: any = {
     where: {
-      type: 'COMMON',
+      nature: 'COMMON',
     },
     skip: page * (limit + offset),
     take: limit,

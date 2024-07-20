@@ -3,19 +3,19 @@
 import { whoAmI } from '@controller';
 import { PrivatePrisma } from '@model';
 
-const updatePrivateUserServices = async ({ upsert = false, user, services }: any) => {
+const updatePrivateUserAbilities = async ({ upsert = false, user, abilities }: any) => {
   try {
     // to-do: move this will be a middleware
-    if (services?.length === 0) return new Error('Code 002: Missing data (services)');
+    if (abilities?.length === 0) return new Error('Code 002: Missing data (abilities)');
 
     const loggedUser = user || (await whoAmI());
 
     const payload = upsert
       ? {
-          servicesIds: [...loggedUser.services, ...services],
+          abilitiesIds: [...loggedUser.abilities, ...abilities],
         }
       : {
-          servicesIds: services,
+          abilitiesIds: abilities,
         };
 
     const adaptQuery: any = {
@@ -33,4 +33,4 @@ const updatePrivateUserServices = async ({ upsert = false, user, services }: any
   }
 };
 
-export default updatePrivateUserServices;
+export default updatePrivateUserAbilities;

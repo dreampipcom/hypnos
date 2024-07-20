@@ -1,10 +1,10 @@
 // @controller/get-private-services.ts
-import { PrivatePrisma } from '@model';
 import { whoAmI } from '@controller';
+import { PrivatePrisma } from '@model';
 
 const PAGE_SIZE = 100;
 
-const getPrivateServices = async ({
+const getPrivateAbilities = async ({
   id,
   name,
   locale = 'es',
@@ -63,4 +63,4 @@ const getPrivateServices = async ({
   return response;
 };
 
-export default getPrivateServices;
+export default getPrivateAbilities;
