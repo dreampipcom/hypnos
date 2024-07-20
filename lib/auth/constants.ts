@@ -1,5 +1,6 @@
 // constants.ts TS-Doc?
 import type { NextAuthConfig } from 'next-auth';
+import type { PrismaClient } from '@prisma/client';
 import { PrivatePrisma } from '@model';
 import NextAuth from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
@@ -8,6 +9,13 @@ import AppleProvider from 'next-auth/providers/apple';
 import FacebookProvider from 'next-auth/providers/facebook';
 import EmailProvider from 'next-auth/providers/email';
 import { PrismaAdapter } from '@auth/prisma-adapter';
+import { UpdatePrivateUserServices, GetPrivateCommonServices } from '@controller';
+
+const allUsersSideEffects = async ({ user }: any) => {
+  const service = await GetPrivateCommonServices({});
+  const commonIds = service.map((service) => service?.id).map((el) => el);
+  await UpdatePrivateUserServices({ user, services: commonIds, upsert: true });
+};
 
 export const providers: any[] = [
   EmailProvider({
@@ -36,14 +44,33 @@ export const providers: any[] = [
 // config.ts
 export const authConfig = {
   providers,
-  adapter: PrismaAdapter(PrivatePrisma),
+  adapter: PrismaAdapter(PrivatePrisma as unknown as PrismaClient),
   // session: {
   //   strategy: 'jwt',
   // },
-  events: {},
+  events: {
+    async signIn(props) {
+      const { user, isNewUser } = props;
+      try {
+        if (isNewUser) {
+          await allUsersSideEffects({ user });
+        }
+      } catch (e) {
+        console.warn(
+          `Code 005: Sign-up side-effects failed. New user entry probably has inconsistent data and might experience problems: ${e}`,
+        );
+      }
+    },
+  },
   callbacks: {
-    async signIn() {
-      // extra sign-in checks
+    async signIn(props) {
+      const { user } = props;
+      try {
+        await allUsersSideEffects({ user });
+      } catch (e) {
+        console.warn(`Code 004: Log-in side-effects failed. If it's a new user, plese ignore: ${e}`);
+      }
+
       return true;
     },
     async redirect() {
@@ -56,13 +83,27 @@ export const authConfig = {
     //   }
     //   return token;
     // },
-    // async session({ session, token }) {
-    //   if (token?.user) {
-    //     // Note that this if condition is needed
-    //     session.user = token.user;
-    //   }
-    //   return session;
-    // },
+    async session({ session, user }: any) {
+      const facadedUser = {
+        id: user.id,
+        email: user.email,
+        image: user.image,
+        name: user.name,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        birthday: user.birthday,
+        preferences: user.preferencesIds,
+        roles: user.rolesIds,
+        services: user.servicesIds,
+        abilities: user.abilitiesIds,
+      };
+      session.user = facadedUser;
+      // if (token?.user) {
+      //   // Note that this if condition is needed
+      //   session.user = token.user;
+      // }
+      return session;
+    },
   },
   cookies: {
     pkceCodeVerifier: {
