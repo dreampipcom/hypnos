@@ -346,20 +346,20 @@ model Services {
 
   users               User[]          @relation("userServices", fields: [usersIds], references: [id])
   usersIds            String[]        @db.ObjectId
-  groups              Groups[]        @relation("groupServices", fields: [groupsIds], references: [id])
-  groupsIds           String[]        @db.ObjectId
+  communities              Groups[]        @relation("communityServices", fields: [communitiesIds], references: [id])
+  communitiesIds           String[]        @db.ObjectId
 
   userOwner           User?           @relation("serviceUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId         String?         @db.ObjectId
 
-  groupOwner          Groups?         @relation("serviceGroupOwner", fields: [groupOwnerId], references: [id])
-  groupOwnerId        String?         @db.ObjectId
+  communityOwner          Groups?         @relation("serviceGroupOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId        String?         @db.ObjectId
 
   userCreator         User?           @relation("serviceUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId       String?         @db.ObjectId
 
-  groupCreator        Groups?         @relation("serviceGroupCreator", fields: [groupCreatorId], references: [id])
-  groupCreatorId      String?         @db.ObjectId
+  communityCreator        Groups?         @relation("serviceGroupCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId      String?         @db.ObjectId
 
   @@map("services")
 }
@@ -380,14 +380,14 @@ model Features {
   userOwner           User?           @relation("featureUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId         String?         @db.ObjectId
 
-  groupOwner          Groups?         @relation("featureGroupOwner", fields: [groupOwnerId], references: [id])
-  groupOwnerId        String?         @db.ObjectId
+  communityOwner          Groups?         @relation("featureGroupOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId        String?         @db.ObjectId
 
   userCreator         User?           @relation("featureUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId       String?         @db.ObjectId
 
-  groupCreator        Groups?         @relation("featureGroupCreator", fields: [groupCreatorId], references: [id])
-  groupCreatorId      String?         @db.ObjectId
+  communityCreator        Groups?         @relation("featureGroupCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId      String?         @db.ObjectId
 
   @@map("features")
 }
@@ -407,20 +407,20 @@ model Abilities {
 
   users               User[]            @relation("userAbilities", fields: [usersIds], references: [id])
   usersIds            String[]          @db.ObjectId
-  groups              Groups[]          @relation("groupAbilities", fields: [groupsIds], references: [id])
-  groupsIds           String[]          @db.ObjectId
+  communities              Groups[]          @relation("communityAbilities", fields: [communitiesIds], references: [id])
+  communitiesIds           String[]          @db.ObjectId
 
   userOwner           User?             @relation("abilityUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId         String?           @db.ObjectId
 
-  groupOwner          Groups?           @relation("abilityGroupOwner", fields: [groupOwnerId], references: [id])
-  groupOwnerId        String?           @db.ObjectId
+  communityOwner          Groups?           @relation("abilityGroupOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId        String?           @db.ObjectId
 
   userCreator         User?             @relation("abilityUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId       String?           @db.ObjectId
 
-  groupCreator        Groups?           @relation("abilityGroupCreator", fields: [groupCreatorId], references: [id])
-  groupCreatorId      String?           @db.ObjectId
+  communityCreator        Groups?           @relation("abilityGroupCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId      String?           @db.ObjectId
 
   @@map("abilities")
 }
