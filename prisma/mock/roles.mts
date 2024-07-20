@@ -18,7 +18,6 @@ export const createMockRole = ({ community, user, refUsers, refCommunities }: an
     status: 'ACTIVE',
     type: 'PROVIDER',
     nature: 'INTERNAL',
-    abilities: ['SUDO'],
     users: {
       connect: refUsers,
     },

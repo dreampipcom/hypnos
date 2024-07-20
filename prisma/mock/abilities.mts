@@ -2,7 +2,7 @@
 import type { ITenant } from './types';
 import { faker } from '@faker-js/faker';
 import { createMockUser, _mockUser, mockUser } from './user.mts';
-import { createMockGroup, mockGroup } from './groups.mts';
+import { createMockGroup, mockGroup } from './communities.mts';
 
 import { mockListing, mockListing2 } from './listings.mts';
 import { mockOrder } from './orders.mts';
@@ -10,7 +10,7 @@ import { mockTerm, mockTerm2 } from './taxonomies.mts';
 
 import { HOMock } from './helpers.mts';
 
-export const createMockAbility = ({ group, user, roles, refUsers, refGroups }: any): any => {
+export const createMockAbility = ({ community, user, roles, refUsers, refCommunities }: any): any => {
   const data = {
     name: {
       es: 'Ability 1',
@@ -24,8 +24,8 @@ export const createMockAbility = ({ group, user, roles, refUsers, refGroups }: a
     users: {
       connect: refUsers,
     },
-    groups: {
-      connect: refGroups,
+    communities: {
+      connect: refCommunities,
     },
   };
   return data;
