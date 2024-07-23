@@ -23,7 +23,6 @@ const allUsersSideEffects = async ({ user }: any) => {
   const commonServices = services.map((service) => service?.id).map((el) => el);
   const commonAbilities = abilities.map((ability) => ability?.id).map((el) => el);
 
-  console.log({ services, abilities, user });
   await UpdatePrivateUserServices({ user, services: [...commonServices, ...user.servicesIds], upsert: false });
   await UpdatePrivateUserAbilities({ user, abilities: [...commonAbilities, ...user.abilitiesIds], upsert: false });
 };
