@@ -18,7 +18,6 @@ const generateErrorResponse = (e: any, status: number) => {
 export async function PATCH(request: CombineRequest) {
   try {
     const body = await request?.json();
-    console.log({ body });
     const listing = body?.listing;
 
     const user = (await getSession())?.user;
