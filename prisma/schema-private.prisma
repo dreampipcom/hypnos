@@ -91,11 +91,16 @@ model User {
   birthday              DateTime?          @db.Date
   communities                Communities[]          @relation(fields: [communitiesIds], references: [id])
   communitiesIds             String[]          @db.ObjectId
-
   location              ILocation?
 
   preferences           Taxonomies[]      @relation("preferences", fields: [preferencesIds], references: [id])
   preferencesIds        String[]          @db.ObjectId
+
+  services              Services[]      @relation("userServices", fields: [servicesIds], references: [id])
+  servicesIds           String[]        @db.ObjectId
+
+  abilities             Abilities[]     @relation("userAbilities", fields: [abilitiesIds], references: [id])
+  abilitiesIds          String[]        @db.ObjectId
 
   // settings           String
   favorites             Listings[]        @relation("favorites", fields: [favoritesIds], references: [id])
@@ -108,7 +113,7 @@ model User {
   messagesReceivedIds   String[]          @db.ObjectId
 
   roles                 Roles[]           @relation("roles", fields: [rolesIds], references: [id])
-  rolesIds              String[]          @db.ObjectId
+  rolesIds              String[]          @db.ObjectId 
 
   // user generated content
 
@@ -139,6 +144,15 @@ model User {
   ownedInvestments           Investments[]          @relation("investmentUserOwner")
   createdInvestments         Investments[]          @relation("investmentUserCreator")
 
+  ownedServices         Services[]      @relation("serviceUserOwner")
+  createdServices       Services[]      @relation("serviceUserCreator")
+
+  ownedFeatures         Features[]      @relation("featureUserOwner")
+  createdFeatures       Features[]      @relation("featureUserCreator")
+
+  ownedAbilities        Abilities[]     @relation("abilityUserOwner")
+  createdAbilities      Abilities[]     @relation("abilityUserCreator")
+
   @@map("user")
 }
 
@@ -167,6 +181,21 @@ model Communities {
 
   ownedMessages         Messages[]        @relation("messageCommunityOwner")
   createdMessages       Messages[]        @relation("messageCommunityCreator")
+
+  services              Services[]      @relation("communityServices", fields: [servicesIds], references: [id])
+  servicesIds           String[]        @db.ObjectId
+
+  abilities             Abilities[]     @relation("communityAbilities", fields: [abilitiesIds], references: [id])
+  abilitiesIds          String[]        @db.ObjectId
+
+  ownedServices         Services[]      @relation("serviceCommunityOwner")
+  createdServices       Services[]      @relation("serviceCommunityCreator")
+
+  ownedFeatures         Features[]      @relation("featureCommunityOwner")
+  createdFeatures       Features[]      @relation("featureCommunityCreator")
+
+  ownedAbilities        Abilities[]     @relation("abilityCommunityOwner")
+  createdAbilities      Abilities[]     @relation("abilityCommunityCreator")
 
   ownedMoods           Moods[]          @relation("moodCommunityOwner")
   createdMoods         Moods[]          @relation("moodCommunityCreator")
@@ -324,7 +353,9 @@ model Roles {
   status            ERoleStatus
   type              ERoleType
   nature            ERoleNature
-  abilities         ERoleAbilites[]
+
+  abilities         Abilities[]         @relation("roleAbilities", fields: [abilitiesIds], references: [id])
+  abilitiesIds      String[]            @db.ObjectId
 
   users             User[]         @relation("roles", fields: [usersIds], references: [id])
   usersIds          String[]        @db.ObjectId
@@ -332,6 +363,97 @@ model Roles {
   communitiesIds         String[]        @db.ObjectId
 
   @@map("roles")
+}
+
+model Services {
+  id                  String          @id @default(auto()) @map("_id") @db.ObjectId
+  name                ILocaleString
+  status              EServiceStatus
+  type                EServiceType
+  nature              EServiceNature
+
+  features            Features[]      @relation("serviceFeatures", fields: [featuresIds], references: [id])
+  featuresIds         String[]        @db.ObjectId
+
+  users               User[]          @relation("userServices", fields: [usersIds], references: [id])
+  usersIds            String[]        @db.ObjectId
+  communities              Communities[]        @relation("communityServices", fields: [communitiesIds], references: [id])
+  communitiesIds           String[]        @db.ObjectId
+
+  userOwner           User?           @relation("serviceUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId         String?         @db.ObjectId
+
+  communityOwner          Communities?         @relation("serviceCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId        String?         @db.ObjectId
+
+  userCreator         User?           @relation("serviceUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId       String?         @db.ObjectId
+
+  communityCreator        Communities?         @relation("serviceCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId      String?         @db.ObjectId
+
+  @@map("services")
+}
+
+model Features {
+  id                  String          @id @default(auto()) @map("_id") @db.ObjectId
+  name                ILocaleString
+  status              EFeatureStatus
+  type                EFeatureType
+  nature              EFeatureNature
+
+  services            Services[]      @relation("serviceFeatures", fields: [servicesIds], references: [id])
+  servicesIds         String[]        @db.ObjectId
+
+  abilities           Abilities[]      @relation("featureAbilities", fields: [abilitiesIds], references: [id])
+  abilitiesIds        String[]        @db.ObjectId
+
+  userOwner           User?           @relation("featureUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId         String?         @db.ObjectId
+
+  communityOwner          Communities?         @relation("featureCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId        String?         @db.ObjectId
+
+  userCreator         User?           @relation("featureUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId       String?         @db.ObjectId
+
+  communityCreator        Communities?         @relation("featureCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId      String?         @db.ObjectId
+
+  @@map("features")
+}
+
+model Abilities {
+  id                  String            @id @default(auto()) @map("_id") @db.ObjectId
+  name                ILocaleString
+  status              EAbilityStatus
+  type                EAbilityType
+  nature              EAbilityNature
+
+  features            Features[]        @relation("featureAbilities", fields: [featuresIds], references: [id])
+  featuresIds         String[]          @db.ObjectId
+
+  roles               Roles[]           @relation("roleAbilities", fields: [rolesIds], references: [id])
+  rolesIds            String[]          @db.ObjectId
+
+  users               User[]            @relation("userAbilities", fields: [usersIds], references: [id])
+  usersIds            String[]          @db.ObjectId
+  communities              Communities[]          @relation("communityAbilities", fields: [communitiesIds], references: [id])
+  communitiesIds           String[]          @db.ObjectId
+
+  userOwner           User?             @relation("abilityUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId         String?           @db.ObjectId
+
+  communityOwner          Communities?           @relation("abilityCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId        String?           @db.ObjectId
+
+  userCreator         User?             @relation("abilityUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId       String?           @db.ObjectId
+
+  communityCreator        Communities?           @relation("abilityCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId      String?           @db.ObjectId
+
+  @@map("abilities")
 }
 
 model Moods {
@@ -702,6 +824,67 @@ enum ERoleAbilites {
   MANAGE_USER
   MANAGE_REVIEWS
   MANAGE_ROLES
+}
+
+// services
+enum EServiceStatus {
+  ACTIVE
+  INACTIVE
+  DELINQUENT
+}
+
+enum EServiceNature {
+  PRIVATE
+  PUBLIC
+  COMMON
+}
+
+enum EServiceType {
+  COMMUNITY
+  FINANCIAL
+  CONSUMER
+  MERCHANT
+}
+
+// features
+enum EFeatureStatus {
+  ACTIVE
+  INACTIVE
+  NIGHTLY
+}
+
+enum EFeatureNature {
+  EXPERIMENTAL
+  LTS
+  LEGACY
+}
+
+enum EFeatureType {
+  INTERFACE
+  INTEGRATION
+  EXPERIENCE
+  PERFORMANCE
+  SECURITY
+}
+
+// abilities
+enum EAbilityStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}
+
+enum EAbilityNature {
+  ROLE_BASED
+  PRIVILEGE
+  COMMON
+  TEMPORARY
+}
+
+enum EAbilityType {
+  R
+  W
+  D
 }
 
 // users

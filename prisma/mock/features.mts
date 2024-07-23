@@ -1,8 +1,8 @@
-// roles.ts
+// features.mts
 import type { ITenant } from './types';
 import { faker } from '@faker-js/faker';
 import { createMockUser, _mockUser, mockUser } from './user.mts';
-import { createMockCommunity, mockCommunity } from './communities.mts';
+import { createMockGroup, mockGroup } from './groups.mts';
 
 import { mockListing, mockListing2 } from './listings.mts';
 import { mockOrder } from './orders.mts';
@@ -10,23 +10,20 @@ import { mockTerm, mockTerm2 } from './taxonomies.mts';
 
 import { HOMock } from './helpers.mts';
 
-export const createMockRole = ({ community, user, refUsers, refCommunities }: any): any => {
+export const createMockFeature = ({ group, user, abilities, refUsers, refGroups }: any): any => {
   const data = {
     name: {
-      es: 'Role 1',
+      es: 'Feature 1',
     },
     status: 'ACTIVE',
-    type: 'PROVIDER',
-    nature: 'INTERNAL',
-    users: {
-      connect: refUsers,
-    },
-    communities: {
-      connect: refCommunities,
+    type: 'INTERFACE',
+    nature: 'LTS',
+    abilities: {
+      connect: abilities,
     },
   };
   return data;
 };
 
-export const mockRole = createMockRole({});
-export const mockRole2 = createMockRole({});
+export const mockFeature = createMockFeature({});
+export const mockFeature2 = createMockFeature({});

@@ -14,6 +14,9 @@ import { createMockTerm } from './mock/taxonomies.mts';
 import { createMockMessage } from './mock/messages.mts';
 import { createMockRole } from './mock/roles.mts';
 import { createMockPubListing } from './mock/public.mts';
+import { createMockAbility } from './mock/abilities.mts';
+import { createMockFeature } from './mock/features.mts';
+import { createMockService } from './mock/services.mts';
 
 export const cleanupDatabase = () => {
   const propertyNames = Object.getOwnPropertyNames(pvtPrisma);
@@ -73,6 +76,65 @@ if (seedType === 'private') {
       });
       const role2 = await pvtPrisma.roles.create({
         data: createMockRole({
+          user: user1.id,
+          community: community1.id,
+          refUsers: [{ id: user2.id }, { id: user3.id }],
+          refCommunities: [{ id: community2.id }, { id: community3.id }],
+        }),
+      });
+
+      // // abilities
+      const ability1 = await pvtPrisma.abilities.create({
+        data: createMockAbility({
+          user: user1.id,
+          community: community1.id,
+          roles: [{ id: role1.id }, { id: role2.id }],
+          refUsers: [{ id: user1.id }],
+          refCommunities: [{ id: community1.id }],
+        }),
+      });
+      const ability2 = await pvtPrisma.abilities.create({
+        data: createMockAbility({
+          user: user1.id,
+          community: community1.id,
+          roles: [{ id: role1.id }, { id: role2.id }],
+          refUsers: [{ id: user1.id }, { id: user2.id }, { id: user3.id }],
+          refCommunities: [{ id: community2.id }, { id: community3.id }],
+        }),
+      });
+
+      // // features
+      const feature1 = await pvtPrisma.features.create({
+        data: createMockFeature({
+          user: user1.id,
+          community: community1.id,
+          abilities: [{ id: ability1.id }],
+          refUsers: [{ id: user1.id }],
+          refCommunities: [{ id: community1.id }],
+        }),
+      });
+      const feature2 = await pvtPrisma.features.create({
+        data: createMockFeature({
+          user: user1.id,
+          community: community1.id,
+          abilities: [{ id: ability2.id }],
+          refUsers: [{ id: user2.id }, { id: user3.id }],
+          refCommunities: [{ id: community2.id }, { id: community3.id }],
+        }),
+      });
+
+      // // services
+      const service1 = await pvtPrisma.services.create({
+        data: createMockService({
+          user: user1.id,
+          community: community1.id,
+          features: [{ id: feature1.id }, { id: feature2.id }],
+          refUsers: [{ id: user1.id }],
+          refCommunities: [{ id: community1.id }],
+        }),
+      });
+      const service2 = await pvtPrisma.services.create({
+        data: createMockService({
           user: user1.id,
           community: community1.id,
           refUsers: [{ id: user2.id }, { id: user3.id }],
