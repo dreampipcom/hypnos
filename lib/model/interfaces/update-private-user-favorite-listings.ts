@@ -4,12 +4,15 @@ import { whoAmI, canI } from '@controller';
 import { PrivatePrisma } from '@model';
 
 const updatePrivateUserFavoriteListings = async ({ upsert = true, user, listings = [] }: any) => {
+  console.log({ user, listings });
   try {
     if (listings?.length === 0) return new Error('Code 002: Missing data (listings)');
 
     const loggedUser = user || (await whoAmI());
 
     const delta = upsert ? listings.filter((listing: any) => !loggedUser?.favorites?.includes(listing)) : [];
+
+    console.log({ loggedUser, delta });
 
     if (await canI({ name: 'Ability 1' })) {
       const payload = upsert

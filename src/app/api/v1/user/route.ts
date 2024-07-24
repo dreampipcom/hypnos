@@ -17,16 +17,19 @@ const generateErrorResponse = (e: any, status: number) => {
 // export const dynamic = 'force-static';
 export async function PATCH(request: CombineRequest) {
   try {
+    // console.log({ request, body: request.body, json: await request.json() })
     const body = await request?.json();
-    const listing = body?.listing;
+    console.log({ body, headers: request.headers });
+    const listings = body?.listings;
 
-    const user = (await getSession())?.user;
+    const session = await getSession();
+    const user = body?.user || (await getSession())?.user;
 
-    console.log({ user });
+    console.log({ session, user });
 
     const data = await UpdatePrivateUserFavoriteListings({
       user,
-      listings: [listing],
+      listings,
     });
 
     console.log({ data });
