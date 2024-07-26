@@ -1,7 +1,5 @@
 # Hypnos - DreamPip's Edge Micro-Services Hub
 
-License: HPL3-ECO-AND-ANC
-
 What: Headless Next.js Edge Runtime
 
 ## Getting Started
@@ -15,3 +13,10 @@ npm run dev
 Documentation: TBD
 
 Dev API: https://alpha.dreampip.com/api/v1
+
+License: HPL3-ECO-AND-ANC 2021—Present
+
+Purizu di Angelo Reale Caldeira de Lemos dba DreamPip
+
+IT02925300903
+
