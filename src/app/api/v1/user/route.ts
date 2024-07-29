@@ -18,7 +18,7 @@ const generateErrorResponse = (e: any, status: number) => {
 export async function PATCH(request: CombineRequest) {
   try {
     const cookies = request?.headers.get('cookies');
-    const session = await GetSession({ cookies });
+    const session = await GetSession({ cookies: cookies || '' });
     const body = await request?.json();
     const listings = body?.listings;
 

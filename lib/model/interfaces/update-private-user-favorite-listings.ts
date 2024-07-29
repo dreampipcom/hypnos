@@ -12,7 +12,7 @@ const updatePrivateUserFavoriteListings = async ({ upsert = true, user, listings
     const delta = upsert ? listings.filter((listing: any) => !loggedUser?.favorites?.includes(listing)) : [];
 
     if (await canI({ name: 'Ability 1', user: loggedUser })) {
-      const swapUserData = loggedUser.favorites.filter((listing) => !listings.includes(listing));
+      const swapUserData = loggedUser.favorites.filter((listing: string) => !listings.includes(listing));
       const payload = upsert
         ? {
             favoritesIds: [...swapUserData, ...delta],

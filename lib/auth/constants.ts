@@ -16,7 +16,7 @@ import {
   GetPrivateCommonAbilities,
 } from '@controller';
 
-export const GetSession = async ({ cookies }) => {
+export const GetSession = async ({ cookies = '' }) => {
   try {
     const response = await fetch(`${process.env.AUTH_URL}/api/auth/session`, {
       method: 'GET',
