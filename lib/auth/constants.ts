@@ -27,7 +27,6 @@ export const GetSession = async ({ cookies }) => {
       },
     });
     const session = await response.json();
-    // console.log("SERVER GET SESSION VIA SELF URL", { response, session, cookies })
     return session;
   } catch (e) {
     console.error(e);
@@ -79,7 +78,6 @@ export const authConfig = {
   events: {
     async signIn(props) {
       const { user, isNewUser } = props;
-      console.log({ isNewUser, props });
       try {
         if (isNewUser) {
           await allUsersSideEffects({ user });
@@ -113,7 +111,6 @@ export const authConfig = {
     //   return token;
     // },
     async session({ session, user }: any) {
-      console.log('SERVER CB AUTH: SESSION', { session, user });
       const facadedUser = {
         id: user.id,
         email: user.email,
