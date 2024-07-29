@@ -1,5 +1,6 @@
 // constants.ts TS-Doc?
 import type { NextAuthConfig } from 'next-auth';
+import { v4 as uuid } from 'uuid';
 import type { PrismaClient } from '@prisma/client';
 import { PrivatePrisma } from '@model';
 import NextAuth from 'next-auth';
@@ -61,6 +62,23 @@ export const providers: any[] = [
   AppleProvider({
     clientId: process.env.APPLE_CLIENT_ID as string,
     clientSecret: process.env.APPLE_CLIENT_SECRET as string,
+    wellKnown: 'https://appleid.apple.com/.well-known/openid-configuration',
+    checks: ['pkce'],
+    token: {
+      url: `https://appleid.apple.com/auth/token`,
+    },
+    authorization: {
+      url: 'https://appleid.apple.com/auth/authorize',
+      params: {
+        scope: '',
+        response_type: 'code',
+        response_mode: 'query',
+        state: uuid(),
+      },
+    },
+    client: {
+      token_endpoint_auth_method: 'client_secret_post',
+    },
   }),
   FacebookProvider({
     clientId: process.env.FACEBOOK_CLIENT_ID as string,
