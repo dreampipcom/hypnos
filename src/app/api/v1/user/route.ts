@@ -15,7 +15,7 @@ const generateErrorResponse = (e: any, status: number) => {
 };
 
 // export const dynamic = 'force-static';
-export async function POST(request: CombineRequest) {
+export async function PATCH(request: CombineRequest) {
   try {
     const cookies = request?.headers.get('cookies');
     const session = await GetSession({ cookies });
