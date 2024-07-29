@@ -106,6 +106,8 @@ model User {
   favorites             Listings[]        @relation("favorites", fields: [favoritesIds], references: [id])
   favoritesIds          String[]          @db.ObjectId
 
+  favoritesStrings             String[] 
+
   messagesSent          Messages[]        @relation("userMessagesSent")
   messagesSentIds       String[]          @db.ObjectId
 

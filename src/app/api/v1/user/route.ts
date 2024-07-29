@@ -19,6 +19,9 @@ export async function PATCH(request: CombineRequest) {
   try {
     const cookies = request?.headers.get('cookies');
     const session = await GetSession({ cookies: cookies || '' });
+    const url = new URL(request.url);
+    const query = url.searchParams;
+    const type = query.get('type') || 'id';
     const body = await request?.json();
     const listings = body?.listings;
 
@@ -27,6 +30,7 @@ export async function PATCH(request: CombineRequest) {
     const data = await UpdatePrivateUserFavoriteListings({
       user,
       listings,
+      type,
     });
 
     return NextResponse.json({
