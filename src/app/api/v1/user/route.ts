@@ -2,7 +2,7 @@
 import type { NextApiRequest } from 'next';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
-import { getSession } from '@auth';
+import { GetSession } from '@auth';
 import { UpdatePrivateUserFavoriteListings } from '@controller';
 type CombineRequest = NextRequest & NextApiRequest;
 
@@ -17,19 +17,17 @@ const generateErrorResponse = (e: any, status: number) => {
 // export const dynamic = 'force-static';
 export async function PATCH(request: CombineRequest) {
   try {
+    const cookies = request?.headers.get('cookies');
+    const session = await GetSession({ cookies: cookies || '' });
     const body = await request?.json();
-    const listing = body?.listing;
+    const listings = body?.listings;
 
-    const user = (await getSession())?.user;
-
-    console.log({ user });
+    const user = body?.user || session?.user;
 
     const data = await UpdatePrivateUserFavoriteListings({
       user,
-      listings: [listing],
+      listings,
     });
-
-    console.log({ data });
 
     return NextResponse.json({
       ok: true,
@@ -37,6 +35,7 @@ export async function PATCH(request: CombineRequest) {
       data,
     });
   } catch (e) {
+    console.error(e);
     return NextResponse.json(generateErrorResponse(e, 403), { status: 403 });
   }
 }

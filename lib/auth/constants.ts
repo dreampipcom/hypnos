@@ -16,6 +16,23 @@ import {
   GetPrivateCommonAbilities,
 } from '@controller';
 
+export const GetSession = async ({ cookies = '' }) => {
+  try {
+    const response = await fetch(`${process.env.AUTH_URL}/api/auth/session`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Cookie: cookies,
+      },
+    });
+    const session = await response.json();
+    return session;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
 // schema sanitizer
 const allUsersSideEffects = async ({ user }: any) => {
   const services = await GetPrivateCommonServices({});
@@ -61,7 +78,6 @@ export const authConfig = {
   events: {
     async signIn(props) {
       const { user, isNewUser } = props;
-      console.log({ isNewUser, props });
       try {
         if (isNewUser) {
           await allUsersSideEffects({ user });
