@@ -16,6 +16,24 @@ import {
   GetPrivateCommonAbilities,
 } from '@controller';
 
+export const GetSession = async ({ cookies }) => {
+  try {
+    const response = await fetch(`http://localhost:3001/api/auth/session`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Cookie: cookies,
+      },
+    });
+    const session = await response.json();
+    // console.log("SERVER GET SESSION VIA SELF URL", { response, session, cookies })
+    return session;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
 // schema sanitizer
 const allUsersSideEffects = async ({ user }: any) => {
   const services = await GetPrivateCommonServices({});
@@ -95,6 +113,7 @@ export const authConfig = {
     //   return token;
     // },
     async session({ session, user }: any) {
+      console.log('SERVER CB AUTH: SESSION', { session, user });
       const facadedUser = {
         id: user.id,
         email: user.email,

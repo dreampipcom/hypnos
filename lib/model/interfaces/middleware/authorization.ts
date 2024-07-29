@@ -1,12 +1,12 @@
 // @interfaces/middleware/authorization.ts
-import { getSession } from '@auth';
+import { getSession, GetSession } from '@auth';
 import { GetPrivateAbilities } from '@controller';
-export const canI = async ({ name }: any) => {
+import { cookies } from 'next/headers';
+export const canI = async ({ name, user }: any) => {
   try {
     const ability = await GetPrivateAbilities({ name });
-    const session = (await getSession()) as any;
     // to-do add authorization/validation checks
-    const yes = session?.user?.abilities?.includes(ability[0]?.id);
+    const yes = user?.abilities?.includes(ability[0]?.id);
     // return the capacity
     return yes;
   } catch (e) {
@@ -15,7 +15,8 @@ export const canI = async ({ name }: any) => {
 };
 export const whoAmI = async () => {
   try {
-    const session = await getSession();
+    const cookieString = cookies().getAll().toString();
+    const session = (await getSession()) || (await GetSession({ cookies: cookieString }));
     // to-do add authorization/validation checks
     return session?.user;
   } catch (e) {
