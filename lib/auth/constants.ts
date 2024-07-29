@@ -124,6 +124,7 @@ export const authConfig = {
         services: user.servicesIds,
         abilities: user.abilitiesIds,
         favorites: user.favoritesIds,
+        favoritesStrings: user.favoritesStrings,
       };
       session.user = facadedUser;
       // if (token?.user) {
