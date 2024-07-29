@@ -18,7 +18,7 @@ import {
 
 export const GetSession = async ({ cookies }) => {
   try {
-    const response = await fetch(`http://localhost:3001/api/auth/session`, {
+    const response = await fetch(`${process.env.AUTH_URL}/api/auth/session`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
