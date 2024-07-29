@@ -30,10 +30,14 @@ const updatePrivateUserFavoriteListings = async ({ upsert = true, user, listings
       const response = await PrivatePrisma.user.update(adaptQuery);
       return response;
     } else if ((await canI({ name: 'Ability 1', user: loggedUser })) && type === 'string') {
-      const swapUserData = loggedUser?.favoritesStrings?.filter((listing: string) => !listings.includes(listing)) || [];
+      const userData = loggedUser?.favoritesStrings;
+      const swapData = userData.filter((listing: string) => listings.includes(listing));
+      const transaction = userData
+        .filter((listing: string) => !swapData.includes(listing))
+        .concat(delta.filter((listing: string) => !swapData.includes(listing)));
       const payload = upsert
         ? {
-            favoritesStrings: [...swapUserData, ...delta],
+            favoritesStrings: [...transaction],
           }
         : {
             favoritesStrings: listings,
