@@ -6,7 +6,7 @@ import { GET as NextAuthGET } from '../../[...nextauth]/route';
 export { NextAuthGET as GET };
 
 export async function POST(req: NextRequest) {
-  const response = NextResponse.redirect({ status: 302 });
+  const response = NextResponse.redirect();
   const pkce = req.cookies.get('next-auth.pkce.code_verifier');
 
   if (pkce?.value) {
@@ -18,6 +18,8 @@ export async function POST(req: NextRequest) {
     });
     console.log({ pkce, response, to: req.nextUrl.pathname });
   }
+
+  response.status = 302;
 
   const data = await req.formData();
   const queryParams: { [key: string]: string } = {};
