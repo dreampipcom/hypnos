@@ -60,24 +60,41 @@ export const providers: any[] = [
     clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
   }),
   AppleProvider({
-    clientId: process.env.APPLE_CLIENT_ID as string,
-    clientSecret: process.env.APPLE_CLIENT_SECRET as string,
+    clientId: process.env.APPLE_ID,
+    clientSecret: process.env.APPLE_SECRET,
     wellKnown: 'https://appleid.apple.com/.well-known/openid-configuration',
     checks: ['pkce'],
-    token: {
-      url: `https://appleid.apple.com/auth/token`,
-    },
     authorization: {
       url: 'https://appleid.apple.com/auth/authorize',
       params: {
-        scope: '',
+        scope: 'name email',
         response_type: 'code',
-        response_mode: 'query',
+        response_mode: 'form_post',
         state: uuid(),
       },
     },
+    token: {
+      url: `https://appleid.apple.com/auth/token`,
+    },
     client: {
       token_endpoint_auth_method: 'client_secret_post',
+    },
+    profile(profile) {
+      return {
+        id: profile.sub,
+        name: profile.name || null,
+        email: profile.email || null,
+        image: null,
+      };
+    },
+    profileConform(profile, query) {
+      if (query.user) {
+        const user = JSON.parse(query.user);
+        if (user.name) {
+          profile.name = Object.values(user.name).join(' ');
+        }
+      }
+      return profile;
     },
   }),
   FacebookProvider({
