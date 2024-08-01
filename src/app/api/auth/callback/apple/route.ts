@@ -6,7 +6,20 @@ import { GET as NextAuthGET } from '../../[...nextauth]/route';
 export { NextAuthGET as GET };
 
 export async function POST(req: NextRequest) {
-  const response = NextResponse.next();
+  const data = await req.formData();
+  const queryParams: { [key: string]: string } = {};
+  data.forEach((value, key) => {
+    queryParams[key] = value.toString();
+  });
+
+  const searchParams = new URLSearchParams(queryParams);
+
+  const response = NextResponse.redirect(
+    `https://${req.headers.get('host')}/api/auth/callback/apple?${searchParams.toString()}`,
+    {
+      status: 302,
+    },
+  );
   const pkce = req.cookies.get('next-auth.pkce.code_verifier');
 
   if (pkce?.value) {
@@ -18,23 +31,9 @@ export async function POST(req: NextRequest) {
     });
     console.log({ pkce, response, to: req.nextUrl.pathname });
   }
-
-  const data = await req.formData();
-  const queryParams: { [key: string]: string } = {};
-  data.forEach((value, key) => {
-    queryParams[key] = value.toString();
-  });
-
-  const searchParams = new URLSearchParams(queryParams);
   // const cookies = req.headers.get('Cookie') || req.cookies.toString() || '';
 
   // console.log({ cookies, data, queryParams, dest: req.headers.get('host') });
 
-  return NextResponse.redirect(
-    `https://${req.headers.get('host')}/api/auth/callback/apple?${searchParams.toString()}`,
-    {
-      ...response,
-      status: 302,
-    },
-  );
+  return response;
 }
