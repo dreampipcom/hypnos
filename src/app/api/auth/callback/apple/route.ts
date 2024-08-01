@@ -7,7 +7,7 @@ export { NextAuthGET as GET };
 
 export async function POST(req: NextRequest) {
   const response = NextResponse.next();
-  const pkce = request.cookies.get('next-auth.pkce.code_verifier');
+  const pkce = req.cookies.get('next-auth.pkce.code_verifier');
 
   if (pkce?.value) {
     response.cookies.set('next-auth.pkce.code_verifier', pkce.value, {
@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
       path: '/',
       secure: true,
     });
-    console.log({ pkce, response, to: request.nextUrl.pathname });
+    console.log({ pkce, response, to: req.nextUrl.pathname });
   }
 
   const data = await req.formData();
