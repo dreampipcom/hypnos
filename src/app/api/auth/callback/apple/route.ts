@@ -30,7 +30,11 @@ export async function POST(req: NextRequest) {
 
   // console.log({ cookies, data, queryParams, dest: req.headers.get('host') });
 
-  return response.redirect(`https://${req.headers.get('host')}/api/auth/callback/apple?${searchParams.toString()}`, {
-    status: 302,
-  });
+  return NextResponse.redirect(
+    `https://${req.headers.get('host')}/api/auth/callback/apple?${searchParams.toString()}`,
+    {
+      ...response,
+      status: 302,
+    },
+  );
 }
