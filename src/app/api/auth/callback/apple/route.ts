@@ -6,7 +6,7 @@ import { GET as NextAuthGET } from '../../[...nextauth]/route';
 export { NextAuthGET as GET };
 
 export async function POST(req: NextRequest) {
-  const response = NextResponse.next();
+  const response = NextResponse.redirect({ status: 302 });
   const pkce = req.cookies.get('next-auth.pkce.code_verifier');
 
   if (pkce?.value) {
@@ -32,9 +32,6 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.redirect(
     `https://${req.headers.get('host')}/api/auth/callback/apple?${searchParams.toString()}`,
-    {
-      status: 302,
-      ...response,
-    },
+    response,
   );
 }
