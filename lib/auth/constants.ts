@@ -1,4 +1,5 @@
 // constants.ts TS-Doc?
+/* eslint @typescript-eslint/consistent-type-assertions:0 */
 import type { NextAuthConfig } from 'next-auth';
 import { v4 as uuid } from 'uuid';
 import type { PrismaClient } from '@prisma/client';
@@ -79,7 +80,7 @@ export const providers: any[] = [
     client: {
       token_endpoint_auth_method: 'client_secret_post',
     },
-    profile(profile) {
+    profile(profile: any) {
       return {
         id: profile.sub,
         name: profile.name || null,
@@ -87,7 +88,7 @@ export const providers: any[] = [
         image: null,
       };
     },
-    profileConform(profile, query) {
+    profileConform(profile: any, query: any) {
       if (query.user) {
         const user = JSON.parse(query.user);
         if (user.name) {
@@ -96,7 +97,7 @@ export const providers: any[] = [
       }
       return profile;
     },
-  }),
+  } as any),
   FacebookProvider({
     clientId: process.env.FACEBOOK_CLIENT_ID as string,
     clientSecret: process.env.FACEBOOK_CLIENT_SECRET as string,
