@@ -13,14 +13,16 @@ export async function POST(req: NextRequest) {
   });
 
   const searchParams = new URLSearchParams(queryParams);
-  const cookie = req.headers.get('cookie') || '';
+  const cookies = req.headers.get('Cookie') || req.cookies || '';
+
+  console.log({ cookies, data, queryParams, dest: req.headers.get('host') });
 
   return NextResponse.redirect(
     `https://${req.headers.get('host')}/api/auth/callback/apple?${searchParams.toString()}`,
     {
       status: 302,
       headers: {
-        cookie,
+        Cookie: cookies,
       },
     },
   );
