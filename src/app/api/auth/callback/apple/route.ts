@@ -29,6 +29,7 @@ export async function POST(req: NextRequest) {
       path: '/',
       secure: true,
     });
+    response.headers.set('Cookie', response.cookies.toString());
     console.log({ pkce, response, to: req.nextUrl.pathname });
   }
   // const cookies = req.headers.get('Cookie') || req.cookies.toString() || '';
