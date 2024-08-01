@@ -1,4 +1,5 @@
 // constants.ts TS-Doc?
+/* eslint @typescript-eslint/consistent-type-assertions:0 */
 import type { NextAuthConfig } from 'next-auth';
 import { v4 as uuid } from 'uuid';
 import type { PrismaClient } from '@prisma/client';
@@ -64,22 +65,39 @@ export const providers: any[] = [
     clientSecret: process.env.APPLE_CLIENT_SECRET as string,
     wellKnown: 'https://appleid.apple.com/.well-known/openid-configuration',
     checks: ['pkce'],
-    token: {
-      url: `https://appleid.apple.com/auth/token`,
-    },
     authorization: {
       url: 'https://appleid.apple.com/auth/authorize',
       params: {
-        scope: '',
+        scope: 'name email',
         response_type: 'code',
-        response_mode: 'query',
+        response_mode: 'form_post',
         state: uuid(),
       },
+    },
+    token: {
+      url: `https://appleid.apple.com/auth/token`,
     },
     client: {
       token_endpoint_auth_method: 'client_secret_post',
     },
-  }),
+    profile(profile: any) {
+      return {
+        id: profile.sub,
+        name: profile.name || null,
+        email: profile.email || null,
+        image: null,
+      };
+    },
+    profileConform(profile: any, query: any) {
+      if (query.user) {
+        const user = JSON.parse(query.user);
+        if (user.name) {
+          profile.name = Object.values(user.name).join(' ');
+        }
+      }
+      return profile;
+    },
+  } as any),
   FacebookProvider({
     clientId: process.env.FACEBOOK_CLIENT_ID as string,
     clientSecret: process.env.FACEBOOK_CLIENT_SECRET as string,
