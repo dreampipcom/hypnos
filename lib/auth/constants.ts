@@ -60,8 +60,8 @@ export const providers: any[] = [
     clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
   }),
   AppleProvider({
-    clientId: process.env.APPLE_ID,
-    clientSecret: process.env.APPLE_SECRET,
+    clientId: process.env.APPLE_CLIENT_ID as string,
+    clientSecret: process.env.APPLE_CLIENT_SECRET as string,
     wellKnown: 'https://appleid.apple.com/.well-known/openid-configuration',
     checks: ['pkce'],
     authorization: {
