@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
   });
 
   const searchParams = new URLSearchParams(queryParams);
-  const cookies = req.headers.get('Cookie') || req.cookies || '';
+  const cookies = req.headers.get('Cookie') || req.cookies.toString() || '';
 
   console.log({ cookies, data, queryParams, dest: req.headers.get('host') });
 
