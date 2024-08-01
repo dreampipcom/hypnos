@@ -15,6 +15,7 @@ const generateErrorResponse = (e: any, status: number) => {
 
 // export const dynamic = 'force-static';
 export async function GET(request: CombineRequest) {
+  console.log({ request: request.cookies });
   try {
     const url = new URL(request.url);
     const query = url.searchParams;
