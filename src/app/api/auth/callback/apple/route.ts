@@ -1,7 +1,7 @@
 // app/api/auth/callback/apple/route.ts
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
-import { GET as NextAuthGET } from '../../[...nextauth]';
+import { GET as NextAuthGET } from '../../[...nextauth]/route';
 
 export { NextAuthGET as GET };
 
