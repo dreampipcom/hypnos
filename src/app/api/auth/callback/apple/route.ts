@@ -19,8 +19,6 @@ export async function POST(req: NextRequest) {
     console.log({ pkce, response, to: req.nextUrl.pathname });
   }
 
-  response.status = 302;
-
   const data = await req.formData();
   const queryParams: { [key: string]: string } = {};
   data.forEach((value, key) => {
