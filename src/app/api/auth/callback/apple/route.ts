@@ -6,7 +6,7 @@ import { GET as NextAuthGET } from '../../[...nextauth]/route';
 export { NextAuthGET as GET };
 
 export async function POST(req: NextRequest) {
-  const response = NextResponse.redirect();
+  const response = NextResponse.next();
   const pkce = req.cookies.get('next-auth.pkce.code_verifier');
 
   if (pkce?.value) {
