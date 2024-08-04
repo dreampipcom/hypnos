@@ -31,7 +31,8 @@
     "format:fix": "next lint --fix && prettier --write --ignore-path .gitignore --ignore-path .prettierignore .",
     "prepare": "husky",
     "npm:wipe": "rm -rf node_modules && npm cache clean --force",
-    "npm:reset": "npm run npm:wipe && npm i"
+    "npm:reset": "npm run npm:wipe && npm i",
+    "postinstall": "patch-package && prisma generate"
   },
   "prisma": {
     "seed": "node --loader ts-node/esm prisma/seed.mts"
@@ -62,6 +63,7 @@
     "mongodb": "^5.0.0",
     "next-auth": "^5.0.0-beta.19",
     "nodemailer": "^6.9.14",
+    "patch-package": "8.0.0",
     "prettier": "^3.2.4",
     "prisma": "^5.14.0",
     "server-only": "^0.0.1",

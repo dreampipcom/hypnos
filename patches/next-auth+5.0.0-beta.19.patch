@@ -1,0 +1,203 @@
+diff --git a/packages/core/src/lib/oauth/callback.ts b/packages/core/src/lib/oauth/callback.ts
+index 1c36c42ce4..8423c33716 100644
+--- a/packages/core/src/lib/oauth/callback.ts
++++ b/packages/core/src/lib/oauth/callback.ts
+@@ -122,7 +122,7 @@ export async function handleOAuth(
+     throw new Error("TODO: Handle www-authenticate challenges as needed")
+   }
+ 
+-  let profile: Profile = {} 
++  let profile: Profile = {}
+   let tokens: TokenSet & Pick<Account, "expires_at">
+ 
+   if (provider.type === "oidc") {
+@@ -140,6 +140,11 @@ export async function handleOAuth(
+     }
+ 
+     profile = o.getValidatedIdTokenClaims(result)
++
++    if (provider.profileConform) {
++      profile = provider.profileConform(profile, query);
++    }
++
+     tokens = result
+   } else {
+     tokens = await o.processAuthorizationCodeOAuth2Response(
+@@ -187,7 +192,7 @@ async function getUserAndAccount(
+   OAuthProfile: Profile,
+   provider: OAuthConfigInternal<any>,
+   tokens: TokenSet,
+-  logger: LoggerInstance
++  logger: LoggerInstance,
+ ) {
+   try {
+     const user = await provider.profile(OAuthProfile, tokens)
+diff --git a/packages/core/src/lib/routes/callback.ts b/packages/core/src/lib/routes/callback.ts
+index 94945855e0..3a270100fc 100644
+--- a/packages/core/src/lib/routes/callback.ts
++++ b/packages/core/src/lib/routes/callback.ts
+@@ -49,7 +49,7 @@ export async function callback(params: {
+   try {
+     if (provider.type === "oauth" || provider.type === "oidc") {
+       const { proxyRedirect, randomState } = handleState(
+-        query,
++        provider.authorization?.url.searchParams.get("response_mode") === 'form_post' ? body : query,
+         provider,
+         options.isOnRedirectProxy
+       )
+@@ -60,7 +60,7 @@ export async function callback(params: {
+       }
+ 
+       const authorizationResult = await handleOAuth(
+-        query,
++        provider.authorization?.url.searchParams.get("response_mode") === 'form_post' ? body : query,
+         params.cookies,
+         options,
+         randomState
+@@ -172,9 +172,8 @@ export async function callback(params: {
+       // Note that the callback URL is preserved, so the journey can still be resumed
+       if (isNewUser && pages.newUser) {
+         return {
+-          redirect: `${pages.newUser}${
+-            pages.newUser.includes("?") ? "&" : "?"
+-          }${new URLSearchParams({ callbackUrl })}`,
++          redirect: `${pages.newUser}${pages.newUser.includes("?") ? "&" : "?"
++            }${new URLSearchParams({ callbackUrl })}`,
+           cookies,
+         }
+       }
+@@ -283,9 +282,8 @@ export async function callback(params: {
+       // Note that the callback URL is preserved, so the journey can still be resumed
+       if (isNewUser && pages.newUser) {
+         return {
+-          redirect: `${pages.newUser}${
+-            pages.newUser.includes("?") ? "&" : "?"
+-          }${new URLSearchParams({ callbackUrl })}`,
++          redirect: `${pages.newUser}${pages.newUser.includes("?") ? "&" : "?"
++            }${new URLSearchParams({ callbackUrl })}`,
+           cookies,
+         }
+       }
+diff --git a/packages/core/src/providers/apple.ts b/packages/core/src/providers/apple.ts
+index 9391cf4c4f..89c6b169a6 100644
+--- a/packages/core/src/providers/apple.ts
++++ b/packages/core/src/providers/apple.ts
+@@ -115,8 +115,8 @@ export interface AppleProfile extends Record<string, any> {
+  * export default NextAuth({
+  *   providers: [
+  *     AppleProvider({
+- *       clientId: process.env.GITHUB_ID,
+- *       clientSecret: process.env.GITHUB_SECRET,
++ *       clientId: process.env.APPLE_ID,
++ *       clientSecret: process.env.APPLE_SECRET,
+  *     }),
+  *   ],
+  * })
+@@ -158,8 +158,35 @@ export default function Apple<P extends AppleProfile>(
+     name: "Apple",
+     type: "oidc",
+     issuer: "https://appleid.apple.com",
++    checks: ["pkce", "state"],
+     authorization: {
+-      params: { scope: "name email", response_mode: "form_post" },
++      url: 'https://appleid.apple.com/auth/authorize',
++      params: {
++        scope: "name email",
++        response_mode: "form_post",
++      }
++    },
++    // Provide a token endpoint to omit the discovery step.
++    // This is required because Apple does not provide a userinfo endpoint.
++    token: 'https://appleid.apple.com/auth/token',
++    profileConform(profile, query) {
++      if (profile.name !== undefined) {
++        console.warn(
++          "'Name' is not undefined. Redundant workaround, please open an issue."
++        )
++      }
++
++      if (query.user) {
++        const user = JSON.parse(query.user);
++        if (user.name) {
++          return {
++            ...profile,
++            name: Object.values(user.name).join(" "),
++          }
++        }
++      }
++
++      return profile;
+     },
+     profile(profile) {
+       return {
+@@ -169,6 +196,9 @@ export default function Apple<P extends AppleProfile>(
+         image: null,
+       }
+     },
++    client: {
++      token_endpoint_auth_method: "client_secret_post",
++    },
+     style: {
+       logo: "/apple.svg",
+       logoDark: "/apple-dark.svg",
+diff --git a/packages/core/src/providers/oauth.ts b/packages/core/src/providers/oauth.ts
+index 4d8a5061c7..a3f9e2f28e 100644
+--- a/packages/core/src/providers/oauth.ts
++++ b/packages/core/src/providers/oauth.ts
+@@ -92,7 +92,7 @@ export type UserinfoEndpointHandler = EndpointHandler<
+ 
+ export type ProfileCallback<Profile> = (
+   profile: Profile,
+-  tokens: TokenSet
++  tokens: TokenSet,
+ ) => Awaitable<User>
+ 
+ export type AccountCallback = (tokens: TokenSet) => TokenSet | undefined | void
+@@ -109,7 +109,7 @@ export interface OAuthProviderButtonStyles {
+ /** TODO: Document */
+ export interface OAuth2Config<Profile>
+   extends CommonProviderOptions,
+-    PartialIssuer {
++  PartialIssuer {
+   /**
+    * Identifies the provider when you want to sign in to
+    * a specific provider.
+@@ -150,7 +150,7 @@ export interface OAuth2Config<Profile>
+    *
+    * @see [Database Adapter: User model](https://authjs.dev/reference/adapters#user)
+    */
+-  profile?: ProfileCallback<Profile>
++  profile?: ProfileCallback<Profile>,
+   /**
+    * Receives the full {@link TokenSet} returned by the OAuth provider, and returns a subset.
+    * It is used to create the account associated with a user in the database.
+@@ -221,6 +221,16 @@ export interface OAuth2Config<Profile>
+    */
+   allowDangerousEmailAccountLinking?: boolean
+   redirectProxyUrl?: AuthConfig["redirectProxyUrl"]
++  /**
++   * If the profile information is not fully returned in the id_token,
++   * the provider can add additional information in this function.
++   *
++   * Currently only used by the `apple` provider, as the user information
++   * is returned in the authorization response, instead of the id_token.
++   *
++   * @internal
++   */
++  profileConform?: (profile: Profile, query: any) => Profile
+   /**
+    * The options provided by the user.
+    * We will perform a deep-merge of these values
+@@ -276,9 +286,9 @@ export type OAuthConfigInternal<Profile> = Omit<
+    */
+   redirectProxyUrl?: OAuth2Config<Profile>["redirectProxyUrl"]
+ } & Pick<
+-    Required<OAuthConfig<Profile>>,
+-    "clientId" | "checks" | "profile" | "account"
+-  >
++  Required<OAuthConfig<Profile>>,
++  "clientId" | "checks" | "profile" | "account"
++>
+ 
+ export type OIDCConfigInternal<Profile> = OAuthConfigInternal<Profile> & {
+   checks: OIDCConfig<Profile>["checks"]
