@@ -38,11 +38,25 @@ export async function GET(request: CombineRequest) {
       filters: filterArray,
     });
 
-    return NextResponse.json({
-      ok: true,
-      status: 200,
-      data,
-    });
+    const headers = {
+      'content-type': 'application/json',
+      'Access-Control-Allow-Origin': process.MAIN_URL || 'https://alpha.dreampip.com',
+      'Cache-Control': 'maxage=0, s-maxage=300, stale-while-revalidate=300',
+    };
+
+    console.log({ headers });
+
+    return NextResponse.json(
+      {
+        ok: true,
+        status: 200,
+        data,
+      },
+      {
+        status: 200,
+        headers,
+      },
+    );
   } catch (e) {
     return NextResponse.json(generateErrorResponse(e, 403), { status: 403 });
   }
