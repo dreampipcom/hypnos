@@ -3,21 +3,21 @@
 import type { NextRequest } from 'next/server';
 import { next } from '@vercel/edge';
 import { ipAddress } from '@vercel/functions';
-import { kv } from '@vercel/kv';
+// import { kv } from '@vercel/kv';
 import { NextResponse } from 'next/server';
-import { Ratelimit } from '@upstash/ratelimit';
+// import { Ratelimit } from '@upstash/ratelimit';
 
-const ratelimit = new Ratelimit({
-  redis: kv,
-  limiter: Ratelimit.slidingWindow(10, '3 s'),
-});
+// const ratelimit = new Ratelimit({
+//   redis: kv,
+//   limiter: Ratelimit.slidingWindow(10, '3 s'),
+// });
 
 export const config = {
   matcher: ['/api/:path*'],
 };
 
 const headers: Record<string, any> = {
-  'content-type': 'application/json',
+  // 'content-type': 'application/json',
   'Access-Control-Allow-Origin': process.env.MAIN_URL || 'https://alpha.dreampip.com',
   'Cache-Control': 'maxage=0, s-maxage=300, stale-while-revalidate=300',
 };
@@ -27,11 +27,12 @@ export default async function middleware(request: NextRequest) {
   const response = next();
   const ip = ipAddress(request) || '127.0.0.1';
 
-  const { success, pending, limit, reset, remaining } = await ratelimit.limit(ip);
+  // const { success, pending, limit, reset, remaining } = await ratelimit.limit(ip);
 
   Object.keys(headers).forEach((key: string) => {
     response.headers.set(key, headers[key]);
   });
 
-  return success ? response : NextResponse.redirect(new URL('https://www.dreampip.com/404', request.url));
+  // return success ? response : NextResponse.redirect(new URL('https://www.dreampip.com/404', request.url));
+  return response ? response : NextResponse.redirect(new URL('https://www.dreampip.com/404', request.url));
 }
