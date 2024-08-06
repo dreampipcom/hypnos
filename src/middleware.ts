@@ -16,7 +16,7 @@ export const config = {
   matcher: ['/api/:path*'],
 };
 
-const headers = {
+const headers: Record<string, any> = {
   'content-type': 'application/json',
   'Access-Control-Allow-Origin': process.env.MAIN_URL || 'https://alpha.dreampip.com',
   'Cache-Control': 'maxage=0, s-maxage=300, stale-while-revalidate=300',
