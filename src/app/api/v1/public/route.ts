@@ -15,7 +15,11 @@ const generateErrorResponse = (e: any, status: number) => {
 
 // export const dynamic = 'force-static';
 export async function GET(request: CombineRequest) {
-  console.log({ request: request.cookies });
+  console.log({
+    request: request.cookies,
+    requestOrigin: request.headers.get('x-forwarded-host'),
+    cache: request.headers.get('cache-control'),
+  });
   try {
     const url = new URL(request.url);
     const query = url.searchParams;
@@ -38,13 +42,7 @@ export async function GET(request: CombineRequest) {
       filters: filterArray,
     });
 
-    const headers = {
-      'content-type': 'application/json',
-      'Access-Control-Allow-Origin': process.MAIN_URL || 'https://alpha.dreampip.com',
-      'Cache-Control': 'maxage=0, s-maxage=300, stale-while-revalidate=300',
-    };
-
-    console.log({ headers });
+    console.log({ headers: request.headers });
 
     return NextResponse.json(
       {
@@ -54,7 +52,6 @@ export async function GET(request: CombineRequest) {
       },
       {
         status: 200,
-        headers,
       },
     );
   } catch (e) {

@@ -33,13 +33,7 @@ export async function PATCH(request: CombineRequest) {
       type,
     });
 
-    const headers = {
-      'content-type': 'application/json',
-      'Access-Control-Allow-Origin': process.MAIN_URL || 'https://alpha.dreampip.com',
-      'Cache-Control': 'maxage=0, s-maxage=300, stale-while-revalidate=300',
-    };
-
-    console.log({ headers });
+    console.log({ headers: request.headers });
 
     return NextResponse.json(
       {
@@ -49,7 +43,6 @@ export async function PATCH(request: CombineRequest) {
       },
       {
         status: 200,
-        headers,
       },
     );
   } catch (e) {
