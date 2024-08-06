@@ -17,9 +17,13 @@ export const config = {
 };
 
 const headers: Record<string, any> = {
-  'content-type': 'application/json',
-  'Access-Control-Allow-Origin': process.env.MAIN_URL || 'https://alpha.dreampip.com',
+  // 'Access-Control-Allow-Origin': process.env.MAIN_URL || 'https://alpha.dreampip.com',
   'Cache-Control': 'maxage=0, s-maxage=300, stale-while-revalidate=300',
+  // DEV-DEBUG:
+  // 'content-type': 'application/json',
+  'Access-Control-Allow-Origin': 'http://localhost:2999',
+  'Access-Control-Allow-Credentials': 'true',
+  'Access-Control-Allow-Headers': '*',
 };
 
 export default async function middleware(request: NextRequest) {
@@ -27,11 +31,11 @@ export default async function middleware(request: NextRequest) {
   const response = next();
   const ip = ipAddress(request) || '127.0.0.1';
 
-  const { success, pending, limit, reset, remaining } = await ratelimit.limit(ip);
+  // const { success, pending, limit, reset, remaining } = await ratelimit.limit(ip);
 
   Object.keys(headers).forEach((key: string) => {
     response.headers.set(key, headers[key]);
   });
 
-  return success ? response : NextResponse.redirect(new URL('https://www.dreampip.com/404', request.url));
+  return response ? response : NextResponse.redirect(new URL('https://www.dreampip.com/404', request.url));
 }
