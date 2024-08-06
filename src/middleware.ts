@@ -29,7 +29,7 @@ export default async function middleware(request: NextRequest) {
 
   const { success, pending, limit, reset, remaining } = await ratelimit.limit(ip);
 
-  Object.keys(headers).forEach((key) => {
+  Object.keys(headers).forEach((key: string) => {
     response.headers.set(key, headers[key]);
   });
 
