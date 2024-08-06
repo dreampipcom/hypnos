@@ -32,7 +32,7 @@
     "prepare": "husky",
     "npm:wipe": "rm -rf node_modules && npm cache clean --force",
     "npm:reset": "npm run npm:wipe && npm i",
-    "postinstall": "patch-package && prisma generate"
+    "postinstall": "patch-package && npm run schema:generate:all"
   },
   "prisma": {
     "seed": "node --loader ts-node/esm prisma/seed.mts"
