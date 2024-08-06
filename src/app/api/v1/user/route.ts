@@ -33,11 +33,18 @@ export async function PATCH(request: CombineRequest) {
       type,
     });
 
-    return NextResponse.json({
-      ok: true,
-      status: 200,
-      data,
-    });
+    console.log({ headers: request.headers });
+
+    return NextResponse.json(
+      {
+        ok: true,
+        status: 200,
+        data,
+      },
+      {
+        status: 200,
+      },
+    );
   } catch (e) {
     console.error(e);
     return NextResponse.json(generateErrorResponse(e, 403), { status: 403 });
