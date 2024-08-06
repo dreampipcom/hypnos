@@ -16,8 +16,8 @@
     "incremental": true,
     "plugins": [
       {
-        "name": "next"
-      }
+        "name": "next",
+      },
     ],
     "paths": {
       "@styles": ["./src/app/styles"],
@@ -53,15 +53,15 @@
       "@components/*": ["./src/app/components/*"],
       "@components": ["./src/app/components"],
       "@helpers/*": ["./lib/helpers/*"],
-      "@helpers": ["./lib/helpers"]
-    }
+      "@helpers": ["./lib/helpers"],
+    },
   },
   "ts-node": {
     "maxOldSpaceSize": 8196,
     "experimentalSpecifierResolution": "node",
     "transpileOnly": true,
-    "esm": true
+    "esm": true,
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules", "**/nsx/**/*", "**/system/**/*", "**/mock/**/*"]
+  "exclude": ["node_modules", "**/nsx/**/*", "**/system/**/*", "**/mock/**/*"],
 }
