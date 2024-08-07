@@ -28,10 +28,11 @@ export default async function middleware(request: NextRequest) {
   const ip = ipAddress(request) || '127.0.0.1';
 
   // const { success, pending, limit, reset, remaining } = await ratelimit.limit(ip);
-
-  Object.keys(headers).forEach((key: string) => {
-    response.headers.set(key, headers[key]);
-  });
+  if (!request?.url?.includes('auth')) {
+    Object.keys(headers).forEach((key: string) => {
+      response.headers.set(key, headers[key]);
+    });
+  }
 
   // return success ? response : NextResponse.redirect(new URL('https://www.dreampip.com/404', request.url));
   return response ? response : NextResponse.redirect(new URL('https://www.dreampip.com/404', request.url));
