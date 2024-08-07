@@ -1,16 +1,16 @@
 /* eslint @typescript-eslint/no-unused-vars:0 */
 // middleware.ts
 import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 import { next } from '@vercel/edge';
 import { ipAddress } from '@vercel/functions';
-import { kv } from '@vercel/kv';
-import { NextResponse } from 'next/server';
-import { Ratelimit } from '@upstash/ratelimit';
+// import { kv } from '@vercel/kv';
+// import { Ratelimit } from '@upstash/ratelimit';
 
-const ratelimit = new Ratelimit({
-  redis: kv,
-  limiter: Ratelimit.slidingWindow(10, '3 s'),
-});
+// const ratelimit = new Ratelimit({
+//   redis: kv,
+//   limiter: Ratelimit.slidingWindow(10, '3 s'),
+// });
 
 export const config = {
   matcher: ['/api/:path*'],
@@ -31,7 +31,7 @@ export default async function middleware(request: NextRequest) {
   const response = next();
   const ip = ipAddress(request) || '127.0.0.1';
 
-  const { success, pending, limit, reset, remaining } = await ratelimit.limit(ip);
+  // const { success, pending, limit, reset, remaining } = await ratelimit.limit(ip);
 
   if (!request?.url?.includes('auth')) {
     Object.keys(headers).forEach((key: string) => {
@@ -39,6 +39,6 @@ export default async function middleware(request: NextRequest) {
     });
   }
 
-  return success ? response : NextResponse.redirect(new URL('https://www.dreampip.com/404', request.url));
-  // return response ? response : NextResponse.redirect(new URL('https://www.dreampip.com/404', request.url));
+  // return success ? response : NextResponse.redirect(new URL('https://www.dreampip.com/404', request.url));
+  return response ? response : NextResponse.redirect(new URL('https://www.dreampip.com/404', request.url));
 }
