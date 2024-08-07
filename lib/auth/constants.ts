@@ -184,9 +184,9 @@ export const authConfig = {
       name: `authjs.csrf-token`,
       options: {
         httpOnly: true,
-        // sameSite: 'none',
+        sameSite: 'none',
         path: '/',
-        // secure: false,
+        secure: true,
       },
     },
   },
