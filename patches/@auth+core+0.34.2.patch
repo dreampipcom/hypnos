@@ -1,5 +1,5 @@
 diff --git a/node_modules/@auth/core/lib/actions/callback/oauth/csrf-token.js b/node_modules/@auth/core/lib/actions/callback/oauth/csrf-token.js
-index a35e8f0..cf5ab1a 100644
+index a35e8f0..12fd7a1 100644
 --- a/node_modules/@auth/core/lib/actions/callback/oauth/csrf-token.js
 +++ b/node_modules/@auth/core/lib/actions/callback/oauth/csrf-token.js
 @@ -14,15 +14,16 @@ import { MissingCSRF } from "../../../../errors.js";
@@ -9,8 +9,7 @@ index a35e8f0..cf5ab1a 100644
 -export async function createCSRFToken({ options, cookieValue, isPost, bodyValue, }) {
 +export async function createCSRFToken({ options, cookieValue, isPost, bodyValue }) {
      if (cookieValue) {
--        const [csrfToken, csrfTokenHash] = cookieValue.split("|");
-+        const [csrfToken, csrfTokenHash] = cookieValue.split("|");
+         const [csrfToken, csrfTokenHash] = cookieValue.split("|");
 +        const [bodyValueToken] = bodyValue?.split("|") || [];
          const expectedCsrfTokenHash = await createHash(`${csrfToken}${options.secret}`);
          if (csrfTokenHash === expectedCsrfTokenHash) {
@@ -31,12 +30,12 @@ index 5e4e758..4ed39b5 100644
      }
      else {
 -        const { csrfToken, cookie: csrfCookie, csrfTokenVerified, } = await createCSRFToken({
-+        const { csrfToken, cookie: csrfCookie, csrfTokenVerified, } = await createCSRFToken({
++        const { csrfToken, cookie: csrfCookie, csrfTokenVerified } = await createCSRFToken({
              options,
              cookieValue: reqCookies?.[options.cookies.csrfToken.name],
              isPost,
 diff --git a/node_modules/@auth/core/src/lib/actions/callback/oauth/csrf-token.ts b/node_modules/@auth/core/src/lib/actions/callback/oauth/csrf-token.ts
-index 337c1d6..8050f34 100644
+index 337c1d6..0034f30 100644
 --- a/node_modules/@auth/core/src/lib/actions/callback/oauth/csrf-token.ts
 +++ b/node_modules/@auth/core/src/lib/actions/callback/oauth/csrf-token.ts
 @@ -31,6 +31,7 @@ export async function createCSRFToken({
@@ -47,3 +46,12 @@ index 337c1d6..8050f34 100644
  
      const expectedCsrfTokenHash = await createHash(
        `${csrfToken}${options.secret}`
+@@ -40,7 +41,7 @@ export async function createCSRFToken({
+       // If hash matches then we trust the CSRF token value
+       // If this is a POST request and the CSRF Token in the POST request matches
+       // the cookie we have already verified is the one we have set, then the token is verified!
+-      const csrfTokenVerified = isPost && csrfToken === bodyValue
++      const csrfTokenVerified = isPost && csrfToken === bodyValueToken
+ 
+       return { csrfTokenVerified, csrfToken }
+     }
