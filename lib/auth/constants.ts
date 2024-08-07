@@ -180,6 +180,15 @@ export const authConfig = {
         secure: true,
       },
     },
+    csrfToken: {
+      name: `__Host-next-auth.csrf-token`,
+      options: {
+        httpOnly: true,
+        sameSite: 'none',
+        path: '/',
+        secure: true,
+      },
+    },
   },
   trustHost: true,
   pages: {
