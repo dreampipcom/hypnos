@@ -137,7 +137,7 @@ export const authConfig = {
       return true;
     },
     async redirect() {
-      return `${process.env.MAIN_URL}`;
+      return `${process.env.MAIN_URL}/dash`;
     },
     // async jwt({ user, token }) {
     //   if (user) {
