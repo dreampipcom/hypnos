@@ -23,7 +23,7 @@ export function RootProviders({ children }: { children: React.ReactNode }) {
   if (!authState?.initd) return;
 
   return (
-    <SessionProvider basePath={base ? `${base}/api/auth` : '/api/auth'}>
+    <SessionProvider basePath={base ? `${base}/api/v1/auth` : '/api/v1/auth'}>
       <AuthContext.Provider value={authState}>{children}</AuthContext.Provider>
     </SessionProvider>
   );

@@ -20,7 +20,7 @@ import {
 
 export const GetSession = async ({ cookies = '' }) => {
   try {
-    const response = await fetch(`${process.env.AUTH_URL}/api/auth/session`, {
+    const response = await fetch(`${process.env.AUTH_URL}/api/v1/auth/session`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -137,7 +137,7 @@ export const authConfig = {
       return true;
     },
     async redirect() {
-      return `${process.env.MAIN_URL}`;
+      return `${process.env.MAIN_URL}/dash`;
     },
     // async jwt({ user, token }) {
     //   if (user) {
@@ -180,13 +180,22 @@ export const authConfig = {
         secure: true,
       },
     },
+    csrfToken: {
+      name: `authjs.csrf-token`,
+      options: {
+        httpOnly: true,
+        sameSite: 'none',
+        path: '/',
+        secure: true,
+      },
+    },
   },
   trustHost: true,
   pages: {
-    signIn: '/signin',
+    signIn: '/dash/signin',
     signOut: '/',
-    error: '/error', // Error code passed in query string as ?error=
-    verifyRequest: '/verify', // (used for check email message)
+    error: '/dash/error', // Error code passed in query string as ?error=
+    verifyRequest: '/dash/verify', // (used for check email message)
     // newUser: '/' // New users will be directed here on first sign in (leave the property out if not of interest)
   },
 } satisfies NextAuthConfig;
