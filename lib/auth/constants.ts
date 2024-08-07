@@ -180,6 +180,15 @@ export const authConfig = {
         secure: true,
       },
     },
+    csrfToken: {
+      name: `authjs.csrf-token`,
+      options: {
+        httpOnly: true,
+        // sameSite: 'none',
+        path: '/',
+        // secure: false,
+      },
+    },
   },
   trustHost: true,
   pages: {
