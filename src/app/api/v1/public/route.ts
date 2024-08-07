@@ -15,6 +15,11 @@ const generateErrorResponse = (e: any, status: number) => {
 
 // export const dynamic = 'force-static';
 export async function GET(request: CombineRequest) {
+  console.log({
+    request: request.cookies,
+    requestOrigin: request.headers.get('x-forwarded-host'),
+    cache: request.headers.get('cache-control'),
+  });
   try {
     const url = new URL(request.url);
     const query = url.searchParams;
@@ -37,11 +42,18 @@ export async function GET(request: CombineRequest) {
       filters: filterArray,
     });
 
-    return NextResponse.json({
-      ok: true,
-      status: 200,
-      data,
-    });
+    console.log({ headers: request.headers });
+
+    return NextResponse.json(
+      {
+        ok: true,
+        status: 200,
+        data,
+      },
+      {
+        status: 200,
+      },
+    );
   } catch (e) {
     return NextResponse.json(generateErrorResponse(e, 403), { status: 403 });
   }
