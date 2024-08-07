@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
   const searchParams = new URLSearchParams(queryParams);
 
   const response = NextResponse.redirect(
-    `https://${req.headers.get('host')}/api/auth/callback/apple?${searchParams.toString()}`,
+    `https://${req.headers.get('host')}/api/v1/auth/callback/apple?${searchParams.toString()}`,
     {
       status: 302,
     },
