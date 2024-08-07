@@ -28,7 +28,7 @@ const headers: Record<string, any> = {
 
 export default async function middleware(request: NextRequest) {
   // You could alternatively limit based on user ID or similar
-  const response = NextResponse.next();
+  const response = next();
   const ip = ipAddress(request) || '127.0.0.1';
 
   const { success, pending, limit, reset, remaining } = await ratelimit.limit(ip);
