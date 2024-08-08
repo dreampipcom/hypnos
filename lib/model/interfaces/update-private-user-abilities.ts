@@ -8,7 +8,7 @@ const updatePrivateUserAbilities = async ({ upsert = false, user, abilities }: a
     // to-do: move this will be a middleware
     if (abilities?.length === 0) return new Error('Code 002: Missing data (abilities)');
 
-    const loggedUser = user || (await whoAmI());
+    const loggedUser = user || (await whoAmI({}));
 
     const payload = upsert
       ? {

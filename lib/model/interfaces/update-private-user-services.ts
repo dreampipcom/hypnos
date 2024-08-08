@@ -8,7 +8,7 @@ const updatePrivateUserServices = async ({ upsert = false, user, services }: any
     // to-do: move this will be a middleware
     if (services?.length === 0) return new Error('Code 002: Missing data (services)');
 
-    const loggedUser = user || (await whoAmI());
+    const loggedUser = user || (await whoAmI({}));
 
     const payload = upsert
       ? {

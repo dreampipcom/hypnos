@@ -14,7 +14,7 @@ const getPrivateAbilities = async ({
   limit = PAGE_SIZE,
   filters = [],
 }: any) => {
-  const loggedUser = user || (await whoAmI());
+  const loggedUser = user || (await whoAmI({}));
 
   const adaptQuery: any = {
     where: {
