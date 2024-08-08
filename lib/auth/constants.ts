@@ -29,6 +29,7 @@ export const GetSession = async ({ cookies = '' }) => {
       },
     });
     const session = await response.json();
+    console.log({ cookies, session });
     return session;
   } catch (e) {
     console.error(e);

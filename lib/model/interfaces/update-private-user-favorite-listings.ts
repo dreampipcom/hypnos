@@ -9,6 +9,8 @@ const updatePrivateUserFavoriteListings = async ({ upsert = true, user, listings
 
     const loggedUser = user || (await whoAmI());
 
+    console.log({ user, loggedUser });
+
     const delta = upsert ? listings.filter((listing: any) => !loggedUser?.favorites?.includes(listing)) : [];
 
     if ((await canI({ name: 'Ability 1', user: loggedUser })) && type === 'id') {

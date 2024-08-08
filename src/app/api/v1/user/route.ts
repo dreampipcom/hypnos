@@ -22,10 +22,9 @@ export async function PATCH(request: CombineRequest) {
     const url = new URL(request.url);
     const query = url.searchParams;
     const type = query.get('type') || 'id';
-    const body = await request?.json();
     const listings = body?.listings;
 
-    const user = body?.user || session?.user;
+    const user = session?.user;
 
     const data = await UpdatePrivateUserFavoriteListings({
       user,
