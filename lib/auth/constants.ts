@@ -20,7 +20,7 @@ import {
 
 export const GetSession = async ({ cookies = '' }) => {
   try {
-    const response = await fetch(`${process.env.MAIN_URL}/api/v1/auth/session`, {
+    const response = await fetch(`${process.env.API_URL}/api/v1/auth/session`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -29,6 +29,7 @@ export const GetSession = async ({ cookies = '' }) => {
       },
     });
     const session = await response.json();
+    console.log({ cookies, session });
     return session;
   } catch (e) {
     console.error(e);

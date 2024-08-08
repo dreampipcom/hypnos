@@ -25,7 +25,8 @@ export async function PATCH(request: CombineRequest) {
     const body = await request?.json();
     const listings = body?.listings;
 
-    const user = body?.user || session?.user;
+    const user = session?.user;
+    console.log({ session, body, cookies });
 
     const data = await UpdatePrivateUserFavoriteListings({
       user,

@@ -7,7 +7,9 @@ const updatePrivateUserFavoriteListings = async ({ upsert = true, user, listings
   try {
     if (listings?.length === 0) return new Error('Code 002: Missing data (listings)');
 
-    const loggedUser = user || (await whoAmI());
+    const loggedUser = user || (await whoAmI({}));
+
+    console.log({ user, loggedUser });
 
     const delta = upsert ? listings.filter((listing: any) => !loggedUser?.favorites?.includes(listing)) : [];
 
