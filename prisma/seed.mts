@@ -124,8 +124,42 @@ if (seedType === 'private') {
       });
 
       // // services
+      const service1name = {
+        en: 'The Rick Morty Experience',
+        it: "L'esperienza di Rick Morty",
+        pt: 'A Experiência Rick Morty',
+        es: 'La Experiencia Rick Morty',
+        de: 'Das Rick Morty Erlebnis',
+        fr: "L'expérience Rick Morty",
+        ro: 'Experiența Rick Morty',
+        cz: 'Rick Morty Zážitek',
+        pl: 'Doświadczenie Rick Morty',
+        et: 'Rick Morty Kogemus',
+        sv: 'Rick Morty-upplevelsen',
+        ja: 'リック・モーティ体験',
+        ru: 'Опыт Рика и Морти',
+      };
+
+      const service2name = {
+        en: 'The Vibe Modulator',
+        it: 'Il Modulatore di Vibrazioni',
+        pt: 'O Modulador de Vibração',
+        es: 'El Modulador de Ambiente',
+        de: 'Der Vibe-Modulator',
+        fr: 'Le Modulateur de Vibration',
+        ro: 'Modulatorul de Vibrații',
+        cz: 'Vibrační Modulátor',
+        pl: 'Modulator Nastroju',
+        et: 'Vibe Modulaator',
+        sv: 'Vibe-modulatorn',
+        ja: 'バイブモジュレーター',
+        ru: 'Вибромодулятор',
+      };
+
       const service1 = await pvtPrisma.services.create({
         data: createMockService({
+          name: service1name,
+          slug: 'rickmorty',
           user: user1.id,
           community: community1.id,
           features: [{ id: feature1.id }, { id: feature2.id }],
@@ -135,6 +169,8 @@ if (seedType === 'private') {
       });
       const service2 = await pvtPrisma.services.create({
         data: createMockService({
+          name: service2name,
+          slug: 'dpcp-vibemodulator',
           user: user1.id,
           community: community1.id,
           refUsers: [{ id: user2.id }, { id: user3.id }],

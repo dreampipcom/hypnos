@@ -370,6 +370,7 @@ model Roles {
 model Services {
   id                  String          @id @default(auto()) @map("_id") @db.ObjectId
   name                ILocaleString
+  slug                String
   status              EServiceStatus
   type                EServiceType
   nature              EServiceNature
@@ -639,6 +640,8 @@ type ILocaleString {
   bg        String?
   bs        String?
   sq        String?
+  ja        String?
+  ru        String?
 }
 
 
