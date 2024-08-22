@@ -9,6 +9,7 @@ const getPrivateServices = async ({
   name,
   locale = 'es',
   user,
+  target,
   page = 0,
   offset = 0,
   limit = PAGE_SIZE,
@@ -19,43 +20,63 @@ const getPrivateServices = async ({
   const adaptQuery: any = {
     where: {
       id,
-      name: { [locale]: name },
+      slug: name,
     },
     skip: page * (limit + offset),
     take: limit,
     cacheStrategy: { ttl: 90 },
   };
 
-  if (filters?.length) {
-    try {
-      const supportedQueries: Record<string, any> = {
-        user: {
-          query: {
-            OR: [{ id: { in: loggedUser?.servicesIds }, name: { [locale]: name } }, { userOwner: loggedUser?.id }],
+  if ((await canI({ type: 'R', action: 'view-listings', target, user: loggedUser })) && type === 'id') {
+    if (filters?.length) {
+      try {
+        const supportedQueries: Record<string, any> = {
+          user: {
+            query: {
+              OR: [{ id: { in: loggedUser?.servicesIds }, name: { [locale]: name } }, { userOwner: loggedUser?.id }],
+            },
           },
-        },
-        // group: {
-        //   query: {
-        //     OR: [
-        //       { id, name, groupOwner: session?.user?.id },
-        //     ],
-        //   },
-        // },
-      };
+          // group: {
+          //   query: {
+          //     OR: [
+          //       { id, name, groupOwner: session?.user?.id },
+          //     ],
+          //   },
+          // },
+        };
 
-      const query: any = filters?.reduce((acc: any, filter: string) => {
-        if (!acc.OR) acc.OR = [];
-        acc.OR.push(supportedQueries[filter].query);
-        return acc;
-      }, {});
+        const query: any = filters?.reduce((acc: any, filter: string) => {
+          if (!acc.OR) acc.OR = [];
+          acc.OR.push(supportedQueries[filter].query);
+          return acc;
+        }, {});
 
-      adaptQuery.where = {
-        ...adaptQuery.where,
-        ...query,
-      };
-    } catch (e) {
-      throw new Error('Code 001: Wrong filter');
+        adaptQuery.where = {
+          ...adaptQuery.where,
+          ...query,
+        };
+      } catch (e) {
+        throw new Error('Code 001: Wrong filter');
+      }
     }
+
+    const swapUserData = loggedUser.favorites.filter((listing: string) => !listings.includes(listing));
+    const payload = upsert
+      ? {
+          favoritesIds: [...swapUserData, ...delta],
+        }
+      : {
+          favoritesIds: listings,
+        };
+    const adaptQuery: any = {
+      where: {
+        email: loggedUser.email,
+      },
+      data: payload,
+    };
+
+    const response = await PrivatePrisma.user.update(adaptQuery);
+    return response;
   }
 
   const response = await PrivatePrisma.services.findMany(adaptQuery);

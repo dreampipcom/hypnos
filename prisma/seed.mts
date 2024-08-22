@@ -84,18 +84,77 @@ if (seedType === 'private') {
       });
 
       // // abilities
+
+      const ability1name = {
+        en: 'Favorite Listings',
+        it: 'Aggiungi ai Preferiti',
+        pt: 'Favoritar Listagens',
+        es: 'Marcar como Favorito',
+        de: 'Anzeigen favorisieren',
+        fr: 'Mettre en Favori',
+        ro: 'Favoritează liste',
+        cz: 'Oblíbené inzeráty',
+        pl: 'Dodaj do Ulubionych',
+        et: 'Lisa lemmikutesse',
+        sv: 'Gör till Favoriter',
+        ja: 'お気に入りにする',
+        ru: 'Добавить в Избранное',
+      };
+
+      const ability2name = {
+        en: 'View Listings',
+        it: 'Visualizza inserzioni',
+        pt: 'Ver listagens',
+        es: 'Ver listados',
+        de: 'Anzeigen anzeigen',
+        fr: 'Voir les annonces',
+        ro: 'Vizualizare liste',
+        cz: 'Zobrazit inzeráty',
+        pl: 'Wyświetl oferty',
+        et: 'Vaata kuulutusi',
+        sv: 'Visa listor',
+        ja: 'リストを表示する',
+        ru: 'Просмотр объявлений',
+      };
+
       const ability1 = await pvtPrisma.abilities.create({
         data: createMockAbility({
+          name: ability2name,
           user: user1.id,
           community: community1.id,
+          type: 'R',
+          action: 'view-listings',
+          nature: 'COMMON',
+          target: 'rickmorty',
           roles: [{ id: role1.id }, { id: role2.id }],
           refUsers: [{ id: user1.id }],
           refCommunities: [{ id: community1.id }],
         }),
       });
+
       const ability2 = await pvtPrisma.abilities.create({
         data: createMockAbility({
+          name: ability2name,
           user: user1.id,
+          type: 'R',
+          action: 'view-listings',
+          nature: 'PRIVILEGE',
+          target: 'dpcp-vibemodulator',
+          community: community1.id,
+          roles: [{ id: role1.id }, { id: role2.id }],
+          refUsers: [{ id: user1.id }, { id: user2.id }, { id: user3.id }],
+          refCommunities: [{ id: community2.id }, { id: community3.id }],
+        }),
+      });
+
+      const ability3 = await pvtPrisma.abilities.create({
+        data: createMockAbility({
+          name: ability1name,
+          user: user1.id,
+          type: 'U',
+          action: 'favorite',
+          nature: 'COMMON',
+          target: 'rickmorty',
           community: community1.id,
           roles: [{ id: role1.id }, { id: role2.id }],
           refUsers: [{ id: user1.id }, { id: user2.id }, { id: user3.id }],
@@ -144,7 +203,7 @@ if (seedType === 'private') {
         en: 'The Vibe Modulator',
         it: 'Il Modulatore di Vibrazioni',
         pt: 'O Modulador de Vibração',
-        es: 'El Modulador de Ambiente',
+        es: 'El Modulador de Vibra',
         de: 'Der Vibe-Modulator',
         fr: 'Le Modulateur de Vibration',
         ro: 'Modulatorul de Vibrații',

@@ -3,7 +3,7 @@
 import { whoAmI, canI } from '@controller';
 import { PrivatePrisma } from '@model';
 
-const updatePrivateUserFavoriteListings = async ({ upsert = true, user, listings = [], type = 'id' }: any) => {
+const updatePrivateUserFavoriteListings = async ({ upsert = true, user, target, listings = [], type = 'id' }: any) => {
   try {
     if (listings?.length === 0) return new Error('Code 002: Missing data (listings)');
 
@@ -13,7 +13,7 @@ const updatePrivateUserFavoriteListings = async ({ upsert = true, user, listings
 
     const delta = upsert ? listings.filter((listing: any) => !loggedUser?.favorites?.includes(listing)) : [];
 
-    if ((await canI({ name: 'Ability 1', user: loggedUser })) && type === 'id') {
+    if ((await canI({ type: 'U', action: 'favorite', target, user: loggedUser })) && type === 'id') {
       const swapUserData = loggedUser.favorites.filter((listing: string) => !listings.includes(listing));
       const payload = upsert
         ? {
@@ -31,7 +31,7 @@ const updatePrivateUserFavoriteListings = async ({ upsert = true, user, listings
 
       const response = await PrivatePrisma.user.update(adaptQuery);
       return response;
-    } else if ((await canI({ name: 'Ability 1', user: loggedUser })) && type === 'string') {
+    } else if ((await canI({ type: 'U', action: 'favorite', target, user: loggedUser })) && type === 'string') {
       const userData = loggedUser?.favoritesStrings;
       const swapData = userData.filter((listing: string) => listings.includes(listing));
       const transaction = userData

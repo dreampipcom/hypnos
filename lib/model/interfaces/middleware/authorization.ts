@@ -2,9 +2,9 @@
 import { getSession, GetSession } from '@auth';
 import { GetPrivateAbilities } from '@controller';
 import { cookies as nextCookies } from 'next/headers';
-export const canI = async ({ name, user }: any) => {
+export const canI = async ({ type, target, action, user }: any) => {
   try {
-    const ability = await GetPrivateAbilities({ name });
+    const ability = await GetPrivateAbilities({ type, target, action });
     // to-do add authorization/validation checks
     const yes = user?.abilities?.includes(ability[0]?.id);
     // return the capacity

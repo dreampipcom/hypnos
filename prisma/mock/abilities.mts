@@ -10,14 +10,25 @@ import { mockTerm, mockTerm2 } from './taxonomies.mts';
 
 import { HOMock } from './helpers.mts';
 
-export const createMockAbility = ({ community, user, roles, refUsers, refCommunities }: any): any => {
+export const createMockAbility = ({
+  name,
+  action,
+  type,
+  nature,
+  target,
+  community,
+  user,
+  roles,
+  refUsers,
+  refCommunities,
+}: any): any => {
   const data = {
-    name: {
-      es: 'Ability 1',
-    },
+    name,
+    target,
+    action,
     status: 'ACTIVE',
-    type: 'R',
-    nature: 'COMMON',
+    type,
+    nature,
     roles: {
       connect: roles,
     },

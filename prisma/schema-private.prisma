@@ -432,6 +432,8 @@ model Abilities {
   status              EAbilityStatus
   type                EAbilityType
   nature              EAbilityNature
+  target              String
+  action              String
 
   features            Features[]        @relation("featureAbilities", fields: [featuresIds], references: [id])
   featuresIds         String[]          @db.ObjectId
@@ -462,6 +464,7 @@ model Abilities {
 model Moods {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
+  slug              String
   description       ILocaleString
 
   title             ILocaleString
@@ -489,6 +492,7 @@ model Moods {
 model Actions {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
+  slug              String
   description       ILocaleString
 
   title             ILocaleString
@@ -516,6 +520,7 @@ model Actions {
 model Thoughts {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
+  slug              String
   description       ILocaleString
 
   title             ILocaleString
@@ -543,6 +548,7 @@ model Thoughts {
 model Projects {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
+  slug              String
   description       ILocaleString
 
   title             ILocaleString
@@ -575,6 +581,7 @@ model Projects {
 model Investments {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
+  slug              String
   description       ILocaleString
 
   title             ILocaleString
@@ -887,8 +894,9 @@ enum EAbilityNature {
 }
 
 enum EAbilityType {
+  C
   R
-  W
+  U
   D
 }
 
