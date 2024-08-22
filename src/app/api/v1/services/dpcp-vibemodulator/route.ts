@@ -2,7 +2,8 @@
 import type { NextApiRequest } from 'next';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
-import { GetPublicListings } from '@controller';
+import { GetPrivateServices } from '@controller';
+import { GetSession } from '@auth';
 type CombineRequest = NextRequest & NextApiRequest;
 
 const generateErrorResponse = (e: any, status: number) => {
@@ -21,6 +22,10 @@ export async function GET(request: CombineRequest) {
     cache: request.headers.get('cache-control'),
   });
   try {
+    const cookies = request?.cookies || request?.headers.get('cookies');
+    const session = await GetSession({ cookies: cookies || '' });
+    const user = session?.user;
+    console.log('handler', { session, user });
     const url = new URL(request.url);
     const query = url.searchParams;
 
@@ -35,14 +40,16 @@ export async function GET(request: CombineRequest) {
     const coercedLimit = Number(limit ? (Array.isArray(limit) ? limit[0] : limit) : 100);
     const coercedOffset = Number(offset ? (Array.isArray(offset) ? offset[0] : offset) : 0);
 
-    const data = await GetPublicListings({
+    const data = await GetPrivateServices({
+      user,
+      target: 'dpcp-vibemodulator',
       page: coercedPage,
       limit: coercedLimit,
       offset: coercedOffset,
       filters: filterArray,
     });
 
-    console.log({ headers: request.headers });
+    console.log({ data, headers: request.headers });
 
     return NextResponse.json(
       {

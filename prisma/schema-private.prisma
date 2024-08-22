@@ -370,7 +370,7 @@ model Roles {
 model Services {
   id                  String          @id @default(auto()) @map("_id") @db.ObjectId
   name                ILocaleString
-  slug                String
+  slug                String?
   status              EServiceStatus
   type                EServiceType
   nature              EServiceNature
@@ -432,8 +432,8 @@ model Abilities {
   status              EAbilityStatus
   type                EAbilityType
   nature              EAbilityNature
-  target              String
-  action              String
+  target              String?
+  action              String?
 
   features            Features[]        @relation("featureAbilities", fields: [featuresIds], references: [id])
   featuresIds         String[]          @db.ObjectId

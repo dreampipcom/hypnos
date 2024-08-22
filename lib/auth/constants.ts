@@ -16,6 +16,7 @@ import {
   GetPrivateCommonServices,
   UpdatePrivateUserAbilities,
   GetPrivateCommonAbilities,
+  GetPrivateAbilities,
 } from '@controller';
 
 export const GetSession = async ({ cookies = '' }) => {
@@ -36,6 +37,8 @@ export const GetSession = async ({ cookies = '' }) => {
   }
 };
 
+// to-do: admin sanitizer
+
 // schema sanitizer
 const allUsersSideEffects = async ({ user }: any) => {
   const services = await GetPrivateCommonServices({});
@@ -43,8 +46,15 @@ const allUsersSideEffects = async ({ user }: any) => {
   const commonServices = services.map((service) => service?.id).map((el) => el);
   const commonAbilities = abilities.map((ability) => ability?.id).map((el) => el);
 
+  const [dpcpAbility] = await GetPrivateAbilities({ id: '66c6859aa06abeda1c830c56' });
+  console.log({ dpcpAbility });
+
   await UpdatePrivateUserServices({ user, services: [...commonServices, ...user.servicesIds], upsert: false });
-  await UpdatePrivateUserAbilities({ user, abilities: [...commonAbilities, ...user.abilitiesIds], upsert: false });
+  await UpdatePrivateUserAbilities({
+    user,
+    abilities: [...commonAbilities, ...user.abilitiesIds, dpcpAbility.id],
+    upsert: false,
+  });
 };
 
 export const providers: any[] = [

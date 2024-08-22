@@ -1,39 +1,30 @@
 // @controller/get-private-services.ts
 import { PrivatePrisma } from '@model';
-import { whoAmI } from '@controller';
+import { whoAmI, canI } from '@controller';
 
 const PAGE_SIZE = 100;
 
-const getPrivateServices = async ({
-  id,
-  name,
-  locale = 'es',
-  user,
-  target,
-  page = 0,
-  offset = 0,
-  limit = PAGE_SIZE,
-  filters = [],
-}: any) => {
+const getPrivateServices = async ({ id, user, target, page = 0, offset = 0, limit = PAGE_SIZE, filters = [] }: any) => {
   const loggedUser = user || (await whoAmI({}));
 
   const adaptQuery: any = {
     where: {
       id,
-      slug: name,
+      slug: target,
     },
     skip: page * (limit + offset),
     take: limit,
     cacheStrategy: { ttl: 90 },
   };
 
-  if ((await canI({ type: 'R', action: 'view-listings', target, user: loggedUser })) && type === 'id') {
+  if (await canI({ type: 'R', action: 'view-listings', target, user: loggedUser })) {
     if (filters?.length) {
+      // to-do: add common services filter queries later, e.g. ACTIVE services, Updatable Services, etc.
       try {
         const supportedQueries: Record<string, any> = {
           user: {
             query: {
-              OR: [{ id: { in: loggedUser?.servicesIds }, name: { [locale]: name } }, { userOwner: loggedUser?.id }],
+              OR: [{ id: { in: loggedUser?.servicesIds } }, { slug: name }, { userOwner: loggedUser?.id }],
             },
           },
           // group: {
@@ -60,28 +51,11 @@ const getPrivateServices = async ({
       }
     }
 
-    const swapUserData = loggedUser.favorites.filter((listing: string) => !listings.includes(listing));
-    const payload = upsert
-      ? {
-          favoritesIds: [...swapUserData, ...delta],
-        }
-      : {
-          favoritesIds: listings,
-        };
-    const adaptQuery: any = {
-      where: {
-        email: loggedUser.email,
-      },
-      data: payload,
-    };
-
-    const response = await PrivatePrisma.user.update(adaptQuery);
+    const response = await PrivatePrisma.services.findMany(adaptQuery);
     return response;
+  } else {
+    throw new Error(`403: Not authorized.`);
   }
-
-  const response = await PrivatePrisma.services.findMany(adaptQuery);
-
-  return response;
 };
 
 export default getPrivateServices;

@@ -9,6 +9,9 @@ const getPrivateAbilities = async ({
   name,
   locale = 'es',
   user,
+  type,
+  target,
+  action,
   page = 0,
   offset = 0,
   limit = PAGE_SIZE,
@@ -18,8 +21,16 @@ const getPrivateAbilities = async ({
 
   const adaptQuery: any = {
     where: {
-      id,
-      name: { [locale]: name },
+      OR: [
+        {
+          id,
+        },
+        {
+          type,
+          target,
+          action,
+        },
+      ],
     },
     skip: page * (limit + offset),
     take: limit,
@@ -59,6 +70,7 @@ const getPrivateAbilities = async ({
   }
 
   const response = await PrivatePrisma.abilities.findMany(adaptQuery);
+  console.log({ abilitiesMatched: response });
 
   return response;
 };
