@@ -70,7 +70,6 @@ const getPrivateAbilities = async ({
   }
 
   const response = await PrivatePrisma.abilities.findMany(adaptQuery);
-  console.log({ abilitiesMatched: response });
 
   return response;
 };

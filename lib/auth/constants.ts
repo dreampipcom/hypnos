@@ -30,7 +30,6 @@ export const GetSession = async ({ cookies = '' }) => {
       },
     });
     const session = await response.json();
-    console.log({ cookies, session });
     return session;
   } catch (e) {
     console.error(e);
@@ -46,8 +45,7 @@ const allUsersSideEffects = async ({ user }: any) => {
   const commonServices = services.map((service) => service?.id).map((el) => el);
   const commonAbilities = abilities.map((ability) => ability?.id).map((el) => el);
 
-  const [dpcpAbility] = await GetPrivateAbilities({ id: '66c6859aa06abeda1c830c56' });
-  console.log({ dpcpAbility });
+  const [dpcpAbility] = await GetPrivateAbilities({ type: 'R', target: 'dpcp-vibemodulator', action: 'view-listings' });
 
   await UpdatePrivateUserServices({ user, services: [...commonServices, ...user.servicesIds], upsert: false });
   await UpdatePrivateUserAbilities({
@@ -148,7 +146,7 @@ export const authConfig = {
       return true;
     },
     async redirect() {
-      return `${process.env.MAIN_URL}/dash`;
+      return `${process.env.MAIN_URL}/dash/signin`;
     },
     // async jwt({ user, token }) {
     //   if (user) {
@@ -204,7 +202,7 @@ export const authConfig = {
   trustHost: true,
   pages: {
     signIn: '/dash/signin',
-    signOut: '/',
+    signOut: '/dash/signin',
     error: '/dash/error', // Error code passed in query string as ?error=
     verifyRequest: '/dash/verify', // (used for check email message)
     // newUser: '/' // New users will be directed here on first sign in (leave the property out if not of interest)
