@@ -25,7 +25,7 @@ export async function GET(request: CombineRequest) {
     const cookies = request?.cookies || request?.headers.get('cookies');
     const session = await GetSession({ cookies: cookies || '' });
     const user = session?.user;
-    console.log('handler', { session, user });
+
     const url = new URL(request.url);
     const query = url.searchParams;
 
@@ -48,8 +48,6 @@ export async function GET(request: CombineRequest) {
       offset: coercedOffset,
       filters: filterArray,
     });
-
-    console.log({ data, headers: request.headers });
 
     return NextResponse.json(
       {
