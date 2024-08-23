@@ -127,7 +127,7 @@ export const authConfig = {
       return true;
     },
     async redirect({ url, baseUrl }) {
-      const redirectUrl = `${url.startsWith('/') ? new URL(url, baseUrl).toString() : url}/dash`;
+      const redirectUrl = `${url.startsWith('/') ? new URL(url, baseUrl).toString() : url}dash`;
       console.log(`[authjs] Redirecting to "${redirectUrl}" (resolved from url "${url}" and baseUrl "${baseUrl}")`);
       return redirectUrl;
     },
