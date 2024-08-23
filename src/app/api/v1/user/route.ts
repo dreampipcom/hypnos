@@ -23,7 +23,6 @@ export async function POST(request: CombineRequest) {
       {
         ok: true,
         status: 200,
-        data,
       },
       {
         status: 200,
