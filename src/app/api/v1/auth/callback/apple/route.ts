@@ -20,10 +20,10 @@ export async function POST(req: NextRequest) {
       status: 302,
     },
   );
-  const pkce = req.cookies.get('next-auth.pkce.code_verifier');
+  const pkce = req.cookies.get('authjs.pkce.code_verifier');
 
   if (pkce?.value) {
-    response.cookies.set('next-auth.pkce.code_verifier', pkce.value, {
+    response.cookies.set('authjs.pkce.code_verifier', pkce.value, {
       httpOnly: true,
       sameSite: 'none',
       path: '/',
