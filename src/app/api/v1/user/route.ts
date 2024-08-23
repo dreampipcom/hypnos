@@ -15,6 +15,23 @@ const generateErrorResponse = (e: any, status: number) => {
 };
 
 // export const dynamic = 'force-static';
+
+export async function POST(request: CombineRequest) {
+  const isHealthCheck = request?.headers?.get('x-dp-keepalive') === process.env.NEXUS_KEEPALIVE;
+  if (isHealthCheck) {
+    return NextResponse.json(
+      {
+        ok: true,
+        status: 200,
+        data,
+      },
+      {
+        status: 200,
+      },
+    );
+  }
+}
+
 export async function PATCH(request: CombineRequest) {
   try {
     const cookies = request?.headers.get('cookies');
