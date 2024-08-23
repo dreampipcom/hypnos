@@ -3,7 +3,7 @@ import type { NextApiRequest } from 'next';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import { GetSession } from '@auth';
-import { UpdatePrivateUserFavoriteListings } from '@controller';
+import { UpdatePrivateUserFavoriteListings, GetPrivateCommonAbilities } from '@controller';
 type CombineRequest = NextRequest & NextApiRequest;
 
 const generateErrorResponse = (e: any, status: number) => {
@@ -19,6 +19,7 @@ const generateErrorResponse = (e: any, status: number) => {
 export async function POST(request: CombineRequest) {
   const isHealthCheck = request?.headers?.get('x-dp-keepalive') === process.env.NEXUS_KEEPALIVE;
   if (isHealthCheck) {
+    await GetPrivateCommonAbilities({});
     return NextResponse.json(
       {
         ok: true,
