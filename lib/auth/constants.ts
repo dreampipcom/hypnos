@@ -3,7 +3,6 @@
 import type { NextAuthConfig } from 'next-auth';
 import { v4 as uuid } from 'uuid';
 import type { PrismaClient } from '@prisma/client';
-import { PrivatePrisma } from '@model';
 import NextAuth from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
@@ -17,6 +16,7 @@ import {
   UpdatePrivateUserAbilities,
   GetPrivateCommonAbilities,
 } from '@controller';
+import { PrivatePrisma } from '@model';
 
 export const GetSession = async ({ cookies = '' }) => {
   try {
@@ -64,41 +64,30 @@ export const providers: any[] = [
   AppleProvider({
     clientId: process.env.APPLE_CLIENT_ID as string,
     clientSecret: process.env.APPLE_CLIENT_SECRET as string,
-    wellKnown: 'https://appleid.apple.com/.well-known/openid-configuration',
     checks: ['pkce'],
-    authorization: {
-      url: 'https://appleid.apple.com/auth/authorize',
-      params: {
-        scope: 'name email',
-        response_type: 'code',
-        response_mode: 'form_post',
-        state: uuid(),
-      },
-    },
     token: {
       url: `https://appleid.apple.com/auth/token`,
     },
     client: {
       token_endpoint_auth_method: 'client_secret_post',
     },
-    profile(profile: any) {
+    authorization: {
+      params: {
+        response_mode: 'form_post',
+        response_type: 'code',
+        scope: 'name email',
+        state: uuid(),
+      },
+    },
+    profile(profile) {
       return {
         id: profile.sub,
-        name: profile.name || null,
-        email: profile.email || null,
-        image: null,
+        name: '',
+        email: profile.email,
+        image: '',
       };
     },
-    profileConform(profile: any, query: any) {
-      if (query.user) {
-        const user = JSON.parse(query.user);
-        if (user.name) {
-          profile.name = Object.values(user.name).join(' ');
-        }
-      }
-      return profile;
-    },
-  } as any),
+  }),
   FacebookProvider({
     clientId: process.env.FACEBOOK_CLIENT_ID as string,
     clientSecret: process.env.FACEBOOK_CLIENT_SECRET as string,
@@ -172,8 +161,8 @@ export const authConfig = {
     },
   },
   cookies: {
-    pkceCodeVerifier: {
-      name: 'next-auth.pkce.code_verifier',
+    csrfToken: {
+      name: `authjs.csrf-token`,
       options: {
         httpOnly: true,
         sameSite: 'none',
@@ -181,8 +170,8 @@ export const authConfig = {
         secure: true,
       },
     },
-    csrfToken: {
-      name: `authjs.csrf-token`,
+    pkceCodeVerifier: {
+      name: 'authjs.pkce.code_verifier',
       options: {
         httpOnly: true,
         sameSite: 'none',

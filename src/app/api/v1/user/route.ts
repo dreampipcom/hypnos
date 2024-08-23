@@ -49,15 +49,12 @@ export async function PATCH(request: CombineRequest) {
     const listings = body?.listings;
 
     const user = session?.user;
-    console.log({ session, body, cookies });
 
     const data = await UpdatePrivateUserFavoriteListings({
       user,
       listings,
       type,
     });
-
-    console.log({ headers: request.headers });
 
     // [DPCP-116]: https://www.notion.so/angeloreale/Hypnos-Add-transactional-websockets-de3667b32a4c4cd4ade76080203e68fd?pvs=4
     // might have idempotency issues.
