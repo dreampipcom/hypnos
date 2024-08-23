@@ -10,7 +10,7 @@ const generateErrorResponse = (e: any, status: number) => {
   return {
     ok: false,
     status,
-    message: e.message,
+    message: e.message || e,
   };
 };
 
@@ -29,6 +29,8 @@ export async function POST(request: CombineRequest) {
       },
     );
   }
+
+  return NextResponse.json(generateErrorResponse('Not authorized', 403), { status: 403 });
 }
 
 export async function PATCH(request: CombineRequest) {
