@@ -64,6 +64,7 @@ export const providers: any[] = [
   AppleProvider({
     clientId: process.env.APPLE_CLIENT_ID as string,
     clientSecret: process.env.APPLE_CLIENT_SECRET as string,
+    redirectProxyUrl: `${process.env.AUTH_URL}`,
     token: {
       url: `https://appleid.apple.com/auth/token`,
     },
