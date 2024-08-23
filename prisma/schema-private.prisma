@@ -884,8 +884,9 @@ enum EAbilityNature {
 }
 
 enum EAbilityType {
+  C
   R
-  W
+  U
   D
 }
 

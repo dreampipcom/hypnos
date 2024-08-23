@@ -3,18 +3,41 @@ import type { NextApiRequest } from 'next';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import { GetSession } from '@auth';
-import { UpdatePrivateUserFavoriteListings } from '@controller';
+import { UpdatePrivateUserFavoriteListings, GetPrivateCommonAbilities } from '@controller';
 type CombineRequest = NextRequest & NextApiRequest;
 
 const generateErrorResponse = (e: any, status: number) => {
   return {
     ok: false,
     status,
-    message: e.message,
+    message: e.message || e,
   };
 };
 
 // export const dynamic = 'force-static';
+
+export async function POST(request: CombineRequest) {
+  const isHealthCheck = request?.headers?.get('x-dp-keepalive') === process.env.NEXUS_KEEPALIVE;
+  if (isHealthCheck) {
+    try {
+      await GetPrivateCommonAbilities({});
+      return NextResponse.json(
+        {
+          ok: true,
+          status: 200,
+        },
+        {
+          status: 200,
+        },
+      );
+    } catch (e) {
+      return NextResponse.json(generateErrorResponse(e, 403), { status: 403 });
+    }
+  }
+
+  return NextResponse.json(generateErrorResponse('Not authorized', 403), { status: 403 });
+}
+
 export async function PATCH(request: CombineRequest) {
   try {
     const cookies = request?.headers.get('cookies');
