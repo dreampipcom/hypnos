@@ -1,8 +1,8 @@
 // constants.ts TS-Doc?
 /* eslint @typescript-eslint/consistent-type-assertions:0 */
 import type { NextAuthConfig } from 'next-auth';
+import { v4 as uuid } from 'uuid';
 import type { PrismaClient } from '@prisma/client';
-import { PrivatePrisma } from '@model';
 import NextAuth from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
@@ -16,6 +16,7 @@ import {
   UpdatePrivateUserAbilities,
   GetPrivateCommonAbilities,
 } from '@controller';
+import { PrivatePrisma } from '@model';
 
 export const GetSession = async ({ cookies = '' }) => {
   try {
@@ -74,6 +75,7 @@ export const providers: any[] = [
         response_mode: 'form_post',
         response_type: 'code',
         scope: 'name email',
+        state: uuid(),
       },
     },
     profile(profile) {
