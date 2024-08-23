@@ -64,7 +64,7 @@ export const providers: any[] = [
   AppleProvider({
     clientId: process.env.APPLE_CLIENT_ID as string,
     clientSecret: process.env.APPLE_CLIENT_SECRET as string,
-    redirectProxyUrl: `${process.env.AUTH_URL}`,
+    checks: ['pkce'],
     token: {
       url: `https://appleid.apple.com/auth/token`,
     },
@@ -165,6 +165,15 @@ export const authConfig = {
   cookies: {
     csrfToken: {
       name: `authjs.csrf-token`,
+      options: {
+        httpOnly: true,
+        sameSite: 'none',
+        path: '/',
+        secure: true,
+      },
+    },
+    pkceCodeVerifier: {
+      name: 'authjs.pkce.code_verifier',
       options: {
         httpOnly: true,
         sameSite: 'none',
