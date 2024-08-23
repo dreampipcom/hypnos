@@ -63,6 +63,27 @@ export const providers: any[] = [
   AppleProvider({
     clientId: process.env.APPLE_CLIENT_ID as string,
     clientSecret: process.env.APPLE_CLIENT_SECRET as string,
+    token: {
+      url: `https://appleid.apple.com/auth/token`,
+    },
+    client: {
+      token_endpoint_auth_method: 'client_secret_post',
+    },
+    authorization: {
+      params: {
+        response_mode: 'form_post',
+        response_type: 'code', // do not set to "code id_token" as it will not work
+        scope: 'name email',
+      },
+    },
+    profile(profile) {
+      return {
+        id: profile.sub,
+        name: '', // profile.name.givenName + " " + profile.name.familyName, but apple does not return name...
+        email: profile.email,
+        image: '',
+      };
+    },
   }),
   FacebookProvider({
     clientId: process.env.FACEBOOK_CLIENT_ID as string,
