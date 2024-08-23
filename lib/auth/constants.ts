@@ -29,7 +29,6 @@ export const GetSession = async ({ cookies = '' }) => {
       },
     });
     const session = await response.json();
-    console.log({ cookies, session });
     return session;
   } catch (e) {
     console.error(e);
@@ -82,7 +81,7 @@ export const providers: any[] = [
     profile(profile) {
       return {
         id: profile.sub,
-        name: '',
+        name: profile.name,
         email: profile.email,
         image: '',
       };
@@ -161,6 +160,15 @@ export const authConfig = {
     },
   },
   cookies: {
+    callbackUrl: {
+      name: `__Secure-authjs.callback-url`,
+      options: {
+        httpOnly: false,
+        sameSite: 'none',
+        path: '/',
+        secure: true,
+      },
+    },
     csrfToken: {
       name: `authjs.csrf-token`,
       options: {
