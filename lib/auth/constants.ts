@@ -72,14 +72,14 @@ export const providers: any[] = [
     authorization: {
       params: {
         response_mode: 'form_post',
-        response_type: 'code', // do not set to "code id_token" as it will not work
+        response_type: 'code',
         scope: 'name email',
       },
     },
     profile(profile) {
       return {
         id: profile.sub,
-        name: '', // profile.name.givenName + " " + profile.name.familyName, but apple does not return name...
+        name: '',
         email: profile.email,
         image: '',
       };
