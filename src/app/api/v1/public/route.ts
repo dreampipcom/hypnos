@@ -44,6 +44,11 @@ export async function GET(request: CombineRequest) {
 
     console.log({ headers: request.headers });
 
+    const headers = {
+      'content-type': 'application/json',
+      'Cache-Control': 'maxage=0, s-maxage=60, stale-while-revalidate=86400',
+    };
+
     return NextResponse.json(
       {
         ok: true,
@@ -52,6 +57,7 @@ export async function GET(request: CombineRequest) {
       },
       {
         status: 200,
+        headers,
       },
     );
   } catch (e) {
