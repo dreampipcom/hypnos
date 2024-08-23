@@ -126,10 +126,8 @@ export const authConfig = {
 
       return true;
     },
-    async redirect({ url, baseUrl }) {
-      const redirectUrl = `${url.startsWith('/') ? new URL(url, baseUrl).toString() : url}dash`;
-      console.log(`[authjs] Redirecting to "${redirectUrl}" (resolved from url "${url}" and baseUrl "${baseUrl}")`);
-      return redirectUrl;
+    async redirect() {
+      return `${process.env.MAIN_URL}/dash`;
     },
     // async jwt({ user, token }) {
     //   if (user) {
