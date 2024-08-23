@@ -36,6 +36,15 @@ export async function PATCH(request: CombineRequest) {
 
     console.log({ headers: request.headers });
 
+    // [DPCP-116]: https://www.notion.so/angeloreale/Hypnos-Add-transactional-websockets-de3667b32a4c4cd4ade76080203e68fd?pvs=4
+    // might have idempotency issues.
+    // need ui to signal request was received,
+    // but subsequent webhook to confirm it was processed correctly
+    // const headers = {
+    //   'content-type': 'application/json',
+    //   'Cache-Control': 'maxage=0, s-maxage=60, stale-while-revalidate=86400'
+    // }
+
     return NextResponse.json(
       {
         ok: true,
