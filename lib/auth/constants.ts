@@ -172,15 +172,6 @@ export const authConfig = {
     },
   },
   cookies: {
-    pkceCodeVerifier: {
-      name: 'authjs.pkce.code_verifier',
-      options: {
-        httpOnly: true,
-        sameSite: 'none',
-        path: '/',
-        secure: true,
-      },
-    },
     csrfToken: {
       name: `authjs.csrf-token`,
       options: {
