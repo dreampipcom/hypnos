@@ -19,16 +19,20 @@ const generateErrorResponse = (e: any, status: number) => {
 export async function POST(request: CombineRequest) {
   const isHealthCheck = request?.headers?.get('x-dp-keepalive') === process.env.NEXUS_KEEPALIVE;
   if (isHealthCheck) {
-    await GetPrivateCommonAbilities({});
-    return NextResponse.json(
-      {
-        ok: true,
-        status: 200,
-      },
-      {
-        status: 200,
-      },
-    );
+    try {
+      await GetPrivateCommonAbilities({});
+      return NextResponse.json(
+        {
+          ok: true,
+          status: 200,
+        },
+        {
+          status: 200,
+        },
+      );
+    } catch (e) {
+      return NextResponse.json(generateErrorResponse(e, 403), { status: 403 });
+    }
   }
 
   return NextResponse.json(generateErrorResponse('Not authorized', 403), { status: 403 });
