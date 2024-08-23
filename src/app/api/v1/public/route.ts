@@ -15,11 +15,6 @@ const generateErrorResponse = (e: any, status: number) => {
 
 // export const dynamic = 'force-static';
 export async function GET(request: CombineRequest) {
-  console.log({
-    request: request.cookies,
-    requestOrigin: request.headers.get('x-forwarded-host'),
-    cache: request.headers.get('cache-control'),
-  });
   try {
     const url = new URL(request.url);
     const query = url.searchParams;
@@ -42,7 +37,10 @@ export async function GET(request: CombineRequest) {
       filters: filterArray,
     });
 
-    console.log({ headers: request.headers });
+    const headers = {
+      'content-type': 'application/json',
+      'Cache-Control': 'maxage=0, s-maxage=60, stale-while-revalidate=86400',
+    };
 
     return NextResponse.json(
       {
@@ -52,6 +50,7 @@ export async function GET(request: CombineRequest) {
       },
       {
         status: 200,
+        headers,
       },
     );
   } catch (e) {
