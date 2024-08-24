@@ -25,7 +25,11 @@ RUN \
 
 # Rebuild the source code only when needed
 FROM base AS builder
+
 WORKDIR /app
+ARG NEXUS_STANDALONE
+ENV NEXUS_STANDALONE=$NEXUS_STANDALONE
+
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 COPY --from=deps /app/package.json /app/yarn.lock* /app/package-lock.json* /app/pnpm-lock.yaml* ./
@@ -124,7 +128,6 @@ RUN \
 # Production image, copy all the files and run next
 FROM base AS runner
 WORKDIR /app
-
 
 ENV NODE_ENV production
 # Uncomment the following line in case you want to disable telemetry during runtime.
