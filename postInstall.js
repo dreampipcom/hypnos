@@ -8,5 +8,5 @@ if (process.env.NEXUS_STANDALONE === 'true') {
   execSync('npx patch-package &&  npm run schema:generate:all:standalone');
 } else {
   console.log('--- RUNNING EDGE POSTINSTALL HOOK');
-  execSync('npx patch-package &&  npm run schema:generate:all:standalone');
+  execSync('npx patch-package &&  npm run schema:generate:all');
 }
