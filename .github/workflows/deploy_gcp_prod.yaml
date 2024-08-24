@@ -34,7 +34,7 @@ jobs:
       - name: hypnos::deploy_prod::docker::Setup docker (missing on MacOS)
         if: runner.os == 'macos'
         run: |
-          brew install docker
+          brew install docker colima docker-buildx
           colima start
       
       - name: hypnos::deploy_prod::docker::Log in to the Container registry
