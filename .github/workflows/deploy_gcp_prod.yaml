@@ -126,42 +126,42 @@ jobs:
   #            # --set-secrets=
 
 
-    deploy-to-gcp-vm:
-        needs: build-and-push-image
-        name: hypnos::deploy_prod::push_to_gcp::vm
-        runs-on: ubuntu-latest
+    # deploy-to-gcp-vm:
+    #     needs: build-and-push-image
+    #     name: hypnos::deploy_prod::push_to_gcp::vm
+    #     runs-on: ubuntu-latest
 
-        steps:
-        - name: hypnos::deploy_prod::gcp::Checkout repository
-          uses: actions/checkout@v3
+    #     steps:
+    #     - name: hypnos::deploy_prod::gcp::Checkout repository
+    #       uses: actions/checkout@v3
 
-        - name: hypnos::deploy_prod::gcp::Set Docker image tag
-          id: set_tag
-          run: echo "::set-output name=tag::${GITHUB_REF#refs/tags/}"
+    #     - name: hypnos::deploy_prod::gcp::Set Docker image tag
+    #       id: set_tag
+    #       run: echo "::set-output name=tag::${GITHUB_REF#refs/tags/}"
 
-        - name: hypnos::deploy_prod::gcp::Set up Google Cloud SDK
-          uses: google-github-actions/setup-gcloud@v0.3.0
-          with:
-            service_account_email: ${{ secrets.GCP_SA_EMAIL }}
-            service_account_key: ${{ secrets.GCP_SA_KEY }}
-            export_default_credentials: true
-            project_id: ${{ secrets.GCP_PROJECT_ID }}
+    #     - name: hypnos::deploy_prod::gcp::Set up Google Cloud SDK
+    #       uses: google-github-actions/setup-gcloud@v0.3.0
+    #       with:
+    #         service_account_email: ${{ secrets.GCP_SA_EMAIL }}
+    #         service_account_key: ${{ secrets.GCP_SA_KEY }}
+    #         export_default_credentials: true
+    #         project_id: ${{ secrets.GCP_PROJECT_ID }}
        
-        - name: hypnos::deploy_prod::gcp::Log in to the Container registry
-          uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
-          with:
-            registry: ${{ env.REGISTRY }}
-            username: ${{ github.actor }}
-            password: ${{ secrets.GITHUB_TOKEN }}
+    #     - name: hypnos::deploy_prod::gcp::Log in to the Container registry
+    #       uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+    #       with:
+    #         registry: ${{ env.REGISTRY }}
+    #         username: ${{ github.actor }}
+    #         password: ${{ secrets.GITHUB_TOKEN }}
 
-        - name: install ssh keys
-          # check this thread to understand why its needed:
-          # <https://stackoverflow.com/a/70447517>
-          run: |
-            install -m 600 -D /dev/null ~/.ssh/id_rsa
-            echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-            ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
-        - name: connect and pull
-          run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && docker compose pull && docker compose up -d && exit"
-        - name: cleanup
-          run: rm -rf ~/.ssh
+    #     - name: install ssh keys
+    #       # check this thread to understand why its needed:
+    #       # <https://stackoverflow.com/a/70447517>
+    #       run: |
+    #         install -m 600 -D /dev/null ~/.ssh/id_rsa
+    #         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+    #         ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
+    #     - name: connect and pull
+    #       run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && docker compose pull && docker compose up -d && exit"
+    #     - name: cleanup
+    #       run: rm -rf ~/.ssh
