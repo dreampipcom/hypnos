@@ -11,7 +11,7 @@ const getPrivateCommonAbilities = async ({ page = 0, offset = 0, limit = PAGE_SI
     },
     skip: page * (limit + offset),
     take: limit,
-    cacheStrategy: { ttl: 90 },
+    cacheStrategy: { ttl: 90, swr: 60 * 60 * 24 * 1 },
   };
 
   if (filters?.length) {
