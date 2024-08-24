@@ -84,7 +84,7 @@ jobs:
             PRISMA_PRIVATE_URI=${{ secrets.MONGODB_PRIVATE_URI_PROD }}
             PRISMA_PUBLIC_URI=${{ secrets.MONGODB_PUBLIC_URI_PROD }}
        
-      - name: Generate artifact attestation
+      - name: hypnos::deploy_prod::docker::Generate artifact attestation
         uses: actions/attest-build-provenance@v1
         with:
           subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
@@ -103,6 +103,6 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY_PROD }}" > ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.SSH_HOST_PROD }} > ~/.ssh/known_hosts
       - name: hypnos::deploy_prod::push_to_gcp::vm::connect and pull
-        run: ssh ${{ secrets.SSH_USER_PROD }}@${{ secrets.SSH_HOST_PROD }} "docker login ghcr.io -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }} && docker pull ${{ secrets.IMAGE_TAG_PROD }} && docker stop hypnos && docker run --name hypnos --restart unless-stopped -p ${{ secrets.IMAGE_PORT_PROD }}:3001 ${{ secrets.IMAGE_TAG_PROD }} && exit"
+        run: ssh ${{ secrets.SSH_USER_PROD }}@${{ secrets.SSH_HOST_PROD }} "docker login ghcr.io -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }} && docker pull ${{ secrets.IMAGE_TAG_PROD }} && docker stop hypnos && docker rm hypnos && docker run --name hypnos --restart unless-stopped -p ${{ secrets.IMAGE_PORT_PROD }}:3001 ${{ secrets.IMAGE_TAG_PROD }} && exit"
       - name: cleanup
         run: rm -rf ~/.ssh
