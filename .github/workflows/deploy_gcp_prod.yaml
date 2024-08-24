@@ -20,7 +20,7 @@ env:
 jobs:
   build-and-push-image:
     name: hypnos::build_and_push::docker_image
-    runs-on: macos-13
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
       packages: write
@@ -34,10 +34,6 @@ jobs:
       - name: hypnos::deploy_prod::docker::Setup docker (missing on MacOS)
         if: runner.os == 'macos'
         run: |
-          brew remove --ignore-dependencies qemu
-          curl -o ./qemu.rb https://raw.githubusercontent.com/Homebrew/homebrew-core/dc0669eca9479e9eeb495397ba3a7480aaa45c2e/Formula/qemu.rb
-          brew install ./qemu.rb
-
           brew install docker colima docker-buildx
           colima start
       
