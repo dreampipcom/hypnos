@@ -128,6 +128,8 @@ RUN \
 # Production image, copy all the files and run next
 FROM base AS runner
 WORKDIR /app
+ARG NEXUS_STANDALONE
+ENV NEXUS_STANDALONE=$NEXUS_STANDALONE
 
 ENV NODE_ENV production
 # Uncomment the following line in case you want to disable telemetry during runtime.
