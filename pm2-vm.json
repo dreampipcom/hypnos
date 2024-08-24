@@ -1,0 +1,11 @@
+{
+  "apps": [
+    {
+      "name": "hypnos",
+      "script": "npm run",
+      "args": "start:vm",
+      "instances": "3",
+      "exec_mode": "cluster"
+    }
+  ]
+}
