@@ -215,6 +215,7 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
 COPY --from=builder /app/public ./public
+COPY --from=builder /app/pm2-vm.json ./
 
 RUN npm i -g pm2
 
