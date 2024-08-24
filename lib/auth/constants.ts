@@ -39,8 +39,8 @@ export const GetSession = async ({ cookies = '' }) => {
 const allUsersSideEffects = async ({ user }: any) => {
   const services = await GetPrivateCommonServices({});
   const abilities = await GetPrivateCommonAbilities({});
-  const commonServices = services.map((service) => service?.id).map((el) => el);
-  const commonAbilities = abilities.map((ability) => ability?.id).map((el) => el);
+  const commonServices = services.map((service: any) => service?.id).map((el) => el);
+  const commonAbilities = abilities.map((ability: any) => ability?.id).map((el) => el);
 
   await UpdatePrivateUserServices({ user, services: [...commonServices, ...user.servicesIds], upsert: false });
   await UpdatePrivateUserAbilities({ user, abilities: [...commonAbilities, ...user.abilitiesIds], upsert: false });
