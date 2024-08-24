@@ -1,7 +1,6 @@
 generator client {
   provider = "prisma-client-js"
   output = "../node_modules/@dreampipcom/db-private/prisma-client"
-  engineType = "binary"
 }
 
 datasource db {
