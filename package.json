@@ -25,7 +25,7 @@
     "schema:generate:all": "npm run schema:generate:private && npm run schema:generate:public",
     "schema:generate:private:standalone": "npx prisma generate --schema=./prisma/schema-private.prisma",
     "schema:generate:public:standalone": "npx prisma generate --schema=./prisma/schema-public.prisma",
-    "schema:generate:all:standalone": "npm run schema:generate:private && npm run schema:generate:public",
+    "schema:generate:all:standalone": "npm run schema:generate:private:standalone && npm run schema:generate:public:standalone",
     "dev": "npm run schema:generate:all && next dev -p 3001",
     "build": "npm run schema:generate:all && next build",
     "build:vm": "npm run schema:generate:all:standalone && next build",
