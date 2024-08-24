@@ -4,7 +4,7 @@
       "name": "hypnos",
       "script": "./server.js",
       "args": "start",
-      "instances": "3",
+      "instances": "8",
       "exec_mode": "cluster"
     }
   ]
