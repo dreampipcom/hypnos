@@ -28,9 +28,8 @@ jobs:
       - name: hypnos::checks::build::Build
         run: npm run build
         env:
-          MONGODB_URI: ${{ secrets.MONGODB_URI }}
-          EMAIL_SERVER: ${{ secrets.EMAIL_SERVER }}
-          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          EMAIL_SERVER: ${{ secrets.EMAIL_SERVER_PROD }}
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM_PROD }}
 
   run-lint:
     name: hypnos::checks::lint

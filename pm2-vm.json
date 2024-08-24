@@ -1,0 +1,11 @@
+{
+  "apps": [
+    {
+      "name": "hypnos",
+      "script": "./server.js",
+      "args": "start",
+      "instances": "8",
+      "exec_mode": "cluster"
+    }
+  ]
+}
