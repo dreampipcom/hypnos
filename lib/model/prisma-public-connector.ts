@@ -3,7 +3,7 @@ import { PrismaClient as PublicPrismaStandalone } from '@dreampipcom/db-public/p
 import { withAccelerate } from '@prisma/extension-accelerate';
 
 const prismaClientSingleton = () => {
-  if (process.env.NEXUS_STANDALONE) {
+  if (process.env.NEXUS_STANDALONE === 'true') {
     return new PublicPrismaStandalone();
   }
   return new PublicPrisma().$extends(withAccelerate());
