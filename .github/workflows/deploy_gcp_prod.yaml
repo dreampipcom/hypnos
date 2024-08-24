@@ -52,6 +52,35 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            API_URL=${{ secrets.API_URL_PROD }}
+            APPLE_CLIENT_ID=${{ secrets.APPLE_CLIENT_ID_PROD }}
+            APPLE_CLIENT_SECRET=${{ secrets.APPLE_CLIENT_SECRET_PROD }}
+            AUTH_SECRET=${{ secrets.AUTH_SECRET_PROD }}
+            AUTH_TRUST_HOST=${{ secrets.AUTH_TRUST_HOST_PROD }}
+            AUTH_URL=${{ secrets.AUTH_URL_PROD }}
+            EMAIL_FROM=${{ secrets.EMAIL_FROM_PROD }}
+            EMAIL_SERVER=${{ secrets.EMAIL_SERVER_PROD }}
+            FACEBOOK_CLIENT_ID=${{ secrets.FACEBOOK_CLIENT_ID_PROD }}
+            FACEBOOK_CLIENT_SECRET=${{ secrets.FACEBOOK_CLIENT_SECRET_PROD }}
+            GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID_PROD }}
+            GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET_PROD }}
+            INSTAGRAM_CLIENT_ID=${{ secrets.INSTAGRAM_CLIENT_ID_PROD }}
+            INSTAGRAM_CLIENT_SECRET=${{ secrets.INSTAGRAM_CLIENT_SECRET_PROD }}
+            KV_REST_API_READ_ONLY_TOKEN=${{ secrets.KV_REST_API_READ_ONLY_TOKEN_PROD }}
+            KV_REST_API_TOKEN=${{ secrets.KV_REST_API_TOKEN_PROD }}
+            KV_URL=${{ secrets.KV_URL_PROD }}
+            MAIN_URL=${{ secrets.MAIN_URL_PROD }}
+            MONGODB_DATABASE=${{ secrets.MONGODB_DATABASE_PROD }}
+            MONGODB_DEFAULT_ORG=${{ secrets.MONGODB_DEFAULT_ORG_PROD }}
+            MONGODB_ORGS_DATABASE=${{ secrets.MONGODB_ORGS_DATABASE_PROD }}
+            MONGODB_PRIVATE_URI=${{ secrets.MONGODB_PRIVATE_URI_PROD }}
+            MONGODB_PUBLIC_URI=${{ secrets.MONGODB_PUBLIC_URI_PROD }}
+            MONGODB_USERS_DATABASE=${{ secrets.MONGODB_USERS_DATABASE_PROD }}
+            NEXUS_KEEPALIVE=${{ secrets.NEXUS_KEEPALIVE_PROD }}
+            NEXUS_MODE=${{ secrets.NEXUS_MODE_PROD }}
+            PRISMA_PRIVATE_URI=${{ secrets.PRISMA_PRIVATE_URI_PROD }}
+            PRISMA_PUBLIC_URI=${{ secrets.PRISMA_PUBLIC_URI_PROD }}
        
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v1
