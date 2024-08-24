@@ -23,7 +23,7 @@ const getPrivateServices = async ({
     },
     skip: page * (limit + offset),
     take: limit,
-    cacheStrategy: { ttl: 90, swr: 60 * 60 * 24 * 1 },
+    cacheStrategy: process.env.NEXUS_STANDALONE !== 'true' ? { ttl: 90, swr: 60 * 60 * 24 * 1 } : undefined,
   };
 
   if (filters?.length) {
