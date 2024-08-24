@@ -133,6 +133,11 @@ ENV NODE_ENV production
 # Uncomment the following line in case you want to disable telemetry during runtime.
 # ENV NEXT_TELEMETRY_DISABLED 1
 
+ENV KV_REST_API_READ_ONLY_TOKEN=$KV_REST_API_READ_ONLY_TOKEN
+ENV KV_REST_API_TOKEN=$KV_REST_API_TOKEN
+ENV KV_REST_API_URL=$KV_REST_API_URL
+ENV KV_URL=$KV_URL
+
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
