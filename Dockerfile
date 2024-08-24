@@ -1,9 +1,9 @@
-FROM node:20 AS base
+FROM node:20-alpine AS base
 
 # Install dependencies only when needed
 FROM base AS deps
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
-# RUN apk add --no-cache libc6-compat
+RUN apk add --no-cache libc6-compat
 
 WORKDIR /app
 ARG NEXUS_STANDALONE
@@ -22,8 +22,6 @@ RUN \
   elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile; \
   else echo "Lockfile not found." && exit 1; \
   fi
-
-RUN npm i -g pm2
 
 # Rebuild the source code only when needed
 FROM base AS builder
@@ -133,6 +131,8 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
 COPY --from=builder /app/public ./public
+
+RUN npm i -g pm2
 
 # Set the correct permission for prerender cache
 RUN mkdir .next
