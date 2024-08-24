@@ -38,7 +38,7 @@ jobs:
           colima start
       
       - name: hypnos::deploy_prod::docker::Log in to the Container registry
-        uses: docker/login-action@v6
+        uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -46,7 +46,7 @@ jobs:
       
       - name: hypnos::deploy_prod::docker::Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metadata-action@v6
+        uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
