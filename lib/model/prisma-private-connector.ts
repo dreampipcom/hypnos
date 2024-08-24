@@ -1,7 +1,11 @@
 import { PrismaClient as PrivatePrisma } from '@dreampipcom/db-private/prisma-client/edge';
+import { PrismaClient as PrivatePrismaStandalone } from '@dreampipcom/db-private/prisma-client';
 import { withAccelerate } from '@prisma/extension-accelerate';
 
 const prismaClientSingleton = () => {
+  if (process.env.NEXUS_STANDALONE) {
+    return new PrivatePrismaStandalone();
+  }
   return new PrivatePrisma().$extends(withAccelerate());
 };
 

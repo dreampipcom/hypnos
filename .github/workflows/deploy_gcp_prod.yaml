@@ -80,8 +80,8 @@ jobs:
             NEXUS_KEEPALIVE=${{ secrets.NEXUS_KEEPALIVE_PROD }}
             NEXUS_MODE=${{ secrets.NEXUS_MODE_PROD }}
             NEXUS_STANDALONE=true
-            PRISMA_PRIVATE_URI=${{ secrets.PRISMA_PRIVATE_URI_PROD }}
-            PRISMA_PUBLIC_URI=${{ secrets.PRISMA_PUBLIC_URI_PROD }}
+            PRISMA_PRIVATE_URI=${{ secrets.MONGODB_PRIVATE_URI_PROD }}
+            PRISMA_PUBLIC_URI=${{ secrets.MONGODB_PUBLIC_URI_PROD }}
        
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v1
