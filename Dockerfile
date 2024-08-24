@@ -111,9 +111,9 @@ ENV NEXUS_MODE=$NEXUS_MODE
 ENV NEXUS_STANDALONE=$NEXUS_STANDALONE
 
 RUN \
-  if [ -f yarn.lock ]; then yarn run build; \
-  elif [ -f package-lock.json ]; then npm run build; \
-  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm run build; \
+  if [ -f yarn.lock ]; then yarn run build:vm; \
+  elif [ -f package-lock.json ]; then npm run build:vm; \
+  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm run build:vm; \
   else echo "Lockfile not found." && exit 1; \
   fi
 
