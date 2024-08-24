@@ -53,8 +53,8 @@ export const providers: any[] = [
     // maxAge: 24 * 60 * 60, // How long email links are valid for (default 24h)
   }),
   GithubProvider({
-    clientId: process.env.GITHUB_ID as string,
-    clientSecret: process.env.GITHUB_SECRET as string,
+    clientId: process.env.AUTH_GITHUB_ID as string,
+    clientSecret: process.env.AUTH_GITHUB_SECRET as string,
   }),
   GoogleProvider({
     clientId: process.env.GOOGLE_CLIENT_ID as string,
