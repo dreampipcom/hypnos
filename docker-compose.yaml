@@ -1,0 +1,6 @@
+services:
+  hypnos:
+    container_name: hypnos
+    image: ghcr.io/dreampipcom/hypnos:latest
+    ports:
+      - 3001:3001
