@@ -31,7 +31,7 @@
     "build:vm": "npm run schema:generate:all:standalone && next build",
     "start": "next start",
     "start:pm2": "pm2 list && pm2-docker start pm2.json",
-    "start:vm": "HOSTNAME='0.0.0.0' node server.js",
+    "start:vm": "HOSTNAME=0.0.0.0 node server.js",
     "start:vm:pm2": "pm2 list && pm2-docker start pm2-vm.json",
     "lint": "next lint",
     "format": "next lint && prettier --check --ignore-path .gitignore --ignore-path .prettierignore .",
