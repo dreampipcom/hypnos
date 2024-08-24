@@ -2,8 +2,8 @@
   "apps": [
     {
       "name": "hypnos",
-      "script": "npm run",
-      "args": "start:vm",
+      "script": "npm run start:vm",
+      "args": "",
       "instances": "3",
       "exec_mode": "cluster"
     }
