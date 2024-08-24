@@ -12,6 +12,7 @@ RUN mkdir -p ./prisma
 COPY prisma/schema-* ./prisma
 RUN mkdir -p ./patches
 COPY patches/* ./patches
+COPY postInstall.js ./
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
 RUN \
   if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
