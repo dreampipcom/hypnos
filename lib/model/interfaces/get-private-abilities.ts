@@ -34,7 +34,7 @@ const getPrivateAbilities = async ({
     },
     skip: page * (limit + offset),
     take: limit,
-    cacheStrategy: { ttl: 90 },
+    cacheStrategy: { ttl: 90, swr: 60 * 10 },
   };
 
   if (filters?.length) {
