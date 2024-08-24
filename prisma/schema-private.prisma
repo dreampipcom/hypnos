@@ -352,6 +352,7 @@ model Messages {
 model Roles {
   id                String          @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
+  slug              String?
   status            ERoleStatus
   type              ERoleType
   nature            ERoleNature
@@ -401,6 +402,7 @@ model Services {
 model Features {
   id                  String          @id @default(auto()) @map("_id") @db.ObjectId
   name                ILocaleString
+  slug                String?
   status              EFeatureStatus
   type                EFeatureType
   nature              EFeatureNature
@@ -429,6 +431,7 @@ model Features {
 model Abilities {
   id                  String            @id @default(auto()) @map("_id") @db.ObjectId
   name                ILocaleString
+  slug                String?
   status              EAbilityStatus
   type                EAbilityType
   nature              EAbilityNature
@@ -888,6 +891,7 @@ enum EAbilityStatus {
 
 enum EAbilityNature {
   ROLE_BASED
+  BILLING_BASED
   PRIVILEGE
   COMMON
   TEMPORARY
