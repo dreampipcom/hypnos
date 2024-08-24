@@ -15,10 +15,6 @@ RUN \
   else echo "Lockfile not found." && exit 1; \
   fi
 
-# Install PM2 globally
-RUN npm install --global pm2
-
-
 # Rebuild the source code only when needed
 FROM base AS builder
 WORKDIR /app
