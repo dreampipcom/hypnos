@@ -20,7 +20,7 @@
     "schema:seed:getseeds": "NEXUS_STANDALONE=true npm run schema:generate:private:standalone && node --loader ts-node/esm prisma/getSeeds.mts --schema=./prisma/schema-private.prisma -- private",
     "schema:seed:public": "NEXUS_STANDALONE=true npm run schema:generate:private:standalone && npm run schema:generate:public:standalone && prisma db seed --schema=./prisma/schema-public.prisma -- public",
     "schema:seed:mock": "NEXUS_STANDALONE=true npm run schema:generate:private:standalone && npm run schema:generate:public:standalone && prisma db seed --schema=./prisma/schema-public.prisma -- mock",
-    "schema:seed:all": "NEXUS_STANDALONE=true npm run schema:seed:private:standalone && npm run schema:seed:public:standalone",
+    "schema:seed:all": "NEXUS_STANDALONE=true npm run schema:seed:private && npm run schema:seed:public",
     "schema:generate:private": "npx prisma generate --no-engine --schema=./prisma/schema-private.prisma",
     "schema:generate:public": "npx prisma generate --no-engine --schema=./prisma/schema-public.prisma",
     "schema:generate:all": "npm run schema:generate:private && npm run schema:generate:public",
