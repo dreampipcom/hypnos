@@ -52,9 +52,9 @@ export async function POST(request: CombineRequest) {
     const payload = { data: {} };
     try {
       if (action === 'get-own-abilities') {
-        payload.data = await GetPrivateAbilities({ filters: ['user'] });
+        payload.data = await GetPrivateAbilities({ filters: ['user'], user });
       } else if (action === 'get-own-services') {
-        payload.data = await GetPrivateServices({ filters: ['user'] });
+        payload.data = await GetPrivateServices({ filters: ['user'], user });
       } else {
         throw new Error('Code 000/1: No specified action');
       }

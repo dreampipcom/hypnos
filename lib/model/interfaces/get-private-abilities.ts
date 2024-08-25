@@ -1,3 +1,4 @@
+/* eslint @typescript-eslint/no-unused-vars:0 */
 // @controller/get-private-services.ts
 import { whoAmI } from '@controller';
 import { PrivatePrisma } from '@model';
@@ -42,7 +43,7 @@ const getPrivateAbilities = async ({
       const supportedQueries: Record<string, any> = {
         user: {
           query: {
-            OR: [{ id: { in: loggedUser?.abilitiesIds }, name: { [locale]: name } }, { userOwner: loggedUser?.id }],
+            OR: [{ id: { in: loggedUser?.abilities } }, { userOwnerId: loggedUser.id }],
           },
         },
         // group: {

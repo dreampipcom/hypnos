@@ -1,3 +1,4 @@
+/* eslint @typescript-eslint/no-unused-vars:0 */
 // @controller/get-private-services.ts
 import { PrivatePrisma } from '@model';
 import { whoAmI, canI } from '@controller';
@@ -37,7 +38,7 @@ const getPrivateServices = async ({
       const supportedQueries: Record<string, any> = {
         user: {
           query: {
-            OR: [{ id: { in: loggedUser?.servicesIds }, name: { [locale]: name } }, { userOwner: loggedUser?.id }],
+            OR: [{ id: { in: loggedUser?.services } }, { userOwnerId: loggedUser.id }],
           },
         },
         // group: {
@@ -60,7 +61,7 @@ const getPrivateServices = async ({
       const response = await PrivatePrisma.services.findMany(adaptQuery);
       return response;
     } catch (e) {
-      throw new Error('Code 000/2: Wrong filter');
+      throw new Error(`Code 000/2: Wrong filter: ${e}`);
     }
   }
 
