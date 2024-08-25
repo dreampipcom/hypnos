@@ -239,6 +239,8 @@ model Listings {
   description         ILocaleString     //model description
   status              EListingStatus
   location            ILocation
+  scheduledFor        DateTime?          @db.Date
+  value               Float?
 
   taxonomies          Taxonomies[]      @relation("listingTaxonomies", fields: [taxonomiesIds], references: [id])
   taxonomiesIds       String[]          @db.ObjectId
@@ -652,6 +654,18 @@ type ILocaleString {
   sq        String?
   ja        String?
   ru        String?
+  ar        String?
+  he        String?
+  zh        String?
+  gl        String?
+  sw        String?
+  hi        String?
+  ms        String?
+  bn        String?
+  pa        String?
+  tr        String?
+  fi        String?
+  uk        String?
 }
 
 

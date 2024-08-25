@@ -19,6 +19,8 @@ model PublicListings {
   description         ILocaleString
   status              EListingStatus
   location            ILocation
+  scheduledFor        DateTime?          @db.Date
+  value               Float?
   taxonomies          ITaxonomiesFacade[]
   reviews             IReviewFacade[]
 
@@ -86,6 +88,20 @@ type ILocaleString {
   bg        String?
   bs        String?
   sq        String?
+  ja        String?
+  ru        String?
+  ar        String?
+  he        String?
+  zh        String?
+  gl        String?
+  sw        String?
+  hi        String?
+  ms        String?
+  bn        String?
+  pa        String?
+  tr        String?
+  fi        String?
+  uk        String?
 }
 
 enum ECurrency {

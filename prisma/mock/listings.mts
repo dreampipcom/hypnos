@@ -9,10 +9,10 @@ import { createMockTerm, mockTerm } from './taxonomies.mts';
 import { HOMock } from './helpers.mts';
 
 const mockLocation = {
-  name: 'Home',
+  name: faker.company.name(),
   geo: {
-    lat: 0.75,
-    lng: 1.02,
+    lat: faker.location.latitude(),
+    lng: faker.location.longitude(),
     radius: 0.98,
   },
   address: {

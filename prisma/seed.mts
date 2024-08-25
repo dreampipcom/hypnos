@@ -6,8 +6,8 @@ import { faker } from '@faker-js/faker';
 import { PrismaClient as PrivatePrisma } from '@dreampipcom/db-private/prisma-client';
 import { PrismaClient as PublicPrisma } from '@dreampipcom/db-public/prisma-client';
 
-import { mockUser, mockUser2, mockUser3 } from './mock/user.mts';
-import { mockCommunity, mockCommunity2, mockCommunity3 } from './mock/communities.mts';
+import { createMockUser, mockUser, mockUser2, mockUser3 } from './mock/user.mts';
+import { createMockCommunity, mockCommunity, mockCommunity2, mockCommunity3 } from './mock/communities.mts';
 import { createMockListing } from './mock/listings.mts';
 import { createMockAudience } from './mock/audiences.mts';
 import { createMockTerm } from './mock/taxonomies.mts';
@@ -17,6 +17,7 @@ import { createMockPubListing } from './mock/public.mts';
 import { createMockAbility } from './mock/abilities.mts';
 import { createMockFeature } from './mock/features.mts';
 import { createMockService } from './mock/services.mts';
+import _ from 'lodash';
 
 export const cleanupDatabase = () => {
   const propertyNames = Object.getOwnPropertyNames(pvtPrisma);
@@ -38,29 +39,26 @@ if (seedType === 'private') {
 
   const main = async () => {
     try {
-      // await pvtPrisma.products.deleteMany();
-
-      // // cleanup the existing database
-      const allProperties = Reflect.ownKeys(Object.getPrototypeOf(pvtPrisma));
-      const modelNames = allProperties.filter(
-        (x) => x != 'constructor' && x != 'on' && x != 'connect' && x != 'runDisconnect' && x != 'disconnect',
-      );
-
-      // if (modelNames.length > 0) {
-      //   console.log("WARNING! ERASING DB.")
-      //   cleanupDatabase()
-      //   console.log("~ ERASED ~")
-      // }
-
-      /*
-        ~~~~ PRIVATE ~~~~
-      */
-
       // user0
-      const user0 = await pvtPrisma.user.create({ data: mockUser });
+      const user0 = await pvtPrisma.user.create({
+        data: createMockUser({
+          name: 'DreamPip',
+          firstName: 'DreamPip',
+          lastName: 'Superuser',
+          email: process.env.NEXUS_EMAIL,
+        }),
+      });
 
       // community0
-      const community0 = await pvtPrisma.communities.create({ data: mockCommunity });
+      const community0 = await pvtPrisma.communities.create({
+        data: createMockCommunity({
+          name: 'DreamPip',
+          description: 'Fintech for compassion.',
+          urls: ['https://www.dreampip.com'],
+          user: user0.id,
+          refUsers: [{ id: user0.id }],
+        }),
+      });
 
       // roles
       const role1name = {
@@ -205,10 +203,11 @@ if (seedType === 'private') {
           slug: 'role-su',
           user: user0.id,
           community: community0.id,
-          refUsers: [],
+          refUsers: [{ id: user0.id }],
           refCommunities: [],
         }),
       });
+
       const role2 = await pvtPrisma.roles.create({
         data: createMockRole({
           name: role2name,
@@ -219,6 +218,7 @@ if (seedType === 'private') {
           refCommunities: [],
         }),
       });
+
       const role3 = await pvtPrisma.roles.create({
         data: createMockRole({
           name: role3name,
@@ -229,6 +229,7 @@ if (seedType === 'private') {
           refCommunities: [],
         }),
       });
+
       const role4 = await pvtPrisma.roles.create({
         data: createMockRole({
           name: role4name,
@@ -241,7 +242,7 @@ if (seedType === 'private') {
       });
 
       // abilities
-      const favoriteListings = {
+      const ability1name = {
         en: 'Favorite Listings',
         it: 'Aggiungi ai Preferiti',
         pt: 'Favoritar Listagens',
@@ -484,6 +485,7 @@ if (seedType === 'private') {
           refCommunities: [{ id: community0.id }],
         }),
       });
+
       const service2 = await pvtPrisma.services.create({
         data: createMockService({
           name: service2name,
@@ -514,24 +516,6 @@ if (seedType === 'private') {
 
   const main = async () => {
     try {
-      // await pvtPrisma.products.deleteMany();
-
-      // // cleanup the existing database
-      const allProperties = Reflect.ownKeys(Object.getPrototypeOf(pubPrisma));
-      const modelNames = allProperties.filter(
-        (x) => x != 'constructor' && x != 'on' && x != 'connect' && x != 'runDisconnect' && x != 'disconnect',
-      );
-
-      // if (modelNames.length > 0) {
-      //   console.log("WARNING! ERASING DB.")
-      //   cleanupDatabase()
-      //   console.log("~ ERASED ~")
-      // }
-
-      /*
-          ~~~~ PUBLIC ~~~~
-      */
-
       const facadeEntry = (fields: string[], facades: Record<string, any>) => (entry: any) => {
         const facader = fields.reduce((fac, field, index) => {
           let content = entry[field];
@@ -544,73 +528,6 @@ if (seedType === 'private') {
 
         return facader;
       };
-
-      const facadeTaxonomy = facadeEntry(['id', 'name', 'description', 'status', 'type', 'nature', 'audiencesIds']);
-
-      // const decorateAd = facadeEntry([
-      //   'userFits',
-      //   'communityFits',
-      // ]);
-
-      const facadeMessage = facadeEntry([
-        'id',
-        'name',
-        'description',
-        'status',
-        'type',
-        'nature',
-        'title',
-        'body',
-        'queuedOn',
-        'scheduledOn',
-        'sentOn',
-      ]);
-
-      const facadeUser = facadeEntry(['id', 'image', 'firstName']);
-
-      const facadeCommunity = facadeEntry(['id', 'image', 'name', 'urls', 'status']);
-
-      const getSeedData = () => {
-        try {
-          const data = JSON.parse(fs.readFileSync('stub.json'));
-          return data;
-        } catch (e) {
-          execSync('npm run schema:seed:getseeds');
-          return { retry: true };
-        }
-      };
-
-      let data = getSeedData();
-
-      if (data?.retry) {
-        data = getSeedData();
-      }
-
-      const { community, user, model, term } = data;
-
-      const pubListing1 = await pubPrisma.publicListings.create({
-        data: createMockPubListing({
-          community: facadeCommunity(community),
-          user: facadeUser(user),
-          taxonomies: [facadeTaxonomy(term)],
-        }),
-      });
-
-      const pubListing2 = await pubPrisma.publicListings.create({
-        data: createMockPubListing({
-          community: facadeCommunity(community),
-          user: facadeUser(user),
-          taxonomies: [facadeTaxonomy(term)],
-        }),
-      });
-
-      const pubListing3 = await pubPrisma.publicListings.create({
-        data: createMockPubListing({
-          community: facadeCommunity(community),
-          user: facadeUser(user),
-          taxonomies: [facadeTaxonomy(term)],
-        }),
-      });
 
       console.log(`Public Database has been seeded. 🌱`);
     } catch (error) {
@@ -628,24 +545,6 @@ if (seedType === 'private') {
 
   const main = async () => {
     try {
-      // await pvtPrisma.products.deleteMany();
-
-      // // cleanup the existing database
-      const allProperties = Reflect.ownKeys(Object.getPrototypeOf(pvtPrisma));
-      const modelNames = allProperties.filter(
-        (x) => x != 'constructor' && x != 'on' && x != 'connect' && x != 'runDisconnect' && x != 'disconnect',
-      );
-
-      // if (modelNames.length > 0) {
-      //   console.log("WARNING! ERASING DB.")
-      //   cleanupDatabase()
-      //   console.log("~ ERASED ~")
-      // }
-
-      /*
-        ~~~~ PRIVATE ~~~~
-      */
-
       const user1 = await pvtPrisma.user.create({ data: mockUser });
       const user2 = await pvtPrisma.user.create({ data: mockUser2 });
       const user3 = await pvtPrisma.user.create({ data: mockUser3 });
@@ -676,35 +575,35 @@ if (seedType === 'private') {
       // // abilities
 
       const ability1name = {
-        en: 'Favorite Listings',
-        it: 'Aggiungi ai Preferiti',
-        pt: 'Favoritar Listagens',
-        es: 'Marcar como Favorito',
-        de: 'Anzeigen favorisieren',
-        fr: 'Mettre en Favori',
-        ro: 'Favoritează liste',
-        cz: 'Oblíbené inzeráty',
-        pl: 'Dodaj do Ulubionych',
-        et: 'Lisa lemmikutesse',
-        sv: 'Gör till Favoriter',
-        ja: 'お気に入りにする',
-        ru: 'Добавить в Избранное',
+        en: 'Favorite Listings (mock)',
+        it: 'Aggiungi ai Preferiti (mock)',
+        pt: 'Favoritar Listagens (mock)',
+        es: 'Marcar como Favorito (mock)',
+        de: 'Anzeigen favorisieren (mock)',
+        fr: 'Mettre en Favori (mock)',
+        ro: 'Favoritează liste (mock)',
+        cz: 'Oblíbené inzeráty (mock)',
+        pl: 'Dodaj do Ulubionych (mock)',
+        et: 'Lisa lemmikutesse (mock)',
+        sv: 'Gör till Favoriter (mock)',
+        ja: 'お気に入りにする (mock)',
+        ru: 'Добавить в Избранное (mock)',
       };
 
       const ability2name = {
-        en: 'View Listings',
-        it: 'Visualizza inserzioni',
-        pt: 'Ver listagens',
-        es: 'Ver listados',
-        de: 'Anzeigen anzeigen',
-        fr: 'Voir les annonces',
-        ro: 'Vizualizare liste',
-        cz: 'Zobrazit inzeráty',
-        pl: 'Wyświetl oferty',
-        et: 'Vaata kuulutusi',
-        sv: 'Visa listor',
-        ja: 'リストを表示する',
-        ru: 'Просмотр объявлений',
+        en: 'View Listings (mock)',
+        it: 'Visualizza inserzioni (mock)',
+        pt: 'Ver listagens (mock)',
+        es: 'Ver listados (mock)',
+        de: 'Anzeigen anzeigen (mock)',
+        fr: 'Voir les annonces (mock)',
+        ro: 'Vizualizare liste (mock)',
+        cz: 'Zobrazit inzeráty (mock)',
+        pl: 'Wyświetl oferty (mock)',
+        et: 'Vaata kuulutusi (mock)',
+        sv: 'Visa listor (mock)',
+        ja: 'リストを表示する (mock)',
+        ru: 'Просмотр объявлений (mock)',
       };
 
       const ability1 = await pvtPrisma.abilities.create({
@@ -713,7 +612,7 @@ if (seedType === 'private') {
           user: user1.id,
           community: community1.id,
           type: 'R',
-          action: 'view-listings',
+          action: 'view-listings-mock',
           nature: 'COMMON',
           target: 'rickmorty',
           roles: [{ id: role1.id }, { id: role2.id }],
@@ -727,7 +626,7 @@ if (seedType === 'private') {
           name: ability2name,
           user: user1.id,
           type: 'R',
-          action: 'view-listings',
+          action: 'view-listings-mock',
           nature: 'PRIVILEGE',
           target: 'dpcp-vibemodulator',
           community: community1.id,
@@ -742,7 +641,7 @@ if (seedType === 'private') {
           name: ability1name,
           user: user1.id,
           type: 'U',
-          action: 'favorite',
+          action: 'favorite-mock',
           nature: 'COMMON',
           target: 'rickmorty',
           community: community1.id,
@@ -774,41 +673,41 @@ if (seedType === 'private') {
 
       // // services
       const service1name = {
-        en: 'The Rick Morty Experience',
+        en: 'The Rick Morty Experience (mock)',
         it: "L'esperienza di Rick Morty",
-        pt: 'A Experiência Rick Morty',
-        es: 'La Experiencia Rick Morty',
-        de: 'Das Rick Morty Erlebnis',
+        pt: 'A Experiência Rick Morty (mock)',
+        es: 'La Experiencia Rick Morty (mock)',
+        de: 'Das Rick Morty Erlebnis (mock)',
         fr: "L'expérience Rick Morty",
-        ro: 'Experiența Rick Morty',
-        cz: 'Rick Morty Zážitek',
-        pl: 'Doświadczenie Rick Morty',
-        et: 'Rick Morty Kogemus',
-        sv: 'Rick Morty-upplevelsen',
-        ja: 'リック・モーティ体験',
-        ru: 'Опыт Рика и Морти',
+        ro: 'Experiența Rick Morty (mock)',
+        cz: 'Rick Morty Zážitek (mock)',
+        pl: 'Doświadczenie Rick Morty (mock)',
+        et: 'Rick Morty Kogemus (mock)',
+        sv: 'Rick Morty-upplevelsen (mock)',
+        ja: 'リック・モーティ体験 (mock)',
+        ru: 'Опыт Рика и Морти (mock)',
       };
 
       const service2name = {
-        en: 'The Vibe Modulator',
-        it: 'Il Modulatore di Vibrazioni',
-        pt: 'O Modulador de Vibração',
-        es: 'El Modulador de Vibra',
-        de: 'Der Vibe-Modulator',
-        fr: 'Le Modulateur de Vibration',
-        ro: 'Modulatorul de Vibrații',
-        cz: 'Vibrační Modulátor',
-        pl: 'Modulator Nastroju',
-        et: 'Vibe Modulaator',
-        sv: 'Vibe-modulatorn',
-        ja: 'バイブモジュレーター',
-        ru: 'Вибромодулятор',
+        en: 'The Vibe Modulator (mock)',
+        it: 'Il Modulatore di Vibrazioni (mock)',
+        pt: 'O Modulador de Vibração (mock)',
+        es: 'El Modulador de Vibra (mock)',
+        de: 'Der Vibe-Modulator (mock)',
+        fr: 'Le Modulateur de Vibration (mock)',
+        ro: 'Modulatorul de Vibrații (mock)',
+        cz: 'Vibrační Modulátor (mock)',
+        pl: 'Modulator Nastroju (mock)',
+        et: 'Vibe Modulaator (mock)',
+        sv: 'Vibe-modulatorn (mock)',
+        ja: 'バイブモジュレーター (mock)',
+        ru: 'Вибромодулятор (mock)',
       };
 
       const service1 = await pvtPrisma.services.create({
         data: createMockService({
           name: service1name,
-          slug: 'rickmorty',
+          slug: 'rickmorty-mock',
           user: user1.id,
           community: community1.id,
           features: [{ id: feature1.id }, { id: feature2.id }],
@@ -816,10 +715,11 @@ if (seedType === 'private') {
           refCommunities: [{ id: community1.id }],
         }),
       });
+
       const service2 = await pvtPrisma.services.create({
         data: createMockService({
           name: service2name,
-          slug: 'dpcp-vibemodulator',
+          slug: 'dpcp-vibemodulator-mock',
           user: user1.id,
           community: community1.id,
           refUsers: [{ id: user2.id }, { id: user3.id }],
@@ -836,6 +736,7 @@ if (seedType === 'private') {
           communityFavorited: [{ id: community2.id }, { id: community3.id }],
         }),
       });
+
       const listing2 = await pvtPrisma.listings.create({
         data: createMockListing({
           favorited: [{ id: user2.id }, { id: user3.id }],
@@ -855,6 +756,7 @@ if (seedType === 'private') {
           targetUser: [{ id: user2.id }],
         }),
       });
+
       const term2 = await pvtPrisma.taxonomies.create({
         data: createMockTerm({
           community: community3.id,
@@ -876,6 +778,7 @@ if (seedType === 'private') {
           toListings: [],
         }),
       });
+
       const message2 = await pvtPrisma.messages.create({
         data: createMockMessage({
           community: community3.id,
@@ -886,6 +789,7 @@ if (seedType === 'private') {
           toListings: [{ id: listing1.id }, { id: listing2.id }],
         }),
       });
+
       const message3 = await pvtPrisma.messages.create({
         data: createMockMessage({
           community: community3.id,
@@ -907,23 +811,6 @@ if (seedType === 'private') {
       const pubPrisma = new PublicPrisma({
         datasourceUrl: process.env.PRISMA_PUBLIC_URI,
       });
-      // await pvtPrisma.products.deleteMany();
-
-      // // cleanup the existing database
-      const allProperties = Reflect.ownKeys(Object.getPrototypeOf(pubPrisma));
-      const modelNames = allProperties.filter(
-        (x) => x != 'constructor' && x != 'on' && x != 'connect' && x != 'runDisconnect' && x != 'disconnect',
-      );
-
-      // if (modelNames.length > 0) {
-      //   console.log("WARNING! ERASING DB.")
-      //   cleanupDatabase()
-      //   console.log("~ ERASED ~")
-      // }
-
-      /*
-          ~~~~ PUBLIC ~~~~
-      */
 
       const facadeEntry = (fields: string[], facades: Record<string, any>) => (entry: any) => {
         const facader = fields.reduce((fac, field, index) => {
@@ -939,11 +826,6 @@ if (seedType === 'private') {
       };
 
       const facadeTaxonomy = facadeEntry(['id', 'name', 'description', 'status', 'type', 'nature', 'audiencesIds']);
-
-      // const decorateAd = facadeEntry([
-      //   'userFits',
-      //   'communityFits',
-      // ]);
 
       const facadeMessage = facadeEntry([
         'id',
@@ -1005,7 +887,17 @@ if (seedType === 'private') {
         }),
       });
 
-      console.log(`Public Database has been seeded. 🌱`);
+      _.times(100, async () => {
+        await pubPrisma.publicListings.create({
+          data: createMockPubListing({
+            community: facadeCommunity(community),
+            user: facadeUser(user),
+            taxonomies: [facadeTaxonomy(term)],
+          }),
+        });
+      });
+
+      console.log(`Public Database has been seeded with mock data. 🌱`);
     } catch (error) {
       throw error;
     }
