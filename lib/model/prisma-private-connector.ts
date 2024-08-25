@@ -5,14 +5,20 @@ import { withAccelerate } from '@prisma/extension-accelerate';
 
 const prismaClientSingleton = () => {
   if (process.env.NEXUS_STANDALONE_PRISMA_ONLY === 'true') {
+    console.log('--- USING EDGE, BUT NOT USING PRISMA ACCELERATE');
     return new PrivatePrisma();
   } else {
+    console.log('--- USING EDGE AND USING PRISMA ACCELERATE');
     return new PrivatePrisma().$extends(withAccelerate());
   }
 };
 
 const prismaClientSingletonStandalone = () => {
-  return new PrivatePrismaStandalone();
+  if (process.env.NEXUS_STANDALONE === 'true') {
+    console.log('--- NOT USING EDGE AND NOT USING PRISMA ACCELERATE');
+    return new PrivatePrismaStandalone();
+  }
+  return;
 };
 
 declare const globalThis: {

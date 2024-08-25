@@ -15,6 +15,7 @@ import {
   GetPrivateCommonServices,
   UpdatePrivateUserAbilities,
   GetPrivateCommonAbilities,
+  GetPrivateAbilities,
 } from '@controller';
 import { PrivatePrisma } from '@model';
 
@@ -35,6 +36,8 @@ export const GetSession = async ({ cookies = '' }) => {
   }
 };
 
+// to-do: admin sanitizer
+
 // schema sanitizer
 const allUsersSideEffects = async ({ user }: any) => {
   const services = await GetPrivateCommonServices({});
@@ -42,8 +45,14 @@ const allUsersSideEffects = async ({ user }: any) => {
   const commonServices = services.map((service: any) => service?.id).map((el: any) => el);
   const commonAbilities = abilities.map((ability: any) => ability?.id).map((el: any) => el);
 
+  const [dpcpAbility] = await GetPrivateAbilities({ type: 'R', target: 'dpcp-vibemodulator', action: 'view-listings' });
+
   await UpdatePrivateUserServices({ user, services: [...commonServices, ...user.servicesIds], upsert: false });
-  await UpdatePrivateUserAbilities({ user, abilities: [...commonAbilities, ...user.abilitiesIds], upsert: false });
+  await UpdatePrivateUserAbilities({
+    user,
+    abilities: [...commonAbilities, ...user.abilitiesIds, dpcpAbility.id],
+    upsert: false,
+  });
 };
 
 export const providers: any[] = [
@@ -126,7 +135,7 @@ export const authConfig = {
       return true;
     },
     async redirect() {
-      return `${process.env.MAIN_URL}/dash`;
+      return `${process.env.MAIN_URL}/dash/signin`;
     },
     // async jwt({ user, token }) {
     //   if (user) {
@@ -191,7 +200,7 @@ export const authConfig = {
   trustHost: true,
   pages: {
     signIn: '/dash/signin',
-    signOut: '/',
+    signOut: '/dash/signin',
     error: '/dash/error', // Error code passed in query string as ?error=
     verifyRequest: '/dash/verify', // (used for check email message)
     // newUser: '/' // New users will be directed here on first sign in (leave the property out if not of interest)

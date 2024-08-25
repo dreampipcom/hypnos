@@ -5,18 +5,20 @@ import { createMockListing } from './listings.mts';
 import { createMockMessage } from './messages.mts';
 import { createMockTerm } from './taxonomies.mts';
 import { createMockRole } from './roles.mts';
+import { HOMock } from './helpers.mts';
 
-export const createMockCommunity = (): any => {
+export const createMockCommunity = ({ name, description, urls, image, user, refUsers }): any => {
   const id = faker.database.mongodbObjectId();
 
-  return {
+  const data = {
     id,
-    name: 'My Community 1',
-    description: 'My community 1 description',
-    urls: ['https://mycommunity.com'],
-    image: faker.image.avatar(),
+    name: name || 'My Community 1',
+    description: description || 'My community 1 description',
+    urls: urls || ['https://mycommunity.com'],
+    image: image || faker.image.avatar(),
     users: {
-      create: [createMockUser(), createMockUser()],
+      create: !refUsers ? [createMockUser({}), createMockUser({})] : undefined,
+      connect: refUsers ? refUsers : undefined,
     },
     status: 'ACTIVE',
     favorites: {
@@ -52,15 +54,11 @@ export const createMockCommunity = (): any => {
     messagesReceived: {
       create: [],
     },
-    userOwner: {
-      create: createMockUser(),
-    },
-    userCreator: {
-      create: createMockUser(),
-    },
   };
+
+  return HOMock(data, { user });
 };
 
-export const mockCommunity = createMockCommunity();
-export const mockCommunity2 = createMockCommunity();
-export const mockCommunity3 = createMockCommunity();
+export const mockCommunity = createMockCommunity({});
+export const mockCommunity2 = createMockCommunity({});
+export const mockCommunity3 = createMockCommunity({});
