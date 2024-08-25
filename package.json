@@ -45,7 +45,7 @@
     "seed": "node --loader ts-node/esm prisma/seed.mts"
   },
   "dependencies": {
-    "@sentry/nextjs": "^8.20.0",
+    "@sentry/nextjs": "8.20.0",
     "next": "14.2.4"
   },
   "devDependencies": {
@@ -66,7 +66,7 @@
     "@vercel/functions": "1.4.0",
     "@vercel/kv": "2.0.0",
     "bson": "6.8.0",
-    "dotenv": "^16.4.5",
+    "dotenv": "16.4.5",
     "eslint": "8",
     "eslint-config-alloy": "5.1.2",
     "eslint-config-next": "14.0.4",
@@ -76,7 +76,7 @@
     "next-auth": "5.0.0-beta.20",
     "nodemailer": "6.9.14",
     "patch-package": "8.0.0",
-    "pm2": "^5.4.2",
+    "pm2": "5.4.2",
     "prettier": "3.2.4",
     "prisma": "5.18.0",
     "server-only": "0.0.1",
