@@ -34,7 +34,7 @@ const getPrivateAbilities = async ({
     },
     skip: page * (limit + offset),
     take: limit,
-    cacheStrategy: { ttl: 90, swr: 60 * 10 },
+    cacheStrategy: process.env.NEXUS_STANDALONE !== 'true' ? { ttl: 90, swr: 60 * 10 } : undefined,
   };
 
   if (filters?.length) {

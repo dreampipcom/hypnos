@@ -7,7 +7,7 @@ const getPublicListings = async ({ page = 0, offset = 0, limit = PAGE_SIZE, filt
   const adaptQuery: any = {
     skip: page * (limit + offset),
     take: limit,
-    cacheStrategy: { ttl: 90, swr: 60 * 60 * 24 * 7 },
+    cacheStrategy: process.env.NEXUS_STANDALONE !== 'true' ? { ttl: 90, swr: 60 * 60 * 24 * 7 } : undefined,
   };
 
   if (filters?.length) {

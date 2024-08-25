@@ -14,7 +14,7 @@ const getPrivateServices = async ({ id, user, target, page = 0, offset = 0, limi
     },
     skip: page * (limit + offset),
     take: limit,
-    cacheStrategy: { ttl: 90, swr: 60 * 60 * 24 * 1 },
+    cacheStrategy: process.env.NEXUS_STANDALONE !== 'true' ? { ttl: 90, swr: 60 * 60 * 24 * 1 } : undefined,
   };
 
   if (await canI({ type: 'R', action: 'view-listings', target, user: loggedUser })) {

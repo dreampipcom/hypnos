@@ -42,8 +42,8 @@ export const GetSession = async ({ cookies = '' }) => {
 const allUsersSideEffects = async ({ user }: any) => {
   const services = await GetPrivateCommonServices({});
   const abilities = await GetPrivateCommonAbilities({});
-  const commonServices = services.map((service) => service?.id).map((el) => el);
-  const commonAbilities = abilities.map((ability) => ability?.id).map((el) => el);
+  const commonServices = services.map((service: any) => service?.id).map((el: any) => el);
+  const commonAbilities = abilities.map((ability: any) => ability?.id).map((el: any) => el);
 
   const [dpcpAbility] = await GetPrivateAbilities({ type: 'R', target: 'dpcp-vibemodulator', action: 'view-listings' });
 
@@ -62,8 +62,8 @@ export const providers: any[] = [
     // maxAge: 24 * 60 * 60, // How long email links are valid for (default 24h)
   }),
   GithubProvider({
-    clientId: process.env.GITHUB_ID as string,
-    clientSecret: process.env.GITHUB_SECRET as string,
+    clientId: process.env.AUTH_GITHUB_ID as string,
+    clientSecret: process.env.AUTH_GITHUB_SECRET as string,
   }),
   GoogleProvider({
     clientId: process.env.GOOGLE_CLIENT_ID as string,
