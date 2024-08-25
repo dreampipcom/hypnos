@@ -4,7 +4,7 @@ import { faker } from '@faker-js/faker';
 
 import { HOMock } from './helpers.mts';
 
-const mockLocation = {
+const mockLocation = () => ({
   name: faker.company.name(),
   geo: {
     lat: faker.location.latitude(),
@@ -17,7 +17,7 @@ const mockLocation = {
     country: 'Sit',
     zipCode: '000000',
   },
-};
+});
 
 export const createMockPubListing = ({
   user,
@@ -104,7 +104,7 @@ export const createMockPubListing = ({
     scheduledFor: faker.date.future(),
     value: faker.number.float(3500),
     status: 'ACTIVE',
-    location: mockLocation,
+    location: mockLocation(),
     taxonomies,
   };
 

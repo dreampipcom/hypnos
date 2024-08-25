@@ -8,7 +8,7 @@ import { createMockTerm, mockTerm } from './taxonomies.mts';
 
 import { HOMock } from './helpers.mts';
 
-const mockLocation = {
+const mockLocation = () => ({
   name: faker.company.name(),
   geo: {
     lat: faker.location.latitude(),
@@ -25,7 +25,7 @@ const mockLocation = {
     zipCode: '000000',
     phone: '01010101010',
   },
-};
+});
 
 export const createMockListing = ({ community, user, communityFavorited, favorited, audiences, model }: any) => {
   const data = {
