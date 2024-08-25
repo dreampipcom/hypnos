@@ -40,7 +40,7 @@ export async function POST(request: CombineRequest) {
 
 export async function PATCH(request: CombineRequest) {
   try {
-    const cookies = request?.headers.get('cookies').toString();
+    const cookies = request?.headers?.get('cookies')?.toString();
     const session = await GetSession({ cookies: cookies || '' });
     const url = new URL(request.url);
     const query = url.searchParams;
