@@ -52,10 +52,10 @@ const updatePrivateUserFavoriteListings = async ({ upsert = true, user, target, 
       const response = await PrivatePrisma.user.update(adaptQuery);
       return response;
     } else {
-      throw new Error(`403: Not authorized.`);
+      throw new Error(`Code 001/0: Not authorized.`);
     }
   } catch (e) {
-    throw new Error(`Code 003: Missing results: ${e}`);
+    throw new Error(`Code 002/0: Missing results: ${e}`);
   }
 };
 

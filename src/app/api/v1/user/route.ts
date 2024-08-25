@@ -3,7 +3,12 @@ import type { NextApiRequest } from 'next';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import { GetSession } from '@auth';
-import { UpdatePrivateUserFavoriteListings, GetPrivateCommonAbilities } from '@controller';
+import {
+  GetPrivateAbilities,
+  GetPrivateServices,
+  UpdatePrivateUserFavoriteListings,
+  GetPrivateCommonAbilities,
+} from '@controller';
 type CombineRequest = NextRequest & NextApiRequest;
 
 const generateErrorResponse = (e: any, status: number) => {
@@ -35,7 +40,41 @@ export async function POST(request: CombineRequest) {
     }
   }
 
-  return NextResponse.json(generateErrorResponse('Not authorized', 403), { status: 403 });
+  const cookies = request?.cookies?.toString() || request?.headers?.get('cookies');
+  const session = await GetSession({ cookies: cookies || '' });
+  const user = session?.user;
+
+  const body = await request?.json();
+  const action = body?.action;
+  // const listings = body?.action;
+
+  if (!!user && !!action) {
+    const payload = {};
+    try {
+      if (action === 'get-own-abilities') {
+        payload.data = await GetPrivateAbilities({ filters: ['user'] });
+      } else if (action === 'get-own-services') {
+        payload.data = await GetPrivateServices({ filters: ['user'] });
+      } else {
+        throw new Error('Code 000/1: No specified action');
+      }
+    } catch (e) {
+      return NextResponse.json(generateErrorResponse(e, 400), { status: 400 });
+    }
+
+    return NextResponse.json(
+      {
+        ok: true,
+        status: 200,
+        data: payload.data,
+      },
+      {
+        status: 200,
+      },
+    );
+  }
+
+  return NextResponse.json(generateErrorResponse('Code 000: Malformed request', 400), { status: 400 });
 }
 
 export async function PATCH(request: CombineRequest) {

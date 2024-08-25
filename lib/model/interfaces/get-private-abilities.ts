@@ -42,7 +42,7 @@ const getPrivateAbilities = async ({
       const supportedQueries: Record<string, any> = {
         user: {
           query: {
-            OR: [{ id: { in: loggedUser?.servicesIds }, name: { [locale]: name } }, { userOwner: loggedUser?.id }],
+            OR: [{ id: { in: loggedUser?.abilitiesIds }, name: { [locale]: name } }, { userOwner: loggedUser?.id }],
           },
         },
         // group: {
@@ -60,13 +60,14 @@ const getPrivateAbilities = async ({
         return acc;
       }, {});
 
-      adaptQuery.where = {
-        ...adaptQuery.where,
-        ...query,
-      };
+      adaptQuery.where?.OR = query?.OR;
     } catch (e) {
-      throw new Error('Code 001: Wrong filter');
+      throw new Error('Code 000/2: Wrong filter');
     }
+  }
+
+  if (!adaptQuery?.where?.OR?.length > 0) {
+    throw new Error('Code 000/1: Malformed request');
   }
 
   const response = await PrivatePrisma.abilities.findMany(adaptQuery);

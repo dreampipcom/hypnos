@@ -9,52 +9,61 @@ const getPrivateServices = async ({ id, user, target, page = 0, offset = 0, limi
 
   const adaptQuery: any = {
     where: {
-      id,
-      slug: target,
+      OR: [
+        {
+          id,
+        },
+        {
+          slug: target,
+        },
+      ],
     },
     skip: page * (limit + offset),
     take: limit,
     cacheStrategy: process.env.NEXUS_STANDALONE !== 'true' ? { ttl: 90, swr: 60 * 60 * 24 * 1 } : undefined,
   };
 
-  if (await canI({ type: 'R', action: 'view-listings', target, user: loggedUser })) {
-    if (filters?.length) {
-      // to-do: add common services filter queries later, e.g. ACTIVE services, Updatable Services, etc.
-      try {
-        const supportedQueries: Record<string, any> = {
-          user: {
-            query: {
-              OR: [{ id: { in: loggedUser?.servicesIds } }, { slug: name }, { userOwner: loggedUser?.id }],
-            },
+  if (filters?.length) {
+    try {
+      const supportedQueries: Record<string, any> = {
+        user: {
+          query: {
+            OR: [{ id: { in: loggedUser?.servicesIds }, name: { [locale]: name } }, { userOwner: loggedUser?.id }],
           },
-          // group: {
-          //   query: {
-          //     OR: [
-          //       { id, name, groupOwner: session?.user?.id },
-          //     ],
-          //   },
-          // },
-        };
+        },
+        // group: {
+        //   query: {
+        //     OR: [
+        //       { id, name, groupOwner: session?.user?.id },
+        //     ],
+        //   },
+        // },
+      };
 
-        const query: any = filters?.reduce((acc: any, filter: string) => {
-          if (!acc.OR) acc.OR = [];
-          acc.OR.push(supportedQueries[filter].query);
-          return acc;
-        }, {});
+      const query: any = filters?.reduce((acc: any, filter: string) => {
+        if (!acc.OR) acc.OR = [];
+        acc.OR.push(supportedQueries[filter].query);
+        return acc;
+      }, {});
 
-        adaptQuery.where = {
-          ...adaptQuery.where,
-          ...query,
-        };
-      } catch (e) {
-        throw new Error('Code 001: Wrong filter');
-      }
+      adaptQuery.where?.OR = query?.OR;
+
+      const response = await PrivatePrisma.services.findMany(adaptQuery);
+      return response;
+    } catch (e) {
+      throw new Error('Code 000/2: Wrong filter');
     }
+  }
 
+  if (!adaptQuery?.where?.OR?.length > 0) {
+    throw new Error('Code 000/1: Malformed request');
+  }
+
+  if (await canI({ type: 'R', action: 'view-listings', target, user: loggedUser })) {
     const response = await PrivatePrisma.services.findMany(adaptQuery);
     return response;
   } else {
-    throw new Error(`403: Not authorized.`);
+    throw new Error(`Code 001/0: Not authorized.`);
   }
 };
 
