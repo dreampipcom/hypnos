@@ -49,7 +49,7 @@ export async function POST(request: CombineRequest) {
   // const listings = body?.action;
 
   if (!!user && !!action) {
-    const payload = {};
+    const payload = { data: {} };
     try {
       if (action === 'get-own-abilities') {
         payload.data = await GetPrivateAbilities({ filters: ['user'] });

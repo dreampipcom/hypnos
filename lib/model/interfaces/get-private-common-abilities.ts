@@ -41,13 +41,13 @@ const getPrivateCommonAbilities = async ({ page = 0, offset = 0, limit = PAGE_SI
         return acc;
       }, {});
 
-      adaptQuery.where?.OR = query?.OR;
+      adaptQuery.where.OR = query?.OR;
     } catch (e) {
       throw new Error('Code 000/2: Wrong filter');
     }
   }
 
-  if (!adaptQuery?.where?.OR?.length > 0) {
+  if (!(adaptQuery?.where?.OR?.length > 0)) {
     throw new Error('Code 000/1: Malformed request');
   }
 

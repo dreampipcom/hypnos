@@ -4,7 +4,16 @@ import { whoAmI, canI } from '@controller';
 
 const PAGE_SIZE = 100;
 
-const getPrivateServices = async ({ id, user, target, page = 0, offset = 0, limit = PAGE_SIZE, filters = [] }: any) => {
+const getPrivateServices = async ({
+  id,
+  user,
+  locale = 'en',
+  target,
+  page = 0,
+  offset = 0,
+  limit = PAGE_SIZE,
+  filters = [],
+}: any) => {
   const loggedUser = user || (await whoAmI({}));
 
   const adaptQuery: any = {
@@ -46,7 +55,7 @@ const getPrivateServices = async ({ id, user, target, page = 0, offset = 0, limi
         return acc;
       }, {});
 
-      adaptQuery.where?.OR = query?.OR;
+      adaptQuery.where.OR = query?.OR;
 
       const response = await PrivatePrisma.services.findMany(adaptQuery);
       return response;
@@ -55,7 +64,7 @@ const getPrivateServices = async ({ id, user, target, page = 0, offset = 0, limi
     }
   }
 
-  if (!adaptQuery?.where?.OR?.length > 0) {
+  if (!(adaptQuery?.where?.OR?.length > 0)) {
     throw new Error('Code 000/1: Malformed request');
   }
 
