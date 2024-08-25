@@ -35,6 +35,11 @@ export const createMockPubListing = ({
     userCreator: user,
     communityCreator: community,
     communityOwner: community,
+    images: [
+      faker.image.urlLoremFlickr({ category: 'crypto' }),
+      faker.image.urlLoremFlickr({ category: 'crypto' }),
+      faker.image.urlLoremFlickr({ category: 'crypto' }),
+    ],
     title: {
       en: faker.airline.airplane().name,
       it: faker.airline.airplane().name,

@@ -21,6 +21,7 @@ model PublicListings {
   location            ILocation
   scheduledFor        DateTime?          @db.Date
   value               Float?
+  images              String[]
   taxonomies          ITaxonomiesFacade[]
   reviews             IReviewFacade[]
 

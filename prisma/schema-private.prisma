@@ -241,6 +241,7 @@ model Listings {
   location            ILocation
   scheduledFor        DateTime?          @db.Date
   value               Float?
+  images              String[]
 
   taxonomies          Taxonomies[]      @relation("listingTaxonomies", fields: [taxonomiesIds], references: [id])
   taxonomiesIds       String[]          @db.ObjectId

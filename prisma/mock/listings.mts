@@ -32,11 +32,16 @@ export const createMockListing = ({ community, user, communityFavorited, favorit
     title: {
       es: 'INTERNAL aud',
     },
+    images: [
+      faker.image.urlLoremFlickr({ category: 'crypto' }),
+      faker.image.urlLoremFlickr({ category: 'crypto' }),
+      faker.image.urlLoremFlickr({ category: 'crypto' }),
+    ],
     description: {
       es: 'Lorem ipsum dolor sit amet consectetur',
     },
     status: 'ACTIVE',
-    location: mockLocation,
+    location: mockLocation(),
     favorited: {
       connect: favorited,
     },
