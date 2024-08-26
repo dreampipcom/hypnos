@@ -1,5 +1,6 @@
 // user.ts
 import { faker } from '@faker-js/faker';
+import { HOMock } from './helpers.mts';
 
 interface UserModel {
   id: string;
@@ -19,19 +20,23 @@ export const _mockUser = {
   userId: '66315b93521b49388fe71aa8',
 };
 
-export const createMockUser = () => ({
-  id: faker.database.mongodbObjectId(),
-  name: faker.person.fullName(),
-  email: faker.internet.email(),
-  image: faker.image.avatar(),
-  firstName: 'Vars',
-  lastName: 'Nothing',
-  birthday: new Date(),
-  location: {
-    name: 'Nowhere',
-  },
-});
+export const createMockUser = ({ name, firstName, lastName, location, email, avatar }: any) => {
+  const data = {
+    id: faker.database.mongodbObjectId(),
+    name: name || faker.person.fullName(),
+    email: email || faker.internet.email(),
+    image: avatar || faker.image.avatar(),
+    firstName: firstName || 'DreamPip',
+    lastName: lastName || 'Superuser',
+    birthday: new Date(),
+    location: location || {
+      name: 'Nowhere',
+    },
+  };
 
-export const mockUser = createMockUser();
-export const mockUser2 = createMockUser();
-export const mockUser3 = createMockUser();
+  return data;
+};
+
+export const mockUser = createMockUser({});
+export const mockUser2 = createMockUser({});
+export const mockUser3 = createMockUser({});

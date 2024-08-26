@@ -6,7 +6,7 @@ import { PrivatePrisma } from '@model';
 const updatePrivateUserServices = async ({ upsert = false, user, services }: any) => {
   try {
     // to-do: move this will be a middleware
-    if (services?.length === 0) return new Error('Code 002: Missing data (services)');
+    if (services?.length === 0) return new Error('Code 002/0: Missing data (services)');
 
     const loggedUser = user || (await whoAmI({}));
 
@@ -29,7 +29,7 @@ const updatePrivateUserServices = async ({ upsert = false, user, services }: any
 
     return response;
   } catch (e) {
-    throw new Error(`Code 003: Missing results: ${e}`);
+    throw new Error(`Code 002/0: Missing results: ${e}`);
   }
 };
 

@@ -20,6 +20,10 @@ const nextConfig = {
 
     return config;
   },
+  output:
+    process.env.NEXUS_STANDALONE === 'true' && process.env.NEXUS_STANDALONE_PRISMA_ONLY !== 'true'
+      ? 'standalone'
+      : undefined,
   basePath: process.env.NEXUS_BASE_PATH,
   transpilePackages: ['next-auth'],
   images: {
