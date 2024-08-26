@@ -15,7 +15,7 @@ const generateErrorResponse = (e: any, status: number) => {
   return {
     ok: false,
     status,
-    message: e.message || e,
+    message: e?.message,
   };
 };
 
@@ -74,7 +74,7 @@ export async function POST(request: CombineRequest) {
     );
   }
 
-  return NextResponse.json(generateErrorResponse('Code 000: Malformed request', 400), { status: 400 });
+  return NextResponse.json(generateErrorResponse({ message: 'Code 000: Malformed request' }, 400), { status: 400 });
 }
 
 export async function PATCH(request: CombineRequest) {

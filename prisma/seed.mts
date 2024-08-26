@@ -544,267 +544,267 @@ if (seedType === 'private') {
   });
 
   const main = async () => {
-    try {
-      const user1 = await pvtPrisma.user.create({ data: mockUser });
-      const user2 = await pvtPrisma.user.create({ data: mockUser2 });
-      const user3 = await pvtPrisma.user.create({ data: mockUser3 });
+    // try {
+    //   const user1 = await pvtPrisma.user.create({ data: mockUser });
+    //   const user2 = await pvtPrisma.user.create({ data: mockUser2 });
+    //   const user3 = await pvtPrisma.user.create({ data: mockUser3 });
 
-      // communities
-      const community1 = await pvtPrisma.communities.create({ data: mockCommunity });
-      const community2 = await pvtPrisma.communities.create({ data: mockCommunity2 });
-      const community3 = await pvtPrisma.communities.create({ data: mockCommunity3 });
+    //   // communities
+    //   const community1 = await pvtPrisma.communities.create({ data: mockCommunity });
+    //   const community2 = await pvtPrisma.communities.create({ data: mockCommunity2 });
+    //   const community3 = await pvtPrisma.communities.create({ data: mockCommunity3 });
 
-      // // roles
-      const role1 = await pvtPrisma.roles.create({
-        data: createMockRole({
-          user: user1.id,
-          community: community1.id,
-          refUsers: [{ id: user1.id }],
-          refCommunities: [{ id: community1.id }],
-        }),
-      });
-      const role2 = await pvtPrisma.roles.create({
-        data: createMockRole({
-          user: user1.id,
-          community: community1.id,
-          refUsers: [{ id: user2.id }, { id: user3.id }],
-          refCommunities: [{ id: community2.id }, { id: community3.id }],
-        }),
-      });
+    //   // // roles
+    //   const role1 = await pvtPrisma.roles.create({
+    //     data: createMockRole({
+    //       user: user1.id,
+    //       community: community1.id,
+    //       refUsers: [{ id: user1.id }],
+    //       refCommunities: [{ id: community1.id }],
+    //     }),
+    //   });
+    //   const role2 = await pvtPrisma.roles.create({
+    //     data: createMockRole({
+    //       user: user1.id,
+    //       community: community1.id,
+    //       refUsers: [{ id: user2.id }, { id: user3.id }],
+    //       refCommunities: [{ id: community2.id }, { id: community3.id }],
+    //     }),
+    //   });
 
-      // // abilities
+    //   // // abilities
 
-      const ability1name = {
-        en: 'Favorite Listings (mock)',
-        it: 'Aggiungi ai Preferiti (mock)',
-        pt: 'Favoritar Listagens (mock)',
-        es: 'Marcar como Favorito (mock)',
-        de: 'Anzeigen favorisieren (mock)',
-        fr: 'Mettre en Favori (mock)',
-        ro: 'Favoritează liste (mock)',
-        cz: 'Oblíbené inzeráty (mock)',
-        pl: 'Dodaj do Ulubionych (mock)',
-        et: 'Lisa lemmikutesse (mock)',
-        sv: 'Gör till Favoriter (mock)',
-        ja: 'お気に入りにする (mock)',
-        ru: 'Добавить в Избранное (mock)',
-      };
+    //   const ability1name = {
+    //     en: 'Favorite Listings (mock)',
+    //     it: 'Aggiungi ai Preferiti (mock)',
+    //     pt: 'Favoritar Listagens (mock)',
+    //     es: 'Marcar como Favorito (mock)',
+    //     de: 'Anzeigen favorisieren (mock)',
+    //     fr: 'Mettre en Favori (mock)',
+    //     ro: 'Favoritează liste (mock)',
+    //     cz: 'Oblíbené inzeráty (mock)',
+    //     pl: 'Dodaj do Ulubionych (mock)',
+    //     et: 'Lisa lemmikutesse (mock)',
+    //     sv: 'Gör till Favoriter (mock)',
+    //     ja: 'お気に入りにする (mock)',
+    //     ru: 'Добавить в Избранное (mock)',
+    //   };
 
-      const ability2name = {
-        en: 'View Listings (mock)',
-        it: 'Visualizza inserzioni (mock)',
-        pt: 'Ver listagens (mock)',
-        es: 'Ver listados (mock)',
-        de: 'Anzeigen anzeigen (mock)',
-        fr: 'Voir les annonces (mock)',
-        ro: 'Vizualizare liste (mock)',
-        cz: 'Zobrazit inzeráty (mock)',
-        pl: 'Wyświetl oferty (mock)',
-        et: 'Vaata kuulutusi (mock)',
-        sv: 'Visa listor (mock)',
-        ja: 'リストを表示する (mock)',
-        ru: 'Просмотр объявлений (mock)',
-      };
+    //   const ability2name = {
+    //     en: 'View Listings (mock)',
+    //     it: 'Visualizza inserzioni (mock)',
+    //     pt: 'Ver listagens (mock)',
+    //     es: 'Ver listados (mock)',
+    //     de: 'Anzeigen anzeigen (mock)',
+    //     fr: 'Voir les annonces (mock)',
+    //     ro: 'Vizualizare liste (mock)',
+    //     cz: 'Zobrazit inzeráty (mock)',
+    //     pl: 'Wyświetl oferty (mock)',
+    //     et: 'Vaata kuulutusi (mock)',
+    //     sv: 'Visa listor (mock)',
+    //     ja: 'リストを表示する (mock)',
+    //     ru: 'Просмотр объявлений (mock)',
+    //   };
 
-      const ability1 = await pvtPrisma.abilities.create({
-        data: createMockAbility({
-          name: ability2name,
-          user: user1.id,
-          community: community1.id,
-          type: 'R',
-          action: 'view-listings-mock',
-          nature: 'COMMON',
-          target: 'rickmorty',
-          roles: [{ id: role1.id }, { id: role2.id }],
-          refUsers: [{ id: user1.id }],
-          refCommunities: [{ id: community1.id }],
-        }),
-      });
+    //   const ability1 = await pvtPrisma.abilities.create({
+    //     data: createMockAbility({
+    //       name: ability2name,
+    //       user: user1.id,
+    //       community: community1.id,
+    //       type: 'R',
+    //       action: 'view-listings-mock',
+    //       nature: 'COMMON',
+    //       target: 'rickmorty',
+    //       roles: [{ id: role1.id }, { id: role2.id }],
+    //       refUsers: [{ id: user1.id }],
+    //       refCommunities: [{ id: community1.id }],
+    //     }),
+    //   });
 
-      const ability2 = await pvtPrisma.abilities.create({
-        data: createMockAbility({
-          name: ability2name,
-          user: user1.id,
-          type: 'R',
-          action: 'view-listings-mock',
-          nature: 'PRIVILEGE',
-          target: 'dpcp-vibemodulator',
-          community: community1.id,
-          roles: [{ id: role1.id }, { id: role2.id }],
-          refUsers: [{ id: user1.id }, { id: user2.id }, { id: user3.id }],
-          refCommunities: [{ id: community2.id }, { id: community3.id }],
-        }),
-      });
+    //   const ability2 = await pvtPrisma.abilities.create({
+    //     data: createMockAbility({
+    //       name: ability2name,
+    //       user: user1.id,
+    //       type: 'R',
+    //       action: 'view-listings-mock',
+    //       nature: 'PRIVILEGE',
+    //       target: 'dpcp-vibemodulator',
+    //       community: community1.id,
+    //       roles: [{ id: role1.id }, { id: role2.id }],
+    //       refUsers: [{ id: user1.id }, { id: user2.id }, { id: user3.id }],
+    //       refCommunities: [{ id: community2.id }, { id: community3.id }],
+    //     }),
+    //   });
 
-      const ability3 = await pvtPrisma.abilities.create({
-        data: createMockAbility({
-          name: ability1name,
-          user: user1.id,
-          type: 'U',
-          action: 'favorite-mock',
-          nature: 'COMMON',
-          target: 'rickmorty',
-          community: community1.id,
-          roles: [{ id: role1.id }, { id: role2.id }],
-          refUsers: [{ id: user1.id }, { id: user2.id }, { id: user3.id }],
-          refCommunities: [{ id: community2.id }, { id: community3.id }],
-        }),
-      });
+    //   const ability3 = await pvtPrisma.abilities.create({
+    //     data: createMockAbility({
+    //       name: ability1name,
+    //       user: user1.id,
+    //       type: 'U',
+    //       action: 'favorite-mock',
+    //       nature: 'COMMON',
+    //       target: 'rickmorty',
+    //       community: community1.id,
+    //       roles: [{ id: role1.id }, { id: role2.id }],
+    //       refUsers: [{ id: user1.id }, { id: user2.id }, { id: user3.id }],
+    //       refCommunities: [{ id: community2.id }, { id: community3.id }],
+    //     }),
+    //   });
 
-      // // features
-      const feature1 = await pvtPrisma.features.create({
-        data: createMockFeature({
-          user: user1.id,
-          community: community1.id,
-          abilities: [{ id: ability1.id }],
-          refUsers: [{ id: user1.id }],
-          refCommunities: [{ id: community1.id }],
-        }),
-      });
-      const feature2 = await pvtPrisma.features.create({
-        data: createMockFeature({
-          user: user1.id,
-          community: community1.id,
-          abilities: [{ id: ability2.id }],
-          refUsers: [{ id: user2.id }, { id: user3.id }],
-          refCommunities: [{ id: community2.id }, { id: community3.id }],
-        }),
-      });
+    //   // // features
+    //   const feature1 = await pvtPrisma.features.create({
+    //     data: createMockFeature({
+    //       user: user1.id,
+    //       community: community1.id,
+    //       abilities: [{ id: ability1.id }],
+    //       refUsers: [{ id: user1.id }],
+    //       refCommunities: [{ id: community1.id }],
+    //     }),
+    //   });
+    //   const feature2 = await pvtPrisma.features.create({
+    //     data: createMockFeature({
+    //       user: user1.id,
+    //       community: community1.id,
+    //       abilities: [{ id: ability2.id }],
+    //       refUsers: [{ id: user2.id }, { id: user3.id }],
+    //       refCommunities: [{ id: community2.id }, { id: community3.id }],
+    //     }),
+    //   });
 
-      // // services
-      const service1name = {
-        en: 'The Rick Morty Experience (mock)',
-        it: "L'esperienza di Rick Morty",
-        pt: 'A Experiência Rick Morty (mock)',
-        es: 'La Experiencia Rick Morty (mock)',
-        de: 'Das Rick Morty Erlebnis (mock)',
-        fr: "L'expérience Rick Morty",
-        ro: 'Experiența Rick Morty (mock)',
-        cz: 'Rick Morty Zážitek (mock)',
-        pl: 'Doświadczenie Rick Morty (mock)',
-        et: 'Rick Morty Kogemus (mock)',
-        sv: 'Rick Morty-upplevelsen (mock)',
-        ja: 'リック・モーティ体験 (mock)',
-        ru: 'Опыт Рика и Морти (mock)',
-      };
+    //   // // services
+    //   const service1name = {
+    //     en: 'The Rick Morty Experience (mock)',
+    //     it: "L'esperienza di Rick Morty",
+    //     pt: 'A Experiência Rick Morty (mock)',
+    //     es: 'La Experiencia Rick Morty (mock)',
+    //     de: 'Das Rick Morty Erlebnis (mock)',
+    //     fr: "L'expérience Rick Morty",
+    //     ro: 'Experiența Rick Morty (mock)',
+    //     cz: 'Rick Morty Zážitek (mock)',
+    //     pl: 'Doświadczenie Rick Morty (mock)',
+    //     et: 'Rick Morty Kogemus (mock)',
+    //     sv: 'Rick Morty-upplevelsen (mock)',
+    //     ja: 'リック・モーティ体験 (mock)',
+    //     ru: 'Опыт Рика и Морти (mock)',
+    //   };
 
-      const service2name = {
-        en: 'The Vibe Modulator (mock)',
-        it: 'Il Modulatore di Vibrazioni (mock)',
-        pt: 'O Modulador de Vibração (mock)',
-        es: 'El Modulador de Vibra (mock)',
-        de: 'Der Vibe-Modulator (mock)',
-        fr: 'Le Modulateur de Vibration (mock)',
-        ro: 'Modulatorul de Vibrații (mock)',
-        cz: 'Vibrační Modulátor (mock)',
-        pl: 'Modulator Nastroju (mock)',
-        et: 'Vibe Modulaator (mock)',
-        sv: 'Vibe-modulatorn (mock)',
-        ja: 'バイブモジュレーター (mock)',
-        ru: 'Вибромодулятор (mock)',
-      };
+    //   const service2name = {
+    //     en: 'The Vibe Modulator (mock)',
+    //     it: 'Il Modulatore di Vibrazioni (mock)',
+    //     pt: 'O Modulador de Vibração (mock)',
+    //     es: 'El Modulador de Vibra (mock)',
+    //     de: 'Der Vibe-Modulator (mock)',
+    //     fr: 'Le Modulateur de Vibration (mock)',
+    //     ro: 'Modulatorul de Vibrații (mock)',
+    //     cz: 'Vibrační Modulátor (mock)',
+    //     pl: 'Modulator Nastroju (mock)',
+    //     et: 'Vibe Modulaator (mock)',
+    //     sv: 'Vibe-modulatorn (mock)',
+    //     ja: 'バイブモジュレーター (mock)',
+    //     ru: 'Вибромодулятор (mock)',
+    //   };
 
-      const service1 = await pvtPrisma.services.create({
-        data: createMockService({
-          name: service1name,
-          slug: 'rickmorty-mock',
-          user: user1.id,
-          community: community1.id,
-          features: [{ id: feature1.id }, { id: feature2.id }],
-          refUsers: [{ id: user1.id }],
-          refCommunities: [{ id: community1.id }],
-        }),
-      });
+    //   const service1 = await pvtPrisma.services.create({
+    //     data: createMockService({
+    //       name: service1name,
+    //       slug: 'rickmorty-mock',
+    //       user: user1.id,
+    //       community: community1.id,
+    //       features: [{ id: feature1.id }, { id: feature2.id }],
+    //       refUsers: [{ id: user1.id }],
+    //       refCommunities: [{ id: community1.id }],
+    //     }),
+    //   });
 
-      const service2 = await pvtPrisma.services.create({
-        data: createMockService({
-          name: service2name,
-          slug: 'dpcp-vibemodulator-mock',
-          user: user1.id,
-          community: community1.id,
-          refUsers: [{ id: user2.id }, { id: user3.id }],
-          refCommunities: [{ id: community2.id }, { id: community3.id }],
-        }),
-      });
+    //   const service2 = await pvtPrisma.services.create({
+    //     data: createMockService({
+    //       name: service2name,
+    //       slug: 'dpcp-vibemodulator-mock',
+    //       user: user1.id,
+    //       community: community1.id,
+    //       refUsers: [{ id: user2.id }, { id: user3.id }],
+    //       refCommunities: [{ id: community2.id }, { id: community3.id }],
+    //     }),
+    //   });
 
-      // // listings
-      const listing1 = await pvtPrisma.listings.create({
-        data: createMockListing({
-          favorited: [{ id: user2.id }, { id: user3.id }],
-          user: user1.id,
-          community: community1.id,
-          communityFavorited: [{ id: community2.id }, { id: community3.id }],
-        }),
-      });
+    //   // // listings
+    //   const listing1 = await pvtPrisma.listings.create({
+    //     data: createMockListing({
+    //       favorited: [{ id: user2.id }, { id: user3.id }],
+    //       user: user1.id,
+    //       community: community1.id,
+    //       communityFavorited: [{ id: community2.id }, { id: community3.id }],
+    //     }),
+    //   });
 
-      const listing2 = await pvtPrisma.listings.create({
-        data: createMockListing({
-          favorited: [{ id: user2.id }, { id: user3.id }],
-          user: user1.id,
-          community: community1.id,
-          communityFavorited: [{ id: community2.id }, { id: community3.id }],
-        }),
-      });
+    //   const listing2 = await pvtPrisma.listings.create({
+    //     data: createMockListing({
+    //       favorited: [{ id: user2.id }, { id: user3.id }],
+    //       user: user1.id,
+    //       community: community1.id,
+    //       communityFavorited: [{ id: community2.id }, { id: community3.id }],
+    //     }),
+    //   });
 
-      // // taxonomies
-      const term1 = await pvtPrisma.taxonomies.create({
-        data: createMockTerm({
-          community: community3.id,
-          user: user2.id,
-          listings: [{ id: listing1.id }],
-          targetCommunities: [{ id: community2.id }],
-          targetUser: [{ id: user2.id }],
-        }),
-      });
+    //   // // taxonomies
+    //   const term1 = await pvtPrisma.taxonomies.create({
+    //     data: createMockTerm({
+    //       community: community3.id,
+    //       user: user2.id,
+    //       listings: [{ id: listing1.id }],
+    //       targetCommunities: [{ id: community2.id }],
+    //       targetUser: [{ id: user2.id }],
+    //     }),
+    //   });
 
-      const term2 = await pvtPrisma.taxonomies.create({
-        data: createMockTerm({
-          community: community3.id,
-          user: user2.id,
-          listings: [{ id: listing2.id }],
-          targetCommunities: [{ id: community3.id }],
-          targetUser: [{ id: user3.id }],
-        }),
-      });
+    //   const term2 = await pvtPrisma.taxonomies.create({
+    //     data: createMockTerm({
+    //       community: community3.id,
+    //       user: user2.id,
+    //       listings: [{ id: listing2.id }],
+    //       targetCommunities: [{ id: community3.id }],
+    //       targetUser: [{ id: user3.id }],
+    //     }),
+    //   });
 
-      // messages
-      const message1 = await pvtPrisma.messages.create({
-        data: createMockMessage({
-          community: community3.id,
-          user: user2.id,
-          fromUser: { id: user3.id },
-          toUser: [{ id: user1.id }, { id: user2.id }],
-          toCommunities: [],
-          toListings: [],
-        }),
-      });
+    //   // messages
+    //   const message1 = await pvtPrisma.messages.create({
+    //     data: createMockMessage({
+    //       community: community3.id,
+    //       user: user2.id,
+    //       fromUser: { id: user3.id },
+    //       toUser: [{ id: user1.id }, { id: user2.id }],
+    //       toCommunities: [],
+    //       toListings: [],
+    //     }),
+    //   });
 
-      const message2 = await pvtPrisma.messages.create({
-        data: createMockMessage({
-          community: community3.id,
-          user: user2.id,
-          fromUser: { id: user2.id },
-          toUser: [],
-          toCommunities: [{ id: community2.id }, { id: community3.id }],
-          toListings: [{ id: listing1.id }, { id: listing2.id }],
-        }),
-      });
+    //   const message2 = await pvtPrisma.messages.create({
+    //     data: createMockMessage({
+    //       community: community3.id,
+    //       user: user2.id,
+    //       fromUser: { id: user2.id },
+    //       toUser: [],
+    //       toCommunities: [{ id: community2.id }, { id: community3.id }],
+    //       toListings: [{ id: listing1.id }, { id: listing2.id }],
+    //     }),
+    //   });
 
-      const message3 = await pvtPrisma.messages.create({
-        data: createMockMessage({
-          community: community3.id,
-          user: user2.id,
-          fromCommunity: { id: community3.id },
-          toUser: [],
-          toCommunities: [],
-          toListings: [],
-        }),
-      });
+    //   const message3 = await pvtPrisma.messages.create({
+    //     data: createMockMessage({
+    //       community: community3.id,
+    //       user: user2.id,
+    //       fromCommunity: { id: community3.id },
+    //       toUser: [],
+    //       toCommunities: [],
+    //       toListings: [],
+    //     }),
+    //   });
 
-      console.log(`Private Database has been seeded with mock data. 🌱`);
-    } catch (error) {
-      throw error;
-    }
+    //   console.log(`Private Database has been seeded with mock data. 🌱`);
+    // } catch (error) {
+    //   throw error;
+    // }
     try {
       console.log('~ SEEDING PUBLIC DB WITH MOCK DATA ~');
 
