@@ -8,11 +8,11 @@ import { createMockTerm, mockTerm } from './taxonomies.mts';
 
 import { HOMock } from './helpers.mts';
 
-const mockLocation = {
-  name: 'Home',
+const mockLocation = () => ({
+  name: faker.company.name(),
   geo: {
-    lat: 0.75,
-    lng: 1.02,
+    lat: faker.location.latitude(),
+    lng: faker.location.longitude(),
     radius: 0.98,
   },
   address: {
@@ -25,18 +25,23 @@ const mockLocation = {
     zipCode: '000000',
     phone: '01010101010',
   },
-};
+});
 
 export const createMockListing = ({ community, user, communityFavorited, favorited, audiences, model }: any) => {
   const data = {
     title: {
       es: 'INTERNAL aud',
     },
+    images: [
+      faker.image.urlLoremFlickr({ category: 'crypto' }),
+      faker.image.urlLoremFlickr({ category: 'crypto' }),
+      faker.image.urlLoremFlickr({ category: 'crypto' }),
+    ],
     description: {
       es: 'Lorem ipsum dolor sit amet consectetur',
     },
     status: 'ACTIVE',
-    location: mockLocation,
+    location: mockLocation(),
     favorited: {
       connect: favorited,
     },

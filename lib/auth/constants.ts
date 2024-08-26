@@ -3,7 +3,6 @@
 import type { NextAuthConfig } from 'next-auth';
 import { v4 as uuid } from 'uuid';
 import type { PrismaClient } from '@prisma/client';
-import { PrivatePrisma } from '@model';
 import NextAuth from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
@@ -16,7 +15,9 @@ import {
   GetPrivateCommonServices,
   UpdatePrivateUserAbilities,
   GetPrivateCommonAbilities,
+  GetPrivateAbilities,
 } from '@controller';
+import { PrivatePrisma } from '@model';
 
 export const GetSession = async ({ cookies = '' }) => {
   try {
@@ -29,22 +30,29 @@ export const GetSession = async ({ cookies = '' }) => {
       },
     });
     const session = await response.json();
-    console.log({ cookies, session });
     return session;
   } catch (e) {
     console.error(e);
   }
 };
 
+// to-do: admin sanitizer
+
 // schema sanitizer
 const allUsersSideEffects = async ({ user }: any) => {
   const services = await GetPrivateCommonServices({});
   const abilities = await GetPrivateCommonAbilities({});
-  const commonServices = services.map((service) => service?.id).map((el) => el);
-  const commonAbilities = abilities.map((ability) => ability?.id).map((el) => el);
+  const commonServices = services.map((service: any) => service?.id).map((el: any) => el);
+  const commonAbilities = abilities.map((ability: any) => ability?.id).map((el: any) => el);
+
+  const [dpcpAbility] = await GetPrivateAbilities({ type: 'R', target: 'dpcp-vibemodulator', action: 'view-listings' });
 
   await UpdatePrivateUserServices({ user, services: [...commonServices, ...user.servicesIds], upsert: false });
-  await UpdatePrivateUserAbilities({ user, abilities: [...commonAbilities, ...user.abilitiesIds], upsert: false });
+  await UpdatePrivateUserAbilities({
+    user,
+    abilities: [...commonAbilities, ...user.abilitiesIds, dpcpAbility.id],
+    upsert: false,
+  });
 };
 
 export const providers: any[] = [
@@ -54,8 +62,8 @@ export const providers: any[] = [
     // maxAge: 24 * 60 * 60, // How long email links are valid for (default 24h)
   }),
   GithubProvider({
-    clientId: process.env.GITHUB_ID as string,
-    clientSecret: process.env.GITHUB_SECRET as string,
+    clientId: process.env.AUTH_GITHUB_ID as string,
+    clientSecret: process.env.AUTH_GITHUB_SECRET as string,
   }),
   GoogleProvider({
     clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -64,41 +72,30 @@ export const providers: any[] = [
   AppleProvider({
     clientId: process.env.APPLE_CLIENT_ID as string,
     clientSecret: process.env.APPLE_CLIENT_SECRET as string,
-    wellKnown: 'https://appleid.apple.com/.well-known/openid-configuration',
     checks: ['pkce'],
-    authorization: {
-      url: 'https://appleid.apple.com/auth/authorize',
-      params: {
-        scope: 'name email',
-        response_type: 'code',
-        response_mode: 'form_post',
-        state: uuid(),
-      },
-    },
     token: {
       url: `https://appleid.apple.com/auth/token`,
     },
     client: {
       token_endpoint_auth_method: 'client_secret_post',
     },
-    profile(profile: any) {
+    authorization: {
+      params: {
+        response_mode: 'form_post',
+        response_type: 'code',
+        scope: 'name email',
+        state: uuid(),
+      },
+    },
+    profile(profile) {
       return {
         id: profile.sub,
-        name: profile.name || null,
-        email: profile.email || null,
-        image: null,
+        name: profile.name,
+        email: profile.email,
+        image: '',
       };
     },
-    profileConform(profile: any, query: any) {
-      if (query.user) {
-        const user = JSON.parse(query.user);
-        if (user.name) {
-          profile.name = Object.values(user.name).join(' ');
-        }
-      }
-      return profile;
-    },
-  } as any),
+  }),
   FacebookProvider({
     clientId: process.env.FACEBOOK_CLIENT_ID as string,
     clientSecret: process.env.FACEBOOK_CLIENT_SECRET as string,
@@ -138,7 +135,7 @@ export const authConfig = {
       return true;
     },
     async redirect() {
-      return `${process.env.MAIN_URL}/dash`;
+      return `${process.env.MAIN_URL}/dash/signin`;
     },
     // async jwt({ user, token }) {
     //   if (user) {
@@ -172,10 +169,10 @@ export const authConfig = {
     },
   },
   cookies: {
-    pkceCodeVerifier: {
-      name: 'next-auth.pkce.code_verifier',
+    callbackUrl: {
+      name: `__Secure-authjs.callback-url`,
       options: {
-        httpOnly: true,
+        httpOnly: false,
         sameSite: 'none',
         path: '/',
         secure: true,
@@ -190,11 +187,20 @@ export const authConfig = {
         secure: true,
       },
     },
+    pkceCodeVerifier: {
+      name: 'authjs.pkce.code_verifier',
+      options: {
+        httpOnly: true,
+        sameSite: 'none',
+        path: '/',
+        secure: true,
+      },
+    },
   },
   trustHost: true,
   pages: {
     signIn: '/dash/signin',
-    signOut: '/',
+    signOut: '/dash/signin',
     error: '/dash/error', // Error code passed in query string as ?error=
     verifyRequest: '/dash/verify', // (used for check email message)
     // newUser: '/' // New users will be directed here on first sign in (leave the property out if not of interest)

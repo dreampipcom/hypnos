@@ -1,3 +1,4 @@
+/* eslint @typescript-eslint/no-unused-vars:0 */
 // @controller/get-private-services.ts
 import { whoAmI } from '@controller';
 import { PrivatePrisma } from '@model';
@@ -7,8 +8,11 @@ const PAGE_SIZE = 100;
 const getPrivateAbilities = async ({
   id,
   name,
-  locale = 'es',
+  locale = 'en',
   user,
+  type,
+  target,
+  action,
   page = 0,
   offset = 0,
   limit = PAGE_SIZE,
@@ -18,12 +22,20 @@ const getPrivateAbilities = async ({
 
   const adaptQuery: any = {
     where: {
-      id,
-      name: { [locale]: name },
+      OR: [
+        {
+          id,
+        },
+        {
+          type,
+          target,
+          action,
+        },
+      ],
     },
     skip: page * (limit + offset),
     take: limit,
-    cacheStrategy: { ttl: 90 },
+    cacheStrategy: process.env.NEXUS_STANDALONE !== 'true' ? { ttl: 90, swr: 60 * 10 } : undefined,
   };
 
   if (filters?.length) {
@@ -31,7 +43,7 @@ const getPrivateAbilities = async ({
       const supportedQueries: Record<string, any> = {
         user: {
           query: {
-            OR: [{ id: { in: loggedUser?.servicesIds }, name: { [locale]: name } }, { userOwner: loggedUser?.id }],
+            OR: [{ id: { in: loggedUser?.abilities } }, { userOwnerId: loggedUser.id }],
           },
         },
         // group: {
@@ -49,13 +61,14 @@ const getPrivateAbilities = async ({
         return acc;
       }, {});
 
-      adaptQuery.where = {
-        ...adaptQuery.where,
-        ...query,
-      };
+      adaptQuery.where.OR = query?.OR;
     } catch (e) {
-      throw new Error('Code 001: Wrong filter');
+      throw new Error('Code 000/2: Wrong filter');
     }
+  }
+
+  if (!(adaptQuery?.where?.OR?.length > 0)) {
+    throw new Error('Code 000/1: Malformed request');
   }
 
   const response = await PrivatePrisma.abilities.findMany(adaptQuery);

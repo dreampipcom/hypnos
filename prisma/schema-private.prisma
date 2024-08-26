@@ -239,6 +239,9 @@ model Listings {
   description         ILocaleString     //model description
   status              EListingStatus
   location            ILocation
+  scheduledFor        DateTime?          @db.Date
+  value               Float?
+  images              String[]
 
   taxonomies          Taxonomies[]      @relation("listingTaxonomies", fields: [taxonomiesIds], references: [id])
   taxonomiesIds       String[]          @db.ObjectId
@@ -352,6 +355,7 @@ model Messages {
 model Roles {
   id                String          @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
+  slug              String?
   status            ERoleStatus
   type              ERoleType
   nature            ERoleNature
@@ -370,6 +374,7 @@ model Roles {
 model Services {
   id                  String          @id @default(auto()) @map("_id") @db.ObjectId
   name                ILocaleString
+  slug                String?
   status              EServiceStatus
   type                EServiceType
   nature              EServiceNature
@@ -400,6 +405,7 @@ model Services {
 model Features {
   id                  String          @id @default(auto()) @map("_id") @db.ObjectId
   name                ILocaleString
+  slug                String?
   status              EFeatureStatus
   type                EFeatureType
   nature              EFeatureNature
@@ -428,9 +434,12 @@ model Features {
 model Abilities {
   id                  String            @id @default(auto()) @map("_id") @db.ObjectId
   name                ILocaleString
+  slug                String?
   status              EAbilityStatus
   type                EAbilityType
   nature              EAbilityNature
+  target              String?
+  action              String?
 
   features            Features[]        @relation("featureAbilities", fields: [featuresIds], references: [id])
   featuresIds         String[]          @db.ObjectId
@@ -461,6 +470,7 @@ model Abilities {
 model Moods {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
+  slug              String
   description       ILocaleString
 
   title             ILocaleString
@@ -488,6 +498,7 @@ model Moods {
 model Actions {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
+  slug              String
   description       ILocaleString
 
   title             ILocaleString
@@ -515,6 +526,7 @@ model Actions {
 model Thoughts {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
+  slug              String
   description       ILocaleString
 
   title             ILocaleString
@@ -542,6 +554,7 @@ model Thoughts {
 model Projects {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
+  slug              String
   description       ILocaleString
 
   title             ILocaleString
@@ -574,6 +587,7 @@ model Projects {
 model Investments {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
+  slug              String
   description       ILocaleString
 
   title             ILocaleString
@@ -639,6 +653,20 @@ type ILocaleString {
   bg        String?
   bs        String?
   sq        String?
+  ja        String?
+  ru        String?
+  ar        String?
+  he        String?
+  zh        String?
+  gl        String?
+  sw        String?
+  hi        String?
+  ms        String?
+  bn        String?
+  pa        String?
+  tr        String?
+  fi        String?
+  uk        String?
 }
 
 
@@ -878,14 +906,16 @@ enum EAbilityStatus {
 
 enum EAbilityNature {
   ROLE_BASED
+  BILLING_BASED
   PRIVILEGE
   COMMON
   TEMPORARY
 }
 
 enum EAbilityType {
+  C
   R
-  W
+  U
   D
 }
 

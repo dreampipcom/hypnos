@@ -1,14 +1,15 @@
+/* eslint @typescript-eslint/no-unused-vars:0 */
 // @controller/get-private-services.ts
 import { PrivatePrisma } from '@model';
-import { whoAmI } from '@controller';
+import { whoAmI, canI } from '@controller';
 
 const PAGE_SIZE = 100;
 
 const getPrivateServices = async ({
   id,
-  name,
-  locale = 'es',
   user,
+  locale = 'en',
+  target,
   page = 0,
   offset = 0,
   limit = PAGE_SIZE,
@@ -18,12 +19,18 @@ const getPrivateServices = async ({
 
   const adaptQuery: any = {
     where: {
-      id,
-      name: { [locale]: name },
+      OR: [
+        {
+          id,
+        },
+        {
+          slug: target,
+        },
+      ],
     },
     skip: page * (limit + offset),
     take: limit,
-    cacheStrategy: { ttl: 90 },
+    cacheStrategy: process.env.NEXUS_STANDALONE !== 'true' ? { ttl: 90, swr: 60 * 60 * 24 * 1 } : undefined,
   };
 
   if (filters?.length) {
@@ -31,7 +38,7 @@ const getPrivateServices = async ({
       const supportedQueries: Record<string, any> = {
         user: {
           query: {
-            OR: [{ id: { in: loggedUser?.servicesIds }, name: { [locale]: name } }, { userOwner: loggedUser?.id }],
+            OR: [{ id: { in: loggedUser?.services } }, { userOwnerId: loggedUser.id }],
           },
         },
         // group: {
@@ -49,18 +56,25 @@ const getPrivateServices = async ({
         return acc;
       }, {});
 
-      adaptQuery.where = {
-        ...adaptQuery.where,
-        ...query,
-      };
+      adaptQuery.where.OR = query?.OR;
+
+      const response = await PrivatePrisma.services.findMany(adaptQuery);
+      return response;
     } catch (e) {
-      throw new Error('Code 001: Wrong filter');
+      throw new Error(`Code 000/2: Wrong filter: ${e}`);
     }
   }
 
-  const response = await PrivatePrisma.services.findMany(adaptQuery);
+  if (!(adaptQuery?.where?.OR?.length > 0)) {
+    throw new Error('Code 000/1: Malformed request');
+  }
 
-  return response;
+  if (await canI({ type: 'R', action: 'view-listings', target, user: loggedUser })) {
+    const response = await PrivatePrisma.services.findMany(adaptQuery);
+    return response;
+  } else {
+    throw new Error(`Code 001/0: Not authorized.`);
+  }
 };
 
 export default getPrivateServices;
