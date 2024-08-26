@@ -1,0 +1,110 @@
+name: hypnos::deploy_prod
+
+on:
+  push:
+    branches:
+      - main
+
+# on:
+#   pull_request:
+#     branches:
+#       - dev
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+  PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+  REGION: europe-west2
+  GAR_LOCATION: europe-west2-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/chain-service/
+
+jobs:
+  build-and-push-image:
+    name: hypnos::build_and_push::docker_image
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+
+    steps:
+      - name: hypnos::deploy_prod::docker::Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: hypnos::deploy_prod::docker::Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: hypnos::deploy_prod::docker::Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+
+      - name: hypnos::deploy_prod::docker::Build and push Docker image
+        id: push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            API_URL=${{ secrets.API_URL_PROD }}
+            APPLE_CLIENT_ID=${{ secrets.APPLE_CLIENT_ID_PROD }}
+            APPLE_CLIENT_SECRET=${{ secrets.APPLE_CLIENT_SECRET_PROD }}
+            AUTH_SECRET=${{ secrets.AUTH_SECRET_PROD }}
+            AUTH_TRUST_HOST=${{ secrets.AUTH_TRUST_HOST_PROD }}
+            AUTH_URL=${{ secrets.AUTH_URL_PROD }}
+            AUTH_GITHUB_ID=${{ secrets.AUTH_GITHUB_ID_PROD }}
+            AUTH_GITHUB_SECRET=${{ secrets.AUTH_GITHUB_SECRET_PROD }}
+            EMAIL_FROM=${{ secrets.EMAIL_FROM_PROD }}
+            EMAIL_SERVER=${{ secrets.EMAIL_SERVER_PROD }}
+            FACEBOOK_CLIENT_ID=${{ secrets.FACEBOOK_CLIENT_ID_PROD }}
+            FACEBOOK_CLIENT_SECRET=${{ secrets.FACEBOOK_CLIENT_SECRET_PROD }}
+            GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID_PROD }}
+            GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET_PROD }}
+            INSTAGRAM_CLIENT_ID=${{ secrets.INSTAGRAM_CLIENT_ID_PROD }}
+            INSTAGRAM_CLIENT_SECRET=${{ secrets.INSTAGRAM_CLIENT_SECRET_PROD }}
+            KV_REST_API_READ_ONLY_TOKEN=${{ secrets.KV_REST_API_READ_ONLY_TOKEN_PROD }}
+            KV_REST_API_TOKEN=${{ secrets.KV_REST_API_TOKEN_PROD }}
+            KV_REST_API_URL=${{ secrets.KV_REST_API_URL_PROD }}
+            KV_URL=${{ secrets.KV_URL_PROD }}
+            MAIN_URL=${{ secrets.MAIN_URL_PROD }}
+            MONGODB_DATABASE=${{ secrets.MONGODB_DATABASE_PROD }}
+            MONGODB_DEFAULT_ORG=${{ secrets.MONGODB_DEFAULT_ORG_PROD }}
+            MONGODB_ORGS_DATABASE=${{ secrets.MONGODB_ORGS_DATABASE_PROD }}
+            MONGODB_PRIVATE_URI=${{ secrets.MONGODB_PRIVATE_URI_PROD }}
+            MONGODB_PUBLIC_URI=${{ secrets.MONGODB_PUBLIC_URI_PROD }}
+            MONGODB_USERS_DATABASE=${{ secrets.MONGODB_USERS_DATABASE_PROD }}
+            NEXUS_KEEPALIVE=${{ secrets.NEXUS_KEEPALIVE_PROD }}
+            NEXUS_MODE=${{ secrets.NEXUS_MODE_PROD }}
+            NEXUS_STANDALONE=true
+            PRISMA_PRIVATE_URI=${{ secrets.MONGODB_PRIVATE_URI_PROD }}
+            PRISMA_PUBLIC_URI=${{ secrets.MONGODB_PUBLIC_URI_PROD }}
+       
+      - name: hypnos::deploy_prod::docker::Generate artifact attestation
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          subject-digest: ${{ steps.push.outputs.digest }}
+          push-to-registry: true
+  
+  deploy-to-gcp-vm:
+    needs: build-and-push-image
+    name: hypnos::deploy_prod::push_to_gcp::vm
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: hypnos::deploy_prod::push_to_gcp::vm::install ssh keys
+        run: |
+          install -m 600 -D /dev/null ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_PRIVATE_KEY_PROD }}" > ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SSH_HOST_PROD }} > ~/.ssh/known_hosts
+      - name: hypnos::deploy_prod::push_to_gcp::vm::connect and pull
+        run: ssh ${{ secrets.SSH_USER_PROD }}@${{ secrets.SSH_HOST_PROD }} "docker login ghcr.io -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }} && docker pull ${{ secrets.IMAGE_TAG_PROD }} && docker stop hypnos && docker rm hypnos && docker run -d --name hypnos --restart unless-stopped -p ${{ secrets.IMAGE_PORT_PROD }}:3001 ${{ secrets.IMAGE_TAG_PROD }} && exit"
+      - name: cleanup
+        run: rm -rf ~/.ssh

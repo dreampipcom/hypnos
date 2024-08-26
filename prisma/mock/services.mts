@@ -10,11 +10,10 @@ import { mockTerm, mockTerm2 } from './taxonomies.mts';
 
 import { HOMock } from './helpers.mts';
 
-export const createMockService = ({ community, user, features, refUsers, refCommunities }: any): any => {
+export const createMockService = ({ name, slug, community, user, features, refUsers, refCommunities }: any): any => {
   const data = {
-    name: {
-      es: 'Service 1',
-    },
+    name,
+    slug,
     status: 'ACTIVE',
     type: 'CONSUMER',
     nature: 'COMMON',
