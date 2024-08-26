@@ -7,7 +7,11 @@ const getPrivateCommonServices = async ({ page = 0, offset = 0, limit = PAGE_SIZ
   // to-do: move, this will be a middleware
   const adaptQuery: any = {
     where: {
-      nature: 'COMMON',
+      OR: [
+        {
+          nature: 'COMMON',
+        },
+      ],
     },
     skip: page * (limit + offset),
     take: limit,
@@ -37,13 +41,14 @@ const getPrivateCommonServices = async ({ page = 0, offset = 0, limit = PAGE_SIZ
         return acc;
       }, {});
 
-      adaptQuery.where = {
-        ...adaptQuery.where,
-        ...query,
-      };
+      adaptQuery.where.OR = query?.OR;
     } catch (e) {
-      throw new Error('Code 001: Wrong filter');
+      throw new Error('Code 000/2: Wrong filter');
     }
+  }
+
+  if (!(adaptQuery?.where?.OR?.length > 0)) {
+    throw new Error('Code 000/1: Malformed request');
   }
 
   const response = await PrivatePrisma.services.findMany(adaptQuery);

@@ -1,8 +1,9 @@
-// @api/v1/public/index.ts
+// @api/v1/services/dpcp-vibemodulator/index.ts
 import type { NextApiRequest } from 'next';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
-import { GetPublicListings } from '@controller';
+import { GetPrivateServices } from '@controller';
+import { GetSession } from '@auth';
 type CombineRequest = NextRequest & NextApiRequest;
 
 const generateErrorResponse = (e: any, status: number) => {
@@ -16,6 +17,10 @@ const generateErrorResponse = (e: any, status: number) => {
 // export const dynamic = 'force-static';
 export async function GET(request: CombineRequest) {
   try {
+    const cookies = request?.cookies?.toString() || request?.headers?.get('cookies');
+    const session = await GetSession({ cookies: cookies || '' });
+    const user = session?.user;
+
     const url = new URL(request.url);
     const query = url.searchParams;
 
@@ -30,17 +35,14 @@ export async function GET(request: CombineRequest) {
     const coercedLimit = Number(limit ? (Array.isArray(limit) ? limit[0] : limit) : 100);
     const coercedOffset = Number(offset ? (Array.isArray(offset) ? offset[0] : offset) : 0);
 
-    const data = await GetPublicListings({
+    const data = await GetPrivateServices({
+      user,
+      target: 'dpcp-vibemodulator',
       page: coercedPage,
       limit: coercedLimit,
       offset: coercedOffset,
       filters: filterArray,
     });
-
-    const headers = {
-      'content-type': 'application/json',
-      'Cache-Control': 'maxage=0, s-maxage=60, stale-while-revalidate=86400',
-    };
 
     return NextResponse.json(
       {
@@ -50,7 +52,6 @@ export async function GET(request: CombineRequest) {
       },
       {
         status: 200,
-        headers,
       },
     );
   } catch (e) {

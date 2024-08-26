@@ -4,11 +4,20 @@ import { PrismaClient as PublicPrismaStandalone } from '@dreampipcom/db-public/p
 import { withAccelerate } from '@prisma/extension-accelerate';
 
 const prismaClientSingleton = () => {
-  return new PublicPrisma().$extends(withAccelerate());
+  if (process.env.NEXUS_STANDALONE_PRISMA_ONLY === 'true') {
+    console.log('--- USING EDGE, BUT NOT USING PRISMA ACCELERATE');
+    return new PublicPrisma();
+  } else {
+    console.log('--- USING EDGE AND USING PRISMA ACCELERATE');
+    return new PublicPrisma().$extends(withAccelerate());
+  }
 };
-
 const prismaClientSingletonStandalone = () => {
-  return new PublicPrismaStandalone();
+  if (process.env.NEXUS_STANDALONE === 'true') {
+    console.log('--- NOT USING EDGE AND NOT USING PRISMA ACCELERATE');
+    return new PublicPrismaStandalone();
+  }
+  return;
 };
 
 declare const globalThis: {

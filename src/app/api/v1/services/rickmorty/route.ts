@@ -1,4 +1,4 @@
-// @api/v1/public/index.ts
+// @api/v1/services/rickmorty/index.ts
 import type { NextApiRequest } from 'next';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
@@ -37,11 +37,6 @@ export async function GET(request: CombineRequest) {
       filters: filterArray,
     });
 
-    const headers = {
-      'content-type': 'application/json',
-      'Cache-Control': 'maxage=0, s-maxage=60, stale-while-revalidate=86400',
-    };
-
     return NextResponse.json(
       {
         ok: true,
@@ -50,7 +45,6 @@ export async function GET(request: CombineRequest) {
       },
       {
         status: 200,
-        headers,
       },
     );
   } catch (e) {
