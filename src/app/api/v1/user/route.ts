@@ -15,7 +15,7 @@ const generateErrorResponse = (e: any, status: number) => {
   return {
     ok: false,
     status,
-    message: e?.message,
+    message: `${e?.message}`,
   };
 };
 
