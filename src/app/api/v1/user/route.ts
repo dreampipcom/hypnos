@@ -22,7 +22,13 @@ const generateErrorResponse = (e: any, status: number) => {
 // export const dynamic = 'force-static';
 
 export async function POST(request: CombineRequest) {
-  const isHealthCheck = request?.headers?.get('x-dp-keepalive') === process.env.NEXUS_KEEPALIVE;
+  const healthSecret =
+    request?.headers?.get('x-dp-keepalive') ||
+    request?.cookies?.toString()?.split('dp-health-check=')[1].split(';')[0] ||
+    request?.headers?.get('cookies')?.toString()?.split('dp-health-check=')[1].split(';')[0] ||
+    '';
+  const isHealthCheck = healthSecret === process.env.NEXUS_KEEPALIVE;
+
   if (isHealthCheck) {
     try {
       await GetPrivateCommonAbilities({});
@@ -40,17 +46,16 @@ export async function POST(request: CombineRequest) {
     }
   }
 
-  const cookies = request?.cookies?.toString() || request?.headers?.get('cookies');
-  const session = await GetSession({ cookies: cookies || '' });
-  const user = session?.user;
+  try {
+    const cookies = request?.cookies?.toString() || request?.headers?.get('cookies');
+    const session = await GetSession({ cookies: cookies || '' });
+    const user = session?.user;
 
-  const body = await request?.json();
-  const action = body?.action;
-  // const listings = body?.action;
+    const body = await request?.json();
+    const action = body?.action;
 
-  if (!!user && !!action) {
-    const payload = { data: {} };
-    try {
+    if (!!user && !!action) {
+      const payload = { data: {} };
       if (action === 'get-own-abilities') {
         payload.data = await GetPrivateAbilities({ filters: ['user'], user });
       } else if (action === 'get-own-services') {
@@ -58,23 +63,22 @@ export async function POST(request: CombineRequest) {
       } else {
         throw new Error('Code 000/1: No specified action');
       }
-    } catch (e) {
-      return NextResponse.json(generateErrorResponse(e, 400), { status: 400 });
+      return NextResponse.json(
+        {
+          ok: true,
+          status: 200,
+          data: payload.data,
+        },
+        {
+          status: 200,
+        },
+      );
     }
 
-    return NextResponse.json(
-      {
-        ok: true,
-        status: 200,
-        data: payload.data,
-      },
-      {
-        status: 200,
-      },
-    );
+    return NextResponse.json(generateErrorResponse({ message: 'Code 000: Malformed request' }, 400), { status: 400 });
+  } catch (e) {
+    return NextResponse.json(generateErrorResponse(e, 400), { status: 400 });
   }
-
-  return NextResponse.json(generateErrorResponse({ message: 'Code 000: Malformed request' }, 400), { status: 400 });
 }
 
 export async function PATCH(request: CombineRequest) {
