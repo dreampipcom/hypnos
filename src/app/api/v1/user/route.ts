@@ -14,7 +14,7 @@ type CombineRequest = NextRequest & NextApiRequest;
 const generateErrorResponse = (e: any, status: number) => {
   return {
     ok: false,
-    status,
+    status: status || 500,
     message: `${e?.message}`,
   };
 };
@@ -22,15 +22,16 @@ const generateErrorResponse = (e: any, status: number) => {
 // export const dynamic = 'force-static';
 
 export async function POST(request: CombineRequest) {
-  const healthSecret =
-    request?.headers?.get('x-dp-keepalive') ||
-    request?.cookies?.toString()?.split('dp-health-check=')[1].split(';')[0] ||
-    request?.headers?.get('cookies')?.toString()?.split('dp-health-check=')[1].split(';')[0] ||
-    '';
-  const isHealthCheck = healthSecret === process.env.NEXUS_KEEPALIVE;
+  const response = { error: generateErrorResponse({ message: 'Code 000/0: Non-identified error.' }, 500) };
+  try {
+    const healthSecret =
+      request?.headers?.get('x-dp-keepalive') ||
+      request?.cookies?.toString()?.split('dp-health-check=')[1]?.split(';')[0] ||
+      request?.headers?.get('cookies')?.toString()?.split('dp-health-check=')[1]?.split(';')[0] ||
+      '';
+    const isHealthCheck = healthSecret === process.env.NEXUS_KEEPALIVE;
 
-  if (isHealthCheck) {
-    try {
+    if (isHealthCheck) {
       await GetPrivateCommonAbilities({});
       return NextResponse.json(
         {
@@ -41,9 +42,9 @@ export async function POST(request: CombineRequest) {
           status: 200,
         },
       );
-    } catch (e) {
-      return NextResponse.json(generateErrorResponse(e, 403), { status: 403 });
     }
+  } catch (e) {
+    response.error = generateErrorResponse(e, 403);
   }
 
   try {
@@ -75,10 +76,12 @@ export async function POST(request: CombineRequest) {
       );
     }
 
-    return NextResponse.json(generateErrorResponse({ message: 'Code 000: Malformed request' }, 400), { status: 400 });
+    response.error = generateErrorResponse({ message: 'Code 000: Malformed request' }, 400);
   } catch (e) {
-    return NextResponse.json(generateErrorResponse(e, 400), { status: 400 });
+    response.error = generateErrorResponse(e, 500);
   }
+
+  return NextResponse.json(response.error, { status: response?.error?.status || 500 });
 }
 
 export async function PATCH(request: CombineRequest) {
