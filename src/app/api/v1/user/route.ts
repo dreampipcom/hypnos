@@ -14,7 +14,7 @@ type CombineRequest = NextRequest & NextApiRequest;
 const generateErrorResponse = (e: any, status: number) => {
   return {
     ok: false,
-    status,
+    status: status || 500,
     message: `${e?.message}`,
   };
 };
@@ -22,6 +22,7 @@ const generateErrorResponse = (e: any, status: number) => {
 // export const dynamic = 'force-static';
 
 export async function POST(request: CombineRequest) {
+  let error;
   try {
     const healthSecret =
       request?.headers?.get('x-dp-keepalive') ||
@@ -43,7 +44,7 @@ export async function POST(request: CombineRequest) {
       );
     }
   } catch (e) {
-    return NextResponse.json(generateErrorResponse(e, 403), { status: 403 });
+    error = generateErrorResponse(e, 403);
   }
 
   try {
@@ -77,8 +78,10 @@ export async function POST(request: CombineRequest) {
 
     return NextResponse.json(generateErrorResponse({ message: 'Code 000: Malformed request' }, 400), { status: 400 });
   } catch (e) {
-    return NextResponse.json(generateErrorResponse(e, 400), { status: 400 });
+    error = generateErrorResponse(e, 400);
   }
+
+  return NextResponse.json(error, error.status);
 }
 
 export async function PATCH(request: CombineRequest) {
