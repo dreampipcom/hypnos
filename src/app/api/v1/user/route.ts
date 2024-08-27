@@ -22,7 +22,7 @@ const generateErrorResponse = (e: any, status: number) => {
 // export const dynamic = 'force-static';
 
 export async function POST(request: CombineRequest) {
-  let error;
+  const response = { error: generateErrorResponse({ message: 'Code 000/0: Non-identified error.' }) };
   try {
     const healthSecret =
       request?.headers?.get('x-dp-keepalive') ||
@@ -44,7 +44,7 @@ export async function POST(request: CombineRequest) {
       );
     }
   } catch (e) {
-    error = generateErrorResponse(e, 403);
+    response.error = generateErrorResponse(e, 403);
   }
 
   try {
@@ -76,12 +76,12 @@ export async function POST(request: CombineRequest) {
       );
     }
 
-    error = generateErrorResponse({ message: 'Code 000: Malformed request' }, 400);
+    response.error = generateErrorResponse({ message: 'Code 000: Malformed request' }, 400);
   } catch (e) {
-    error = generateErrorResponse(e, 500);
+    response.error = generateErrorResponse(e, 500);
   }
 
-  return NextResponse.json(error, { status: error?.status || 500 });
+  return NextResponse.json(response.error, { status: response?.error?.status || 500 });
 }
 
 export async function PATCH(request: CombineRequest) {
