@@ -27,7 +27,7 @@ export async function POST(request: CombineRequest) {
     request?.cookies?.toString().split('dp-health-check=')[1].split(';')[0] ||
     request?.headers?.get('cookies').toString().split('dp-health-check=')[1].split(';')[0];
   const isHealthCheck = healthSecret === process.env.NEXUS_KEEPALIVE;
-  console.log({ healthSecret });
+
   if (isHealthCheck) {
     try {
       await GetPrivateCommonAbilities({});
