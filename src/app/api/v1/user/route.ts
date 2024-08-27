@@ -22,7 +22,7 @@ const generateErrorResponse = (e: any, status: number) => {
 // export const dynamic = 'force-static';
 
 export async function POST(request: CombineRequest) {
-  const response = { error: generateErrorResponse({ message: 'Code 000/0: Non-identified error.' }) };
+  const response = { error: generateErrorResponse({ message: 'Code 000/0: Non-identified error.' }, 500) };
   try {
     const healthSecret =
       request?.headers?.get('x-dp-keepalive') ||
