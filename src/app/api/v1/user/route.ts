@@ -76,9 +76,9 @@ export async function POST(request: CombineRequest) {
       );
     }
 
-    return NextResponse.json(generateErrorResponse({ message: 'Code 000: Malformed request' }, 400), { status: 400 });
+    error = generateErrorResponse({ message: 'Code 000: Malformed request' }, 400);
   } catch (e) {
-    error = generateErrorResponse(e, 400);
+    error = generateErrorResponse(e, 500);
   }
 
   return NextResponse.json(error, error.status);
