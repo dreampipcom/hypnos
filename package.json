@@ -73,7 +73,7 @@
     "eslint-config-alloy": "5.1.2",
     "eslint-config-next": "14.0.4",
     "husky": "9.0.11",
-    "lodash": "4.17.21",
+    "lodash": "^4.17.21",
     "mongodb": "5.0.0",
     "next-auth": "5.0.0-beta.20",
     "nodemailer": "6.9.14",
