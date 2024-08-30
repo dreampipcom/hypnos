@@ -120,7 +120,7 @@ export const authConfig = {
       try {
         if (isNewUser) {
           // [DPCP-125] https://www.notion.so/angeloreale/Hypnos-Feature-use-lib-log-for-server-console-logs-67993255fc4e4010a08fee263089f9b7?pvs=4
-          console.log('dp::hypnos:: Running side-effects');
+          console.log('dp::hypnos::Running sign-up side-effects');
           await allUsersSideEffects({ user });
         }
       } catch (e) {
