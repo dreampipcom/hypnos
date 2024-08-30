@@ -59,6 +59,7 @@
     "@prisma/extension-accelerate": "1.1.0",
     "@prisma/nextjs-monorepo-workaround-plugin": "5.18.0",
     "@types/json-schema": "7.0.15",
+    "@types/lodash": "^4.17.7",
     "@types/node": "20",
     "@types/react": "18.3.2",
     "@types/uuid": "9.0.8",
