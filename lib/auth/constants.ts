@@ -51,8 +51,8 @@ const allUsersSideEffects = async ({ user }: any) => {
 
   const [dpcpAbility] = await GetPrivateAbilities({ type: 'R', target: 'dpcp-vibemodulator', action: 'view-listings' });
 
-  const nextAbilities = _.uniq([...commonAbilities, userAbilities, dpcpAbility?.id]);
-  const nextServices = _.uniq([...commonServices, userServices]);
+  const nextAbilities = _.uniq([...commonAbilities, ...userAbilities, dpcpAbility?.id]);
+  const nextServices = _.uniq([...commonServices, ...userServices]);
 
   await UpdatePrivateUserServices({ user, services: nextServices, upsert: false });
   await UpdatePrivateUserAbilities({
