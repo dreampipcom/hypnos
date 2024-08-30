@@ -119,7 +119,8 @@ export const authConfig = {
       const { user, isNewUser } = props;
       try {
         if (isNewUser) {
-          console.log('Events: Running side-effects');
+          // [DPCP-125] https://www.notion.so/angeloreale/Hypnos-Feature-use-lib-log-for-server-console-logs-67993255fc4e4010a08fee263089f9b7?pvs=4
+          console.log('dp::hypnos:: Running side-effects');
           await allUsersSideEffects({ user });
         }
       } catch (e) {
@@ -132,10 +133,10 @@ export const authConfig = {
   callbacks: {
     async signIn(props) {
       const { user } = props;
-      console.log({ props, user });
       try {
         if (user) {
-          console.log('Callback: Running side-effects');
+          // [DPCP-125] https://www.notion.so/angeloreale/Hypnos-Feature-use-lib-log-for-server-console-logs-67993255fc4e4010a08fee263089f9b7?pvs=4
+          console.log('dp::hypnos::Callback: Running sign-in side-effects');
           await allUsersSideEffects({ user });
         }
       } catch (e) {
