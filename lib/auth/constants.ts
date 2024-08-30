@@ -114,6 +114,7 @@ export const authConfig = {
       const { user, isNewUser } = props;
       try {
         if (isNewUser) {
+          console.log('Events: Running side-effects');
           await allUsersSideEffects({ user });
         }
       } catch (e) {
@@ -127,6 +128,7 @@ export const authConfig = {
     async signIn(props) {
       const { user } = props;
       try {
+        console.log('Callback: Running side-effects');
         await allUsersSideEffects({ user });
       } catch (e) {
         console.warn(`Code 004: Log-in side-effects failed. If it's a new user, plese ignore: ${e}`);
