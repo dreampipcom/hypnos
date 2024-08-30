@@ -85,6 +85,13 @@ jobs:
             NEXUS_STANDALONE=true
             PRISMA_PRIVATE_URI=${{ secrets.MONGODB_PRIVATE_URI_PROD }}
             PRISMA_PUBLIC_URI=${{ secrets.MONGODB_PUBLIC_URI_PROD }}
+            SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN_PROD }}
+            SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN_PROD }}
+            NEXT_PUBLIC_SENTRY_DSN=${{ secrets.NEXT_PUBLIC_SENTRY_DSN_PROD }}
+            SENTRY_PROJECT=${{ secrets.SENTRY_PROJECT_PROD }}
+            SENTRY_ORG=${{ secrets.SENTRY_ORG_PROD }}
+            VERCEL_GIT_COMMIT_SHA=${{ github.sha }}
+
        
       - name: hypnos::deploy_prod::docker::Generate artifact attestation
         uses: actions/attest-build-provenance@v1
