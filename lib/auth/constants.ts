@@ -42,6 +42,8 @@ export const GetSession = async ({ cookies = '' }) => {
 // schema sanitizer
 const allUsersSideEffects = async ({ user }: any) => {
   if (!user) return;
+  const userServices = user.servicesIds || [];
+  const userAbilities = user.abilitiesIds || [];
   const services = await GetPrivateCommonServices({});
   const abilities = await GetPrivateCommonAbilities({});
   const commonServices = services.map((service: any) => service?.id).map((el: any) => el);
@@ -49,8 +51,8 @@ const allUsersSideEffects = async ({ user }: any) => {
 
   const [dpcpAbility] = await GetPrivateAbilities({ type: 'R', target: 'dpcp-vibemodulator', action: 'view-listings' });
 
-  const nextAbilities = _.uniq([...commonAbilities, ...user.abilitiesIds, dpcpAbility?.id]);
-  const nextServices = _.uniq([...commonServices, ...user.servicesIds]);
+  const nextAbilities = _.uniq([...commonAbilities, userAbilities, dpcpAbility?.id]);
+  const nextServices = _.uniq([...commonServices, userServices]);
 
   await UpdatePrivateUserServices({ user, services: nextServices, upsert: false });
   await UpdatePrivateUserAbilities({
