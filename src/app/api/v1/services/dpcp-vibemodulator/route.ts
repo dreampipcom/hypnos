@@ -15,6 +15,7 @@ const generateErrorResponse = (e: any, status: number) => {
 };
 
 // export const dynamic = 'force-static';
+
 export async function GET(request: CombineRequest) {
   try {
     const cookies = request?.cookies?.toString() || request?.headers?.get('cookies');

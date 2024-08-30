@@ -1,5 +1,6 @@
 // constants.ts TS-Doc?
 /* eslint @typescript-eslint/consistent-type-assertions:0 */
+import _ from 'lodash';
 import type { NextAuthConfig } from 'next-auth';
 import { v4 as uuid } from 'uuid';
 import type { PrismaClient } from '@prisma/client';
@@ -40,6 +41,7 @@ export const GetSession = async ({ cookies = '' }) => {
 
 // schema sanitizer
 const allUsersSideEffects = async ({ user }: any) => {
+  if (!user) return;
   const services = await GetPrivateCommonServices({});
   const abilities = await GetPrivateCommonAbilities({});
   const commonServices = services.map((service: any) => service?.id).map((el: any) => el);
@@ -47,10 +49,13 @@ const allUsersSideEffects = async ({ user }: any) => {
 
   const [dpcpAbility] = await GetPrivateAbilities({ type: 'R', target: 'dpcp-vibemodulator', action: 'view-listings' });
 
-  await UpdatePrivateUserServices({ user, services: [...commonServices, ...user.servicesIds], upsert: false });
+  const nextAbilities = _.uniq([...commonAbilities, ...user.abilitiesIds, dpcpAbility?.id]);
+  const nextServices = _.uniq([...commonServices, ...user.servicesIds]);
+
+  await UpdatePrivateUserServices({ user, services: nextServices, upsert: false });
   await UpdatePrivateUserAbilities({
     user,
-    abilities: [...commonAbilities, ...user.abilitiesIds, dpcpAbility.id],
+    abilities: nextAbilities,
     upsert: false,
   });
 };
@@ -127,9 +132,12 @@ export const authConfig = {
   callbacks: {
     async signIn(props) {
       const { user } = props;
+      console.log({ props, user });
       try {
-        console.log('Callback: Running side-effects');
-        await allUsersSideEffects({ user });
+        if (user) {
+          console.log('Callback: Running side-effects');
+          await allUsersSideEffects({ user });
+        }
       } catch (e) {
         console.warn(`Code 004: Log-in side-effects failed. If it's a new user, plese ignore: ${e}`);
       }
