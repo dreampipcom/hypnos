@@ -29,6 +29,7 @@ export const GetSession = async ({ cookies = '' }) => {
         'Content-Type': 'application/json',
         Cookie: cookies,
       },
+      next: { revalidate: 0 },
     });
     const session = await response.json();
     return session;
