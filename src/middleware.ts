@@ -7,10 +7,10 @@ import { next } from '@vercel/edge';
 // import { kv } from '@vercel/kv';
 // import { Ratelimit } from '@upstash/ratelimit';
 
-const ratelimit = new Ratelimit({
-  redis: kv,
-  limiter: Ratelimit.slidingWindow(10, '3 s'),
-});
+// const ratelimit = new Ratelimit({
+//   redis: kv,
+//   limiter: Ratelimit.slidingWindow(10, '3 s'),
+// });
 
 export const config = {
   matcher: ['/api/:path*'],
