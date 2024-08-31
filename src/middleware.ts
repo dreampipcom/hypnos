@@ -37,9 +37,9 @@ export default async function middleware(request: NextRequest) {
   if (origin !== process.env.MAIN_URL) {
     headers['Access-Control-Allow-Origin'] = allowedOrigins[origin] || 'https://www.dreampip.com';
   }
+  const response = next();
 
   // You could alternatively limit based on user ID or similar
-  // const response = next();
   // const ip = ipAddress(request) || '127.0.0.1';
   // const { success, pending, limit, reset, remaining } = await ratelimit.limit(ip);
 
