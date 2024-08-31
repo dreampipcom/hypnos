@@ -19,7 +19,7 @@ const generateErrorResponse = (e: any, status: number) => {
   };
 };
 
-export const dynamic = 'force-dynamic';
+// export const dynamic = 'force-dynamic';
 
 export async function POST(request: CombineRequest) {
   const response = { error: generateErrorResponse({ message: 'Code 000/0: Non-identified error.' }, 500) };
