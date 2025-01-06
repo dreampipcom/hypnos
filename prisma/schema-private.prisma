@@ -450,7 +450,7 @@ model FeelDreams {
   @@map("feelDreams")
 }
 
-model FeelRegret {
+model FeelConfessions {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String
@@ -475,7 +475,7 @@ model FeelRegret {
   communityCreator      Communities?             @relation("moodCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("regret")
+  @@map("confessions")
 }
 
 model FeelMoods {
