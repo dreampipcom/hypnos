@@ -2,8 +2,11 @@
 // ---- @INT: Invest: place it. ----
 // 
 // Invest
-// Karunas
-model InvestCareEulogies {
+// KRN Asset: Karuna: Compliments, Witnessing. +
+// DPIP Asset: Pip: Criticism, Feedback. -
+
+// Asset: Long positions. +
+model InvestLongs {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String
@@ -31,7 +34,8 @@ model InvestCareEulogies {
   @@map("investCareEulogy")
 }
 
-model InvestCareImprovementPlans {
+// Asset: Short positions. -
+model InvestShorts {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String
@@ -59,7 +63,8 @@ model InvestCareImprovementPlans {
   @@map("investCareImprovementPlan")
 }
 
-model InvestCareTypes {
+// Types of Assets (Portrait of asset: NFT, Promises, Fungible Derivatives: Curse Gossip: DPIP:D, Monetary Responsibility: 1,000.00 US Dollars investment: DPIP:O, etc.FX:EURUSD, FX:GBPUSD, FX:DPIP:D, FX:DPIP:H)
+model InvestTypes {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String

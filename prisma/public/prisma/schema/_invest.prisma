@@ -2,7 +2,7 @@
 // ---- @INT: Invest: place it. ----
 // 
 // Invest
-// Karunas
+// Portfolios and Public Perfomance Data
 model PublicInvestPortfolios {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
@@ -29,4 +29,33 @@ model PublicInvestPortfolios {
   communityCreatorId    String?             @db.ObjectId
 
   @@map("investCareEulogy")
+}
+
+// Types of Assets (Portrait of asset: NFT, Promises, Fungible Derivatives: Curse Gossip: DPIP:D, Monetary Responsibility: 1,000.00 US Dollars investment: DPIP:O, etc.FX:EURUSD, FX:GBPUSD, FX:DPIP:D, FX:DPIP:H)
+model PublicInvestTypes {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]            @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("thoughtUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("thoughtCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("thoughtUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("thoughtCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("careTypes")
 }
