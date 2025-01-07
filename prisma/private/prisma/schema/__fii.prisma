@@ -1,15 +1,8 @@
 // to-do: __fii.prisma
 // Welcome to FinCore. @™
-// ---- @PRIVATE: Private Financial Data. ----
+// ---- @PRIVATE: Private Faithancial Data. ----
 //
 // Positions
-// to-do: _invest.prisma
-// ---- @INT: Invest: place it. ----
-// 
-// Invest
-// KRN Asset: Karuna: Compliments, Witnessing. +
-// DPIP Asset: Pip: Criticism, Feedback. -
-
 // Asset: Long positions. +
 model InvestLongs {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
