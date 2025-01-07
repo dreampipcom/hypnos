@@ -21,16 +21,16 @@ model BeHealth {
   loggedFor         DateTime[]            @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner             User?              @relation("thoughtUserOwner", fields: [userOwnerId], references: [id])
+  userOwner             User?              @relation("beHealthUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId           String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("thoughtCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("beHealthCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator           User?              @relation("thoughtUserCreator", fields: [userCreatorId], references: [id])
+  userCreator           User?              @relation("beHealthUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId         String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("thoughtCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("beHealthCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
   @@map("beHealth")

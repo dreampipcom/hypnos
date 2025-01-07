@@ -395,8 +395,8 @@ model BeMailboxes {
 
   aliases           String[]
 
-  activeSession     Session
-  mailActiveToken   String
+  activeSession     Session?          @relation("beMailboxesActiveSession", fields: [mailActiveToken], references: [id])
+  mailActiveToken   String? 
 
   caldavs                 String[]
   carddavs                String[]

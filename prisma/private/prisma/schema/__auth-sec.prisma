@@ -31,7 +31,7 @@ model Session {
   userId          String          @db.ObjectId
   expires         DateTime
   user            User            @relation(fields: [userId], references: [id], onDelete: Cascade)
-  mailboxes       BeMailboxes[]   @relation(fields: [mailboxesTokens], references: [id], onDelete: Cascade)
+  mailboxes       BeMailboxes[]   @relation("beMailboxesActiveSession")
   mailboxesTokens String[]
  
   createdAt DateTime @default(now())
@@ -305,6 +305,7 @@ model User {
 
   ownedBeContacts            BeContacts[]          @relation("beContactsUserOwner")
   createdBeContacts          BeContacts[]          @relation("beContactsUserCreator")
+  managedBeContacts            BeContacts[]          @relation("beContactsUserManager")
 
   ownedBeRelations            BeRelations[]          @relation("beRelationsUserOwner")
   createdBeRelations          BeRelations[]          @relation("beRelationsUserCreator")
@@ -564,6 +565,7 @@ model Communities {
 
   ownedBeContacts            BeContacts[]          @relation("beContactsCommunityOwner")
   createdBeContacts          BeContacts[]          @relation("beContactsCommunityCreator")
+  managedBeContacts            BeContacts[]          @relation("beContactsCommunityManager")
 
   ownedBeRelations            BeRelations[]          @relation("beRelationsCommunityOwner")
   createdBeRelations          BeRelations[]          @relation("beRelationsCommunityCreator")
