@@ -124,9 +124,6 @@ model User {
   ownedMoods            FeelMoods[]          @relation("feelMoodUserOwner")
   createdMoods          FeelMoods[]          @relation("feelMoodUserCreator")
 
-  ownedDos              Dos[]          @relation("doDosUserOwner")
-  createdDos            Dos[]          @relation("doDosUserCreator")
-
   ownedWriteIdeas            WriteIdeas[]          @relation("writeIdeasUserOwner")
   createdWriteIdeas          WriteIdeas[]          @relation("writeIdeasUserCreator")
 
@@ -208,9 +205,6 @@ model User {
   ownedFeelSymptoms            FeelSymptoms[]          @relation("feelSymptomsUserOwner")
   createdFeelSymptoms          FeelSymptoms[]          @relation("feelSymptomsUserCreator")
 
-  ownedDoQuests           DoQuests[]          @relation("doQuestUserOwner")
-  createdDoQuests         DoQuests[]          @relation("doQuestUserCreator")
-
   ownedInvestPositions          InvestPositions[]          @relation("investPositionsUserOwner")
   createdInvestPositions         InvestPositions[]          @relation("investPositionsUserCreator")
 
@@ -222,6 +216,42 @@ model User {
 
   ownedInvestSharedPortfolios          InvestSharedPortfolios[]          @relation("investSharedPortfoliosUserOwner")
   createdInvestSharedPortfolios         InvestSharedPortfolios[]          @relation("investSharedPortfoliosUserCreator")
+
+  ownedDoDos            Dos[]          @relation("doDosUserOwner")
+  createdDoDos          Dos[]          @relation("doDosUserCreator")
+
+  ownedDoQuests         DoQuests[]          @relation("doQuestsUserOwner")
+  createdDoQuests       DoQuests[]          @relation("doQuestsUserCreator")
+
+  ownedDoTypes         DoTypes[]          @relation("doTypesUserOwner")
+  createdDoTypes       DoTypes[]          @relation("doTypesUserCreator")
+
+  ownedDoContexts         DoContexts[]          @relation("doContextsUserOwner")
+  createdDoContexts       DoContexts[]          @relation("doContextsUserCreator")
+
+  ownedDoRoutines         DoRoutines[]          @relation("doRoutinesUserOwner")
+  createdDoRoutines       DoRoutines[]          @relation("doRoutinesUserCreator")
+
+  ownedDoDifficulties         DoDifficulties[]          @relation("doDifficultiesUserOwner")
+  createdDoDifficulties       DoDifficulties[]          @relation("doDifficultiesUserCreator")
+
+  ownedDoModes         DoModes[]          @relation("doModesUserOwner")
+  createdDoModes       DoModes[]          @relation("doModesUserCreator")
+
+  ownedDoProducts         DoProducts[]          @relation("doProductsUserOwner")
+  createdDoProducts       DoProducts[]          @relation("doProductsUserCreator")
+
+  ownedDoQuestTypes         DoQuestTypes[]          @relation("doQuestTypesUserOwner")
+  createdDoQuestTypes       DoQuestTypes[]          @relation("doQuestTypesUserCreator")
+
+  ownedDoScores         DoScores[]          @relation("doScoresUserOwner")
+  createdDoScores       DoScores[]          @relation("doScoresUserCreator")
+
+  ownedDoLogs         DoLogs[]          @relation("doLogsUserOwner")
+  createdDoLogs       DoLogs[]          @relation("doLogsUserCreator")
+
+  ownedDoReports         DoReports[]          @relation("doReportsUserOwner")
+  createdDoReports       DoReports[]          @relation("doReportsUserCreator")
 
   ownedServices         Services[]      @relation("serviceUserOwner")
   createdServices       Services[]      @relation("serviceUserCreator")
@@ -274,9 +304,6 @@ model Communities {
 
   ownedMoods            FeelMoods[]          @relation("moodCommunityOwner")
   createdMoods          FeelMoods[]          @relation("moodCommunityCreator")
-
-  ownedDos              Dos[]          @relation("doDosCommunityOwner")
-  createdDos            Dos[]          @relation("doDosCommunityCreator")
 
   ownedIdeas            WriteIdeas[]          @relation("writeIdeasCommunityOwner")
   createdIdeas          WriteIdeas[]          @relation("writeIdeasCommunityCreator")
@@ -341,9 +368,6 @@ model Communities {
   ownedMakeFunctions            MakeFunctions[]          @relation("makeFunctionsCommunityOwner")
   createdMakeFunctions          MakeFunctions[]          @relation("makeFunctionsCommunityCreator")
 
-  ownedDoQuests           DoQuests[]          @relation("questCommunityOwner")
-  createdDoQuests         DoQuests[]          @relation("doQuestCommunityCreator")
-
   ownedInvestPositions          InvestPositions[]          @relation("investPositionsCommunityOwner")
   createdInvestPositions         InvestPositions[]          @relation("investPositionsCommunityCreator")
 
@@ -355,6 +379,42 @@ model Communities {
 
   ownedInvestSharedPortfolios          InvestSharedPortfolios[]          @relation("investSharedPortfoliosCommunityOwner")
   createdInvestSharedPortfolios         InvestSharedPortfolios[]          @relation("investSharedPortfoliosCommunityCreator")
+
+  ownedDoDos            Dos[]          @relation("doDosCommunityOwner")
+  createdDoDos          Dos[]          @relation("doDosCommunityCreator")
+
+  ownedDoQuests         DoQuests[]          @relation("doQuestsCommunityOwner")
+  createdDoQuests       DoQuests[]          @relation("doQuestsCommunityCreator")
+
+  ownedDoTypes         DoTypes[]          @relation("doTypesCommunityOwner")
+  createdDoTypes       DoTypes[]          @relation("doTypesCommunityCreator")
+
+  ownedDoContexts         DoContexts[]          @relation("doContextsCommunityOwner")
+  createdDoContexts       DoContexts[]          @relation("doContextsCommunityCreator")
+
+  ownedDoRoutines         DoRoutines[]          @relation("doRoutinesCommunityOwner")
+  createdDoRoutines       DoRoutines[]          @relation("doRoutinesCommunityCreator")
+
+  ownedDoDifficulties         DoDifficulties[]          @relation("doDifficultiesCommunityOwner")
+  createdDoDifficulties       DoDifficulties[]          @relation("doDifficultiesCommunityCreator")
+
+  ownedDoModes         DoModes[]          @relation("doModesCommunityOwner")
+  createdDoModes       DoModes[]          @relation("doModesCommunityCreator")
+
+  ownedDoProducts         DoProducts[]          @relation("doProductsCommunityOwner")
+  createdDoProducts       DoProducts[]          @relation("doProductsCommunityCreator")
+
+  ownedDoQuestTypes         DoQuestTypes[]          @relation("doQuestTypesCommunityOwner")
+  createdDoQuestTypes       DoQuestTypes[]          @relation("doQuestTypesCommunityCreator")
+
+  ownedDoScores         DoScores[]          @relation("doScoresCommunityOwner")
+  createdDoScores       DoScores[]          @relation("doScoresCommunityCreator")
+
+  ownedDoLogs         DoLogs[]          @relation("doLogsCommunityOwner")
+  createdDoLogs       DoLogs[]          @relation("doLogsCommunityCreator")
+
+  ownedDoReports         DoReports[]          @relation("doReportsCommunityOwner")
+  createdDoReports       DoReports[]          @relation("doReportsCommunityCreator")
 
   roles                 Roles[]           @relation("communityRoles", fields: [rolesIds], references: [id])
   rolesIds              String[]          @db.ObjectId
