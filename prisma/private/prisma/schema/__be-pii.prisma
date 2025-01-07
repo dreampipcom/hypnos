@@ -193,7 +193,7 @@ model BeEvent {
   communityCreator      Communities?             @relation("beEventCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("beOccasion")
+  @@map("beEvent")
 }
 
 model BeCalendar {
