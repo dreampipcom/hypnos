@@ -7,6 +7,7 @@ model BeYou {
   name              ILocaleString
   slug              String
   description       ILocaleString
+  beAt              ILocation
 
   title             ILocaleString
   body              ILocaleString
