@@ -1,17 +1,19 @@
-// to-do: schema-pii.prisma
+// to-do: schema-write.prisma
 generator client {
   provider = "prisma-client-js"
-  output = "../node_modules/@dreampipcom/db-pii/prisma-client"
+  output = "../node_modules/@dreampipcom/db-write/prisma-client"
 }
 
 datasource db {
   provider        = "mongodb"
-  url             = env("PRISMA_PII_URI")
-  directUrl       = env("MONGODB_PII_URI")
+  url             = env("PRISMA_WRITE_URI")
+  directUrl       = env("MONGODB_WRITE_URI")
 }
 
-// Self
-model BeYou {
+// ---- Write: Blogging ----
+// Wernicke, "vem cá véi" -- the hdgehg.mod@regroup
+// Organize
+model WriteIdeas {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String
@@ -36,126 +38,10 @@ model BeYou {
   communityCreator      Communities?             @relation("thoughtCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("beYou")
+  @@map("writeIdeas")
 }
 
-// Dating
-model BeCourtships {
-  id                String              @id @default(auto()) @map("_id") @db.ObjectId
-  name              ILocaleString
-  slug              String
-  description       ILocaleString
-
-  title             ILocaleString
-  body              ILocaleString
-
-  loggedOn          DateTime            @db.Date
-  loggedFor         DateTime[]          @db.Date
-  publishedOn       DateTime            @db.Date
-
-  userOwner         User?              @relation("actionUserOwner", fields: [userOwnerId], references: [id])
-  userOwnerId       String?             @db.ObjectId
-
-  communityOwner        Communities?             @relation("actionCommunityOwner", fields: [communityOwnerId], references: [id])
-  communityOwnerId      String?             @db.ObjectId
-
-  userCreator       User?              @relation("actionUserCreator", fields: [userCreatorId], references: [id])
-  userCreatorId     String?             @db.ObjectId
-
-  communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
-  communityCreatorId    String?             @db.ObjectId
-
-  @@map("beCourtships")
-}
-
-// Event / Calendar
-model BeOccasion {
-  id                String              @id @default(auto()) @map("_id") @db.ObjectId
-  name              ILocaleString
-  slug              String
-  description       ILocaleString
-
-  title             ILocaleString
-  body              ILocaleString
-
-  loggedOn          DateTime            @db.Date
-  loggedFor         DateTime[]          @db.Date
-  publishedOn       DateTime            @db.Date
-
-  userOwner         User?              @relation("actionUserOwner", fields: [userOwnerId], references: [id])
-  userOwnerId       String?             @db.ObjectId
-
-  communityOwner        Communities?             @relation("actionCommunityOwner", fields: [communityOwnerId], references: [id])
-  communityOwnerId      String?             @db.ObjectId
-
-  userCreator       User?              @relation("actionUserCreator", fields: [userCreatorId], references: [id])
-  userCreatorId     String?             @db.ObjectId
-
-  communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
-  communityCreatorId    String?             @db.ObjectId
-
-  @@map("beOccasion")
-}
-
-model BeCalendar {
-  id                String              @id @default(auto()) @map("_id") @db.ObjectId
-  name              ILocaleString
-  slug              String
-  description       ILocaleString
-
-  title             ILocaleString
-  body              ILocaleString
-
-  loggedOn          DateTime            @db.Date
-  loggedFor         DateTime[]          @db.Date
-  publishedOn       DateTime            @db.Date
-
-  userOwner         User?              @relation("actionUserOwner", fields: [userOwnerId], references: [id])
-  userOwnerId       String?             @db.ObjectId
-
-  communityOwner        Communities?             @relation("actionCommunityOwner", fields: [communityOwnerId], references: [id])
-  communityOwnerId      String?             @db.ObjectId
-
-  userCreator       User?              @relation("actionUserCreator", fields: [userCreatorId], references: [id])
-  userCreatorId     String?             @db.ObjectId
-
-  communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
-  communityCreatorId    String?             @db.ObjectId
-
-  @@map("beCalendar")
-}
-
-// Titles
-model BeRoles {
-  id                String              @id @default(auto()) @map("_id") @db.ObjectId
-  name              ILocaleString
-  slug              String
-  description       ILocaleString
-
-  title             ILocaleString
-  body              ILocaleString
-
-  loggedOn          DateTime            @db.Date
-  loggedFor         DateTime[]          @db.Date
-  publishedOn       DateTime            @db.Date
-
-  userOwner         User?              @relation("actionUserOwner", fields: [userOwnerId], references: [id])
-  userOwnerId       String?             @db.ObjectId
-
-  communityOwner        Communities?             @relation("actionCommunityOwner", fields: [communityOwnerId], references: [id])
-  communityOwnerId      String?             @db.ObjectId
-
-  userCreator       User?              @relation("actionUserCreator", fields: [userCreatorId], references: [id])
-  userCreatorId     String?             @db.ObjectId
-
-  communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
-  communityCreatorId    String?             @db.ObjectId
-
-  @@map("beRoles")
-}
-
-// Friendships
-model BeRelations {
+model WriteLearnings {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String
@@ -180,11 +66,11 @@ model BeRelations {
   communityCreator      Communities?             @relation("thoughtCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("beRelations")
+  @@map("writeLearnings")
 }
 
-// Sales
-model BeDeals {
+// newsfeed
+model WriteWits {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String
@@ -209,10 +95,10 @@ model BeDeals {
   communityCreator      Communities?             @relation("thoughtCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("beDeals")
+  @@map("writeWits")
 }
 
-model WriteDocs {
+model WriteCogitos {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String
@@ -237,5 +123,119 @@ model WriteDocs {
   communityCreator      Communities?             @relation("thoughtCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("writeDocs")
+  @@map("writeCogitos")
+}
+
+// Broca, "se ligue" -- the foxylady.mod@goget.it
+model WriteHopes {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]            @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("thoughtUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("thoughtCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("thoughtUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("thoughtCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("writeHopes")
+}
+
+model WriteThreads {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]            @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("thoughtUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("thoughtCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("thoughtUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("thoughtCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("writeThreads")
+}
+
+// newsfeed backlink from wit comments
+model WriteOpinions {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]            @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("thoughtUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("thoughtCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("thoughtUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("thoughtCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("writeOpinions")
+}
+
+model WritePublications {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]            @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("thoughtUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("thoughtCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("thoughtUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("thoughtCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("writePublications")
 }

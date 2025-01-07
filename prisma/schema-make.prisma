@@ -1,46 +1,17 @@
-// to-do: schema-pii.prisma
+// to-do: schema-make.prisma
 generator client {
   provider = "prisma-client-js"
-  output = "../node_modules/@dreampipcom/db-pii/prisma-client"
+  output = "../node_modules/@dreampipcom/db-make/prisma-client"
 }
 
 datasource db {
   provider        = "mongodb"
-  url             = env("PRISMA_PII_URI")
-  directUrl       = env("MONGODB_PII_URI")
+  url             = env("PRISMA_MAKE_URI")
+  directUrl       = env("MONGODB_MAKE_URI")
 }
 
-// Self
-model BeYou {
-  id                String              @id @default(auto()) @map("_id") @db.ObjectId
-  name              ILocaleString
-  slug              String
-  description       ILocaleString
-
-  title             ILocaleString
-  body              ILocaleString
-
-  loggedOn          DateTime            @db.Date
-  loggedFor         DateTime[]            @db.Date
-  publishedOn       DateTime            @db.Date
-
-  userOwner         User?              @relation("thoughtUserOwner", fields: [userOwnerId], references: [id])
-  userOwnerId       String?             @db.ObjectId
-
-  communityOwner        Communities?             @relation("thoughtCommunityOwner", fields: [communityOwnerId], references: [id])
-  communityOwnerId      String?             @db.ObjectId
-
-  userCreator       User?              @relation("thoughtUserCreator", fields: [userCreatorId], references: [id])
-  userCreatorId     String?             @db.ObjectId
-
-  communityCreator      Communities?             @relation("thoughtCommunityCreator", fields: [communityCreatorId], references: [id])
-  communityCreatorId    String?             @db.ObjectId
-
-  @@map("beYou")
-}
-
-// Dating
-model BeCourtships {
+// Edibles
+model MakeRecipes {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String
@@ -65,11 +36,11 @@ model BeCourtships {
   communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("beCourtships")
+  @@map("makeRecipes")
 }
 
-// Event / Calendar
-model BeOccasion {
+// Geography or ambients
+model MakeSpaces {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String
@@ -94,10 +65,11 @@ model BeOccasion {
   communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("beOccasion")
+  @@map("makeSpaces")
 }
 
-model BeCalendar {
+// Groceries or shopping lists
+model MakeProcurements {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String
@@ -122,11 +94,11 @@ model BeCalendar {
   communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("beCalendar")
+  @@map("makeProcurements")
 }
 
-// Titles
-model BeRoles {
+// Catalogues
+model MakeThings {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String
@@ -151,11 +123,11 @@ model BeRoles {
   communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("beRoles")
+  @@map("makeThings")
 }
 
-// Friendships
-model BeRelations {
+// Models
+model MakeInventories {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String
@@ -165,26 +137,26 @@ model BeRelations {
   body              ILocaleString
 
   loggedOn          DateTime            @db.Date
-  loggedFor         DateTime[]            @db.Date
+  loggedFor         DateTime[]          @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         User?              @relation("thoughtUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("actionUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("thoughtCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("actionCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("thoughtUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("actionUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("thoughtCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("beRelations")
+  @@map("makeInventories")
 }
 
-// Sales
-model BeDeals {
+// Stashes
+model MakeItems {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String
@@ -194,25 +166,26 @@ model BeDeals {
   body              ILocaleString
 
   loggedOn          DateTime            @db.Date
-  loggedFor         DateTime[]            @db.Date
+  loggedFor         DateTime[]          @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         User?              @relation("thoughtUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("actionUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("thoughtCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("actionCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("thoughtUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("actionUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("thoughtCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("beDeals")
+  @@map("makeItems")
 }
 
-model WriteDocs {
+// Listings
+model MakeListings {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String
@@ -222,20 +195,49 @@ model WriteDocs {
   body              ILocaleString
 
   loggedOn          DateTime            @db.Date
-  loggedFor         DateTime[]            @db.Date
+  loggedFor         DateTime[]          @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         User?              @relation("thoughtUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("actionUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("thoughtCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("actionCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("thoughtUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("actionUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("thoughtCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("writeDocs")
+  @@map("makeListings")
+}
+
+// Things purpose
+model MakeFunction {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]          @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("actionUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("actionCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("actionUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("makeFunction")
 }

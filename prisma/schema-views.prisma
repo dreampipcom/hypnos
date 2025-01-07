@@ -1,17 +1,17 @@
-// to-do: schema-fii.prisma
+// to-do: schema-views.prisma
 generator client {
   provider = "prisma-client-js"
-  output = "../node_modules/@dreampipcom/db-fii/prisma-client"
+  output = "../node_modules/@dreampipcom/db-views/prisma-client"
 }
 
 datasource db {
   provider        = "mongodb"
-  url             = env("PRISMA_FII_URI")
-  directUrl       = env("MONGODB_FII_URI")
+  url             = env("PRISMA_VIEWS_URI")
+  directUrl       = env("MONGODB_VIEWS_URI")
 }
 
-// Welcome to FinCore. @™
-model Investments {
+// Time view
+model TimeDays {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String
@@ -19,13 +19,6 @@ model Investments {
 
   title             ILocaleString
   body              ILocaleString
-
-  placedOn          DateTime            @db.Date
-  issuedOn          DateTime            @db.Date
-  settledOn         DateTime            @db.Date
-
-  ticker            Projects?           @relation("ticker", fields: [tickerId], references: [id])
-  tickerId          String?             @db.ObjectId
 
   purchaseValue     Float
   settledValue      Float
@@ -42,10 +35,10 @@ model Investments {
   communityCreator      Communities?             @relation("investmentCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("investments")
+  @@map("timeDays")
 }
 
-model InvestWallets {
+model TimeCharts {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String
@@ -53,13 +46,6 @@ model InvestWallets {
 
   title             ILocaleString
   body              ILocaleString
-
-  placedOn          DateTime            @db.Date
-  issuedOn          DateTime            @db.Date
-  settledOn         DateTime            @db.Date
-
-  ticker            Projects?           @relation("ticker", fields: [tickerId], references: [id])
-  tickerId          String?             @db.ObjectId
 
   purchaseValue     Float
   settledValue      Float
@@ -76,10 +62,10 @@ model InvestWallets {
   communityCreator      Communities?             @relation("investmentCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("investWallets")
+  @@map("timeCharts")
 }
 
-model InvestCareEulogy {
+model TimeMoments {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String
@@ -88,26 +74,25 @@ model InvestCareEulogy {
   title             ILocaleString
   body              ILocaleString
 
-  loggedOn          DateTime            @db.Date
-  loggedFor         DateTime[]            @db.Date
-  publishedOn       DateTime            @db.Date
+  purchaseValue     Float
+  settledValue      Float
 
-  userOwner         User?              @relation("thoughtUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("investmentUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("thoughtCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("investmentCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("thoughtUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("investmentUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("thoughtCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("investmentCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("investCareEulogy")
+  @@map("timeMoments")
 }
 
-model InvestCareImprovementPlan {
+model TimePrivacy {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String
@@ -116,26 +101,25 @@ model InvestCareImprovementPlan {
   title             ILocaleString
   body              ILocaleString
 
-  loggedOn          DateTime            @db.Date
-  loggedFor         DateTime[]            @db.Date
-  publishedOn       DateTime            @db.Date
+  purchaseValue     Float
+  settledValue      Float
 
-  userOwner         User?              @relation("thoughtUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("investmentUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("thoughtCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("investmentCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("thoughtUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("investmentUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("thoughtCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("investmentCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("investCareImprovementPlan")
+  @@map("timePrivacy")
 }
 
-model CareTypes {
+model TimeDashboard {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String
@@ -144,21 +128,20 @@ model CareTypes {
   title             ILocaleString
   body              ILocaleString
 
-  loggedOn          DateTime            @db.Date
-  loggedFor         DateTime[]            @db.Date
-  publishedOn       DateTime            @db.Date
+  purchaseValue     Float
+  settledValue      Float
 
-  userOwner         User?              @relation("thoughtUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("investmentUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("thoughtCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("investmentCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("thoughtUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("investmentUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("thoughtCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("investmentCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("careTypes")
+  @@map("timeDashboard")
 }
