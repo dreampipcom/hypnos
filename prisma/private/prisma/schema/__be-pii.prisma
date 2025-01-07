@@ -13,9 +13,35 @@ model BeYou {
   domiciles         ILocation?
   beAt              ILocation?
   movingTo          ILocation?
+
   activeContracts   InvestContracts[]?
   pendingContracts  InvestContracts[]?
   finishedContracts InvestContracts[]?
+
+  // invest
+  fungibleWallets                     InvestWallets[]      @relation("beHumanFungibleWallets", fields: [fungibleWalletsIds], references: [id])
+  fungibleWalletsIds                  String[]        @db.ObjectId
+
+  nonFungibleWallets                  InvestWallets[]      @relation("beHumanNonFungibleWallets", fields: [nonFungibleWalletsIds], references: [id])
+  nonFungibleWalletsIds               String[]        @db.ObjectId
+
+
+  // portfolios
+  portfolios                     InvestPortfolio[]      @relation("beYouPortfolio", fields: [portfoliosIds], references: [id])
+  portfoliosIds                  String[]        @db.ObjectId
+
+  receivedLongs                InvestLongs[]      @relation("beYouReceivedLongs", fields: [receivedCareEulogiesIds], references: [id])
+  receivedLongsIds             String[]        @db.ObjectId
+
+  givenLongs                   InvestLongs[]      @relation("beYouGivenLongs", fields: [givenLongsIds], references: [id])
+  givenLongsIds                String[]        @db.ObjectId
+
+  receivedShorts                 InvestShorts[]      @relation("beYouReceivedShorts", fields: [receivedShortsIds], references: [id])
+  receivedShortsIds              String[]        @db.ObjectId
+
+  givenShorts                    InvestShorts[]      @relation("beYouGivenShorts", fields: [givenShortsIds], references: [id])
+  givenShortsIds                 String[]        @db.ObjectId
+  
 
   slug              String
   description       ILocaleString
@@ -120,25 +146,9 @@ model BeHumans {
   albumsVideos      String[]
   wallVideos        String[]
 
-  // invest
-  fungibleWallets                     InvestWallets[]      @relation("beHumanFungibleWallets", fields: [fungibleWalletsIds], references: [id])
-  fungibleWalletsIds                  String[]        @db.ObjectId
+  publicPortfolios  InvestPortfolios[]
 
-  nonFungibleWallets                  InvestWallets[]      @relation("beHumanNonFungibleWallets", fields: [nonFungibleWalletsIds], references: [id])
-  nonFungibleWalletsIds               String[]        @db.ObjectId
 
-  receivedCareEulogies                InvestCareEulogies[]      @relation("beHumanReceivedCareEulogies", fields: [receivedCareEulogiesIds], references: [id])
-  receivedCareEulogiesIds             String[]        @db.ObjectId
-
-  givenCareEulogies                   InvestCareEulogies[]      @relation("beHumanGivenCareEulogies", fields: [givenCareEulogiesIds], references: [id])
-  givenCareEulogiesIds                String[]        @db.ObjectId
-
-  receivedCareImprovementPlans                 InvestCareImprovementPlans[]      @relation("beHumanReceivedCareImprovementPlans", fields: [receivedCareImprovementPlansIds], references: [id])
-  receivedCareImprovementPlansIds              String[]        @db.ObjectId
-
-  givenCareImprovementPlans                    InvestCareImprovementPlans[]      @relation("beHumanGivenCareImprovementPlans", fields: [givenCareImprovementPlansIds], references: [id])
-  givenCareImprovementPlansIds                 String[]        @db.ObjectId
-  
   // courtship
   likedTopics                     BeTopics[]      @relation("beHumanLikedTopics", fields: [likedTopicsIds], references: [id])
   likedTopicsIds                  String[]        @db.ObjectId
