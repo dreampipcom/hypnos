@@ -5,6 +5,12 @@
 model BeYou {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              String
+  slug              String
+  description       ILocaleString
+  title             ILocaleString
+  body              ILocaleString
+  handle            String
+
   legalFirstName    String?
   legalLastName     String?
   citizenships      ICountry[]?
@@ -13,11 +19,23 @@ model BeYou {
   domiciles         ILocation?
   beAt              ILocation?
 
-  contacts          BeContact[]
-  preferredContact  BeContact
+  contactProfiles                     BeContacts[]      @relation("beYouContactProfiles", fields: [contactProfilesIds], references: [id])
+  contactProfilesIds                  String[]        @db.ObjectId
+  
+  lastContactProfile       BeContact?              @relation("beYouPreferredContactProfile", fields: [lastContactProfileId], references: [id])
+  lastContactProfileId     String?             @db.ObjectId
 
-  communities                     BeCommunities[]      @relation("beCommunitiesMembers", fields: [communitiesIds], references: [id])
+  preferredContactProfile       BeContact?              @relation("beYouPreferredContactProfile", fields: [preferredContactProfileId], references: [id])
+  preferredContactProfileId     String?             @db.ObjectId
+
+  communities                     BeCommunities[]      @relation("beYouMembers", fields: [communitiesIds], references: [id])
   communitiesIds                  String[]        @db.ObjectId
+
+  preferredCommunity       BeCommunity?              @relation("beYouPreferredCommunity", fields: [preferredCommunityId], references: [id])
+  preferredCommunityId     String?             @db.ObjectId
+
+  lastCommunity       BeCommunity?              @relation("beYouPreferredCommunity", fields: [lastCommunityId], references: [id])
+  lastCommunityId     String?             @db.ObjectId
 
 // e.g. [Can Baro Tobacco Shop, Gracia, Genoa, Italy]
   movingFrom        ILocation[]?
@@ -42,16 +60,6 @@ model BeYou {
   positions                InvestPositions[]      @relation("beYouPositions", fields: [positionsIds], references: [id])
   positionsIds             String[]        @db.ObjectId
 
-  slug              String
-  description       ILocaleString
-
-  title             ILocaleString
-  body              ILocaleString
-
-  loggedOn          DateTime            @db.Date
-  loggedFor         DateTime[]            @db.Date
-  publishedOn       DateTime            @db.Date
-
   userOwner         User?              @relation("beYouUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
@@ -71,6 +79,8 @@ model BeYou {
 model BeCommunities {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              String
+  handle            String
+
   legalName         String
   entityType        EEntityType
   
