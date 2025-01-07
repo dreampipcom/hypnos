@@ -2,9 +2,7 @@
 // ---- @INT: Be: I am. ----
 // 
 // Be
-// @dpip.cc
-// main handle, aliases, creds? api? back auth?
-// Internal Social Profile
+// Your social profile.
 model BeWithOthers {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
