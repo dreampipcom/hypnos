@@ -14,9 +14,6 @@ model BeHealth {
   heartRates        IHeartRates[]
   motions           IMotion[]
 
-  workouts          DoMovements[]      @relation("beHealthWorkouts", fields: [workoutsIds], references: [id])
-  workoutsIds       String[]        @db.ObjectId
-
   cardiograms       ICardiograms[]
   vitalSigns        ISmartScales[]
 

@@ -53,22 +53,22 @@ model InvestPositions {
   settledOn         DateTime            @db.Date
   publishedOn       DateTime            @db.Date
 
-  wallet            InvestWallets              @relation("investWalletPositions", fields: [walletId], references: [id])
-  walletId          String?             @db.ObjectId
+  wallet            InvestWallets?             @relation("investWalletPositions", fields: [walletId], references: [id])
+  walletId          String?
 
   relatedQuests                     DoQuests[]      @relation("doQuestPositions", fields: [relatedQuestsIds], references: [id])
   relatedQuestsIds                  String[]        @db.ObjectId
 
-  userOwner         User?              @relation("thoughtUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("investPositionsUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("thoughtCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("investPositionsCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("thoughtUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("investPositionsUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("thoughtCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("investPositionsCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
   @@map("investCareEulogy")
@@ -111,7 +111,7 @@ model InvestWallets {
   title             ILocaleString
   body              ILocaleString
 
-  positions                     InvestPositions[]      @relation("investWalletPositions", fields: [positionsIds], references: [id])
+  positions                     InvestPositions[]      @relation("investWalletPositions")
   positionsIds                  String[]        @db.ObjectId
 
   userOwner         User?              @relation("investWalletsUserOwner", fields: [userOwnerId], references: [id])

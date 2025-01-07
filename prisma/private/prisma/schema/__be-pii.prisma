@@ -153,7 +153,7 @@ model BeCommunities {
 }
 
 // Event / Calendar
-model BeEvent {
+model BeEvents {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String
@@ -196,7 +196,7 @@ model BeEvent {
   @@map("beEvent")
 }
 
-model BeCalendar {
+model BeCalendars {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String
@@ -248,20 +248,20 @@ model BeContacts {
   portfolios             InvestPortfolios[]      @relation("beContactPortfolios", fields: [portfoliosIds], references: [id])
   portfoliosIds             String[]        @db.ObjectId
 
-  positions          InvestPositions[]      @relation("beContactPositions", fields: [positionsIds], references: [id])
+  positions          InvestPositions[]      @relation("beContactsPositions", fields: [positionsIds], references: [id])
   positionsIds             String[]        @db.ObjectId
 
   // courtship
-  givenGifts                     MakeItems[]      @relation("beContactGivenGifts", fields: [givenGiftsIds], references: [id])
+  givenGifts                     MakeItems[]      @relation("beContactsGivenGifts", fields: [givenGiftsIds], references: [id])
   givenGiftsIds                  String[]        @db.ObjectId
 
-  receivedGifts                  MakeItems[]      @relation("beContactReceivedGifts", fields: [receivedGiftsIds], references: [id])
+  receivedGifts                  MakeItems[]      @relation("beContactsReceivedGifts", fields: [receivedGiftsIds], references: [id])
   receivedGiftsIds                  String[]        @db.ObjectId
 
-  likedTopics                     BeTopics[]      @relation("beContactLikedTopics", fields: [likedTopicsIds], references: [id])
+  likedTopics                     BeTopics[]      @relation("beContactsLikedTopics", fields: [likedTopicsIds], references: [id])
   likedTopicsIds                  String[]        @db.ObjectId
 
-  dislikedTopics                  BeTopics[]      @relation("beContactDislikedTopics", fields: [dislikedTopicsIds], references: [id])
+  dislikedTopics                  BeTopics[]      @relation("beContactsDislikedTopics", fields: [dislikedTopicsIds], references: [id])
   dislikedTopicsIds               String[]        @db.ObjectId
 
   cityBirth                       ILocation
@@ -270,18 +270,18 @@ model BeContacts {
   dateBirth                       DateTime    
   timeBirth                       DateTime
 
-  relationshipStatus              BeRelations?    @relation("beContactRelationshipStatus", fields: [relationshipStatusId], references: [id])
+  relationshipStatus              BeRelations?    @relation("beContactsRelationshipStatus", fields: [relationshipStatusId], references: [id])
   relationshipStatusId            String?         @db.ObjectId
 
   
   // space
-  workSpaces                     MakeSpaces[]    @relation("beContactWorkSpaces", fields: [workSpacesIds], references: [id])
+  workSpaces                     MakeSpaces[]    @relation("beContactsWorkSpaces", fields: [workSpacesIds], references: [id])
   workSpacesIds                  String[]        @db.ObjectId
 
-  homeSpaces                     MakeSpaces[]    @relation("beContactHomeSpaces", fields: [homeSpacesIds], references: [id])
+  homeSpaces                     MakeSpaces[]    @relation("beContactsHomeSpaces", fields: [homeSpacesIds], references: [id])
   homeSpacesIds                  String[]        @db.ObjectId
 
-  socialSpaces                   MakeSpaces[]    @relation("beContactSocialSpaces", fields: [socialSpacesIds], references: [id])
+  socialSpaces                   MakeSpaces[]    @relation("beContactsSocialSpaces", fields: [socialSpacesIds], references: [id])
   socialSpacesIds                String[]        @db.ObjectId
 
   // contact
@@ -295,36 +295,36 @@ model BeContacts {
   websites                        String[]
 
   // messaging
-  lettersSent                   BeLetters[]    @relation("beContactLettersSent", fields: [lettersSentIds], references: [id])
+  lettersSent                   BeLetters[]    @relation("beContactsLettersSent", fields: [lettersSentIds], references: [id])
   lettersSentIds                String[]        @db.ObjectId
 
-  lettersReceived                   BeLetters[]    @relation("beContactLettersReceived", fields: [lettersReceivedIds], references: [id])
+  lettersReceived                   BeLetters[]    @relation("beContactsLettersReceived", fields: [lettersReceivedIds], references: [id])
   lettersReceivedIds                String[]        @db.ObjectId
 
   // make
-  deals                   BeDeals[]    @relation("beContactDeals", fields: [dealsIds], references: [id])
+  deals                   BeDeals[]    @relation("beContactsDeals", fields: [dealsIds], references: [id])
   dealsIds                String[]        @db.ObjectId 
 
   // hydrate decorations: 
   // sharedInventories
   // sharedListings
   // sharedDos/Quests
-  inventories                   MakeInventories[]    @relation("beContactInventories", fields: [inventoriesIds], references: [id])
+  inventories                   MakeInventories[]    @relation("beContactsInventories", fields: [inventoriesIds], references: [id])
   inventoriesIds                String[]        @db.ObjectId
 
-  listings                   MakeListings[]    @relation("beContactListings", fields: [listingsIds], references: [id])
+  listings                   MakeListings[]    @relation("beContactsListings", fields: [listingsIds], references: [id])
   listingsIds                String[]        @db.ObjectId
 
-  procurements                   MakeProcurements[]    @relation("beContactProcurements", fields: [procurementsIds], references: [id])
+  procurements                   MakeProcurements[]    @relation("beContactsProcurements", fields: [procurementsIds], references: [id])
   procurementsIds                String[]        @db.ObjectId
 
-  quests                   DoQuests[]    @relation("beContactQuests", fields: [questsIds], references: [id])
+  quests                   DoQuests[]    @relation("beContactsQuests", fields: [questsIds], references: [id])
   questsIds                String[]        @db.ObjectId
 
-  reports                   DoReports[]    @relation("beContactReports", fields: [reportsIds], references: [id])
+  reports                   DoReports[]    @relation("beContactsReports", fields: [reportsIds], references: [id])
   reportsIds                String[]        @db.ObjectId
 
-  dos                   Dos[]    @relation("beContactDos", fields: [dosIds], references: [id])
+  dos                   Dos[]    @relation("beContactsDos", fields: [dosIds], references: [id])
   dosIds                String[]        @db.ObjectId
 
   // @PRIVATE
@@ -336,25 +336,25 @@ model BeContacts {
   loggedFor         DateTime[]            @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         User?              @relation("beContactUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("beContactsUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  userCreator       User?              @relation("beContactUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("beContactsUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  userManager       User?              @relation("beContactUserManager", fields: [userManagerId], references: [id])
+  userManager       User?              @relation("beContactsUserManager", fields: [userManagerId], references: [id])
   userManagerId     String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("beContactCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("beContactsCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("beContactCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("beContactsCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  communityManager      Communities?             @relation("beContactCommunityManager", fields: [communityManagerId], references: [id])
+  communityManager      Communities?             @relation("beContactsCommunityManager", fields: [communityManagerId], references: [id])
   communityManagerId    String?             @db.ObjectId
 
-  @@map("beContact")
+  @@map("beContacts")
 }
 
 model BeRelations {
@@ -370,16 +370,16 @@ model BeRelations {
   loggedFor         DateTime[]            @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         User?              @relation("thoughtUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("beRelationsUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("thoughtCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("beRelationsCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("thoughtUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("beRelationsUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("thoughtCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("beRelationsCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
   @@map("beRelations")
@@ -422,16 +422,16 @@ model BeMailboxes {
   loggedFor         DateTime[]            @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         User?              @relation("thoughtUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("beMailboxesUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("thoughtCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("beMailboxesCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("thoughtUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("beMailboxesUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("thoughtCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("beMailboxesCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
   @@map("beMailbox")
@@ -452,16 +452,16 @@ model BeCourtships {
   loggedFor         DateTime[]          @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         User?              @relation("actionUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("beCourtshipsUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("actionCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("beCourtshipsCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("actionUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("beCourtshipsUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("beCourtshipsCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
   @@map("beCourtships")
@@ -483,16 +483,16 @@ model BeLetters {
   loggedFor         DateTime[]          @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         User?              @relation("actionUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("beLettersUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("actionCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("beLettersCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("actionUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("beLettersUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("beLettersCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
   @@map("beLetters")
@@ -513,79 +513,19 @@ model BeDeals {
   loggedFor         DateTime[]            @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         User?              @relation("thoughtUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("beDealsUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("thoughtCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("beDealsCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("thoughtUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("beDealsUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("thoughtCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("beDealsCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
   @@map("beDeals")
-}
-
-// Legal Docs
-// We're invoicing.
-model BeDocs {
-  id                String              @id @default(auto()) @map("_id") @db.ObjectId
-  name              ILocaleString
-  slug              String
-  description       ILocaleString
-
-  title             ILocaleString
-  body              ILocaleString
-
-  loggedOn          DateTime            @db.Date
-  loggedFor         DateTime[]            @db.Date
-  publishedOn       DateTime            @db.Date
-
-  userOwner         User?              @relation("thoughtUserOwner", fields: [userOwnerId], references: [id])
-  userOwnerId       String?             @db.ObjectId
-
-  communityOwner        Communities?             @relation("thoughtCommunityOwner", fields: [communityOwnerId], references: [id])
-  communityOwnerId      String?             @db.ObjectId
-
-  userCreator       User?              @relation("thoughtUserCreator", fields: [userCreatorId], references: [id])
-  userCreatorId     String?             @db.ObjectId
-
-  communityCreator      Communities?             @relation("thoughtCommunityCreator", fields: [communityCreatorId], references: [id])
-  communityCreatorId    String?             @db.ObjectId
-
-  @@map("writeDocs")
-}
-
-// Last.fm
-// We're listening to music.
-model BeListens {
-  id                String              @id @default(auto()) @map("_id") @db.ObjectId
-  name              ILocaleString
-  slug              String
-  description       ILocaleString
-
-  title             ILocaleString
-  body              ILocaleString
-
-  loggedOn          DateTime            @db.Date
-  loggedFor         DateTime[]          @db.Date
-  publishedOn       DateTime            @db.Date
-
-  userOwner         User?              @relation("actionUserOwner", fields: [userOwnerId], references: [id])
-  userOwnerId       String?             @db.ObjectId
-
-  communityOwner        Communities?             @relation("actionCommunityOwner", fields: [communityOwnerId], references: [id])
-  communityOwnerId      String?             @db.ObjectId
-
-  userCreator       User?              @relation("actionUserCreator", fields: [userCreatorId], references: [id])
-  userCreatorId     String?             @db.ObjectId
-
-  communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
-  communityCreatorId    String?             @db.ObjectId
-
-  @@map("beListens")
 }
 
 type IEmail {
