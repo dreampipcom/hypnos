@@ -4,10 +4,18 @@
 // Your private data
 model BeYou {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
-  name              ILocaleString
+  name              String
+  legalFirstName    String?
+  legalLastName     String?
+  citizenships      ICountry?
+  fiscalResidencies ILocation?
+  legalResidencies  ILocation?
+  domiciles         ILocation?
+  beAt              ILocation?
+  movingTo          ILocation?
+
   slug              String
   description       ILocaleString
-  beAt              ILocation
 
   title             ILocaleString
   body              ILocaleString
