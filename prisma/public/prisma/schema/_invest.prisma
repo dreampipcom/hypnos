@@ -31,7 +31,7 @@ model PublicInvestPortfolios {
   @@map("investCareEulogy")
 }
 
-// Types of Assets (Portrait of asset: NFT, Promises, Fungible Derivatives: Curse Gossip: DPIP:D, Monetary Responsibility: 1,000.00 US Dollars investment: DPIP:O, etc.FX:EURUSD, FX:GBPUSD, FX:DPIP:D, FX:DPIP:H)
+// Types of Assets (Portrait of asset: NFT, Promises, Fungible Derivatives: Curse Gossip: DPIP:D, Monetary Responsibility: 1,000.00 US Dollars investment: DPIP:O, etc.FX:EURUSD, FX:GBPUSD, DPIP:D, DPIP:H, KRN:O, DPIP:ETH)
 model PublicInvestTypes {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
