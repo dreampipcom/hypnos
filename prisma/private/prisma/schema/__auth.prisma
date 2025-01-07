@@ -1,5 +1,5 @@
 // to-do: __auth.prisma
-// ---- App Governance. ----
+// ---- @PRIVATE: App Governance. ----
 // 
 // @auth stuff.
 model Account {
