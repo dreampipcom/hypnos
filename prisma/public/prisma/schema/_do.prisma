@@ -36,6 +36,7 @@ model PublicDoQuests {
   @@map("doQuests")
 }
 
+// Public Project Types
 model PublicDoQuestsTypes {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
@@ -64,6 +65,7 @@ model PublicDoQuestsTypes {
   @@map("doQuestsTypes")
 }
 
+// Public Products
 model PublicDoProducts {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
@@ -92,6 +94,7 @@ model PublicDoProducts {
   @@map("doProducts")
 }
 
+// Public Scores
 model PublicDoScores {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
