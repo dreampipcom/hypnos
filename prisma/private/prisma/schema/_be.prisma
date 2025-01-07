@@ -59,7 +59,7 @@ model BeSocialCommunities {
   communityCreator      Communities?             @relation("thoughtCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("beCommunities")
+  @@map("beSocialCommunities")
 }
 
 // Interests

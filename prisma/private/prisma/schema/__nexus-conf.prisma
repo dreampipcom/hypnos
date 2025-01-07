@@ -54,7 +54,7 @@ model NexusWeeks {
   communityCreator      Communities?             @relation("investmentCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("nexusDays")
+  @@map("nexusWeeks")
 }
 
 model NexusQuarters {
@@ -81,7 +81,7 @@ model NexusQuarters {
   communityCreator      Communities?             @relation("investmentCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("nexusDays")
+  @@map("nexusQuarters")
 }
 
 model NexusYears {
@@ -108,7 +108,7 @@ model NexusYears {
   communityCreator      Communities?             @relation("investmentCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("nexusDays")
+  @@map("nexusYears")
 }
 
 model NexusMoments {
@@ -135,7 +135,7 @@ model NexusMoments {
   communityCreator      Communities?             @relation("investmentCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("nexusDays")
+  @@map("nexusMoments")
 }
 
 // Space Nexus
@@ -163,7 +163,7 @@ model NexusSpaces {
   communityCreator      Communities?             @relation("investmentCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("nexusDays")
+  @@map("nexusSpaces")
 }
 
 // Context Nexus
@@ -191,7 +191,7 @@ model NexusContexts {
   communityCreator      Communities?             @relation("investmentCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("nexusDays")
+  @@map("nexusContexts")
 }
 
 

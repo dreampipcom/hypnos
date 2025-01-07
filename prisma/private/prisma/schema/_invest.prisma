@@ -57,5 +57,5 @@ model InvestSharedPositions {
   communityCreator      Communities?             @relation("thoughtCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("investSharedPortfolios")
+  @@map("investSharedPositions")
 }

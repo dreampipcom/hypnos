@@ -22,7 +22,7 @@ model BeYou {
   contactProfiles                     BeContacts[]      @relation("beYouContactProfiles", fields: [contactProfilesIds], references: [id])
   contactProfilesIds                  String[]        @db.ObjectId
   
-  lastContactProfile       BeContacts?              @relation("beYouPreferredContactProfile", fields: [lastContactProfileId], references: [id])
+  lastContactProfile       BeContacts?              @relation("beYouLastContactProfile", fields: [lastContactProfileId], references: [id])
   lastContactProfileId     String?             @db.ObjectId
 
   preferredContactProfile       BeContacts?              @relation("beYouPreferredContactProfile", fields: [preferredContactProfileId], references: [id])
@@ -34,7 +34,7 @@ model BeYou {
   preferredCommunity       BeCommunities?              @relation("beYouPreferredCommunity", fields: [preferredCommunityId], references: [id])
   preferredCommunityId     String?             @db.ObjectId
 
-  lastCommunity       BeCommunities?              @relation("beYouPreferredCommunity", fields: [lastCommunityId], references: [id])
+  lastCommunity       BeCommunities?              @relation("beYouLastCommunity", fields: [lastCommunityId], references: [id])
   lastCommunityId     String?             @db.ObjectId
 
  // e.g. [Can Baro Tobacco Shop, Gracia, Genoa, Italy]
@@ -45,10 +45,10 @@ model BeYou {
   activeContracts                     InvestContracts[]      @relation("beYouActiveContracts", fields: [activeContractsIds], references: [id])
   activeContractsIds                  String[]        @db.ObjectId
 
-  pendingContracts                     InvestContracts[]      @relation("beYouActiveContracts", fields: [pendingContractsIds], references: [id])
+  pendingContracts                     InvestContracts[]      @relation("beYouPendingContracts", fields: [pendingContractsIds], references: [id])
   pendingContractsIds                  String[]        @db.ObjectId
 
-  finishedContracts                     InvestContracts[]      @relation("beYouActiveContracts", fields: [finishedContractsIds], references: [id])
+  finishedContracts                     InvestContracts[]      @relation("beYouFinishedContracts", fields: [finishedContractsIds], references: [id])
   finishedContractsIds                  String[]        @db.ObjectId
 
   // invest
@@ -107,7 +107,7 @@ model BeCommunities {
   contactProfiles                     BeContacts[]      @relation("beYouContactProfiles", fields: [contactProfilesIds], references: [id])
   contactProfilesIds                  String[]        @db.ObjectId
   
-  lastContactProfile       BeContacts?              @relation("beYouPreferredContactProfile", fields: [lastContactProfileId], references: [id])
+  lastContactProfile       BeContacts?              @relation("beYouLastContactProfile", fields: [lastContactProfileId], references: [id])
   lastContactProfileId     String?             @db.ObjectId
 
   preferredContactProfile       BeContacts?              @relation("beYouPreferredContactProfile", fields: [preferredContactProfileId], references: [id])
@@ -116,10 +116,10 @@ model BeCommunities {
   activeContracts                     InvestContracts[]      @relation("beYouActiveContracts", fields: [activeContractsIds], references: [id])
   activeContractsIds                  String[]        @db.ObjectId
 
-  pendingContracts                     InvestContracts[]      @relation("beYouActiveContracts", fields: [pendingContractsIds], references: [id])
+  pendingContracts                     InvestContracts[]      @relation("beYouPendingContracts", fields: [pendingContractsIds], references: [id])
   pendingContractsIds                  String[]        @db.ObjectId
 
-  finishedContracts                     InvestContracts[]      @relation("beYouActiveContracts", fields: [finishedContractsIds], references: [id])
+  finishedContracts                     InvestContracts[]      @relation("beYouFinishedContracts", fields: [finishedContractsIds], references: [id])
   finishedContractsIds                  String[]        @db.ObjectId
 
   // invest
@@ -149,7 +149,7 @@ model BeCommunities {
   communityCreator      Communities?             @relation("beCommunitiesCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("beYou")
+  @@map("beCommunities")
 }
 
 // Event / Calendar

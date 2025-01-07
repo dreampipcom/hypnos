@@ -28,5 +28,5 @@ model FeelSharedMoods {
   communityCreator      Communities?             @relation("moodCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("feelMoods")
+  @@map("feelSharedMoods")
 }
