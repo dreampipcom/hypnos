@@ -573,6 +573,13 @@ type IEmail {
   context String
 }
 
+type ILegalData {
+  name    String
+  type    String
+  content String
+  photos  String[]
+}
+
 type ICompany {
   name            String
   legalName       String
@@ -580,8 +587,8 @@ type ICompany {
   fiscalAddress   ILocation
   offices         ILocation[]
   socialAddresses ILocation[]
-  socialNumber    String
-  socialType      EEntityType
+  legalData       ILegalData[]
+  otherLegalData  ILegalData[]
   socialProfile   String // BeCommunities @id
 }
 
