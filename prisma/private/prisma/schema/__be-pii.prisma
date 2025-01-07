@@ -198,7 +198,7 @@ model BeContact {
   portfolios             InvestPortfolios[]      @relation("beContactPortfolios", fields: [portfoliosIds], references: [id])
   portfoliosIds             String[]        @db.ObjectId
 
-  positions          InvestPositions[]      @relation("beContactReceivedLongs", fields: [positionsIds], references: [id])
+  positions          InvestPositions[]      @relation("beContactPositions", fields: [positionsIds], references: [id])
   positionsIds             String[]        @db.ObjectId
 
   // courtship
