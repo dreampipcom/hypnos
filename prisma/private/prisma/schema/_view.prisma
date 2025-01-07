@@ -2,7 +2,7 @@
 // ---- @INT: View: UX. ----
 // 
 // View
-// Dashboards
+// Dashboards View
 model ViewDashboards {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
@@ -15,24 +15,24 @@ model ViewDashboards {
   purchaseValue     Float
   settledValue      Float
 
-  userOwner         User?              @relation("investmentUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("viewDashboardsUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("investmentCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("viewDashboardsCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("investmentUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("viewDashboardsUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("investmentCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("viewDashboardsCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
   @@map("viewDashboards")
 }
 
-// Time view
+// Chart view
 
-model ViewTimeCharts {
+model ViewCharts {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String
@@ -44,22 +44,24 @@ model ViewTimeCharts {
   purchaseValue     Float
   settledValue      Float
 
-  userOwner         User?              @relation("investmentUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("viewChartsUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("investmentCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("viewChartsCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("investmentUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("viewChartsUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("investmentCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("viewChartsCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("timeCharts")
+  @@map("viewCharts")
 }
 
-model ViewTimeMoments {
+// Time view
+
+model ViewTime {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String
@@ -71,19 +73,19 @@ model ViewTimeMoments {
   purchaseValue     Float
   settledValue      Float
 
-  userOwner         User?              @relation("investmentUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("viewTimeUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("investmentCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("viewTimeCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("investmentUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("viewTimeUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("investmentCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("viewTimeCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("timeMoments")
+  @@map("viewTime")
 }
 
 // Space View
@@ -99,16 +101,16 @@ model ViewSpaces {
   purchaseValue     Float
   settledValue      Float
 
-  userOwner         User?              @relation("investmentUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("viewSpacesUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("investmentCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("viewSpacesCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("investmentUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("viewSpacesUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("investmentCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("viewSpacesCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
   @@map("viewSpaces")
@@ -127,16 +129,16 @@ model ViewListings {
   purchaseValue     Float
   settledValue      Float
 
-  userOwner         User?              @relation("investmentUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("viewListingsUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("investmentCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("viewListingsCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("investmentUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("viewListingsUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("investmentCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("viewListingsCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
   @@map("viewListings")

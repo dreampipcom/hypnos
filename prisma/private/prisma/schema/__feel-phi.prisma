@@ -16,17 +16,11 @@ model FeelSymptoms {
   loggedFor         DateTime[]          @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         User?              @relation("moodUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("feelSymptomsUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("moodCommunityOwner", fields: [communityOwnerId], references: [id])
-  communityOwnerId      String?             @db.ObjectId
-
-  userCreator       User?              @relation("moodUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("feelSymptomsUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
-
-  communityCreator      Communities?             @relation("moodCommunityCreator", fields: [communityCreatorId], references: [id])
-  communityCreatorId    String?             @db.ObjectId
 
   @@map("feelSymptoms")
 }
@@ -45,17 +39,11 @@ model FeelLike {
   loggedFor         DateTime[]          @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         User?              @relation("moodUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("feelLikeUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("moodCommunityOwner", fields: [communityOwnerId], references: [id])
-  communityOwnerId      String?             @db.ObjectId
-
-  userCreator       User?              @relation("moodUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("feelLikeUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
-
-  communityCreator      Communities?             @relation("moodCommunityCreator", fields: [communityCreatorId], references: [id])
-  communityCreatorId    String?             @db.ObjectId
 
   @@map("feelLike")
 }
@@ -74,17 +62,11 @@ model FeelDreams {
   loggedFor         DateTime[]          @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         User?              @relation("moodUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("feelDreamsUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("moodCommunityOwner", fields: [communityOwnerId], references: [id])
-  communityOwnerId      String?             @db.ObjectId
-
-  userCreator       User?              @relation("moodUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("feelDreamsUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
-
-  communityCreator      Communities?             @relation("moodCommunityCreator", fields: [communityCreatorId], references: [id])
-  communityCreatorId    String?             @db.ObjectId
 
   @@map("feelDreams")
 }
@@ -104,19 +86,13 @@ model FeelConfessions {
   loggedFor         DateTime[]          @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         User?               @relation("moodUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?               @relation("feelConfessionsUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?    @relation("moodCommunityOwner", fields: [communityOwnerId], references: [id])
-  communityOwnerId      String?         @db.ObjectId
-
-  userCreator       User?               @relation("moodUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?               @relation("feelConfessionsUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?    @relation("moodCommunityCreator", fields: [communityCreatorId], references: [id])
-  communityCreatorId    String?         @db.ObjectId
-
-  @@map("confessions")
+  @@map("feelConfessions")
 }
 
 // Feels good?
@@ -133,17 +109,11 @@ model FeelMoods {
   loggedFor         DateTime[]          @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         User?              @relation("moodUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("feelMoodsUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("moodCommunityOwner", fields: [communityOwnerId], references: [id])
-  communityOwnerId      String?             @db.ObjectId
-
-  userCreator       User?              @relation("moodUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("feelMoodsUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
-
-  communityCreator      Communities?             @relation("moodCommunityCreator", fields: [communityCreatorId], references: [id])
-  communityCreatorId    String?             @db.ObjectId
 
   @@map("feelMoods")
 }
@@ -162,17 +132,11 @@ model FeelCravings {
   loggedFor         DateTime[]          @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         User?              @relation("moodUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("feelCravingsUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("moodCommunityOwner", fields: [communityOwnerId], references: [id])
-  communityOwnerId      String?             @db.ObjectId
-
-  userCreator       User?              @relation("moodUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("feelCravingsUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
-
-  communityCreator      Communities?             @relation("moodCommunityCreator", fields: [communityCreatorId], references: [id])
-  communityCreatorId    String?             @db.ObjectId
 
   @@map("feelCravings")
 }

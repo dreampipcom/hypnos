@@ -16,17 +16,11 @@ model FeelSharedMoods {
   loggedFor         DateTime[]          @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         User?              @relation("moodUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("feelSharedMoodsUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("moodCommunityOwner", fields: [communityOwnerId], references: [id])
-  communityOwnerId      String?             @db.ObjectId
-
-  userCreator       User?              @relation("moodUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("feelSharedMoodsUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
-
-  communityCreator      Communities?             @relation("moodCommunityCreator", fields: [communityCreatorId], references: [id])
-  communityCreatorId    String?             @db.ObjectId
 
   @@map("feelSharedMoods")
 }
