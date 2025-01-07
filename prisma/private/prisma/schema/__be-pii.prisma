@@ -205,6 +205,12 @@ model BeCalendar {
   title             ILocaleString
   body              ILocaleString
 
+  caldavs           String[]
+  googleCalendars   String[]
+  type              ECalType
+
+  syncStrategy      ESyncStrategy
+
   loggedOn          DateTime            @db.Date
   loggedFor         DateTime[]          @db.Date
   publishedOn       DateTime            @db.Date
@@ -619,4 +625,15 @@ enum EEntityType {
   Government
   Military
   International
+}
+
+enum ESyncStrategy {
+  KEEP_LOCAL
+  KEEP_CLOUD
+  KEEP_BOTH
+}
+
+enum ECalType {
+  CalDav
+  GoogleCalendar
 }
