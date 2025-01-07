@@ -15,16 +15,16 @@ model NexusDays {
   purchaseValue     Float
   settledValue      Float
 
-  userOwner         User?              @relation("investmentUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("nexusDaysUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("investmentCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("nexusDaysCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("investmentUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("nexusDaysUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("investmentCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("nexusDaysCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
   @@map("nexusDays")
@@ -42,16 +42,16 @@ model NexusWeeks {
   purchaseValue     Float
   settledValue      Float
 
-  userOwner         User?              @relation("investmentUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("nexusWeeksUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("investmentCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("nexusWeeksCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("investmentUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("nexusWeeksUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("investmentCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("nexusWeeksCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
   @@map("nexusWeeks")
@@ -69,16 +69,16 @@ model NexusQuarters {
   purchaseValue     Float
   settledValue      Float
 
-  userOwner         User?              @relation("investmentUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("nexusQuartersUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("investmentCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("nexusQuartersCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("investmentUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("nexusQuartersUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("investmentCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("nexusQuartersCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
   @@map("nexusQuarters")
@@ -96,16 +96,16 @@ model NexusYears {
   purchaseValue     Float
   settledValue      Float
 
-  userOwner         User?              @relation("investmentUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("nexusYearsUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("investmentCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("nexusYearsCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("investmentUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("nexusYearsUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("investmentCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("nexusYearsCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
   @@map("nexusYears")
@@ -123,16 +123,16 @@ model NexusMoments {
   purchaseValue     Float
   settledValue      Float
 
-  userOwner         User?              @relation("investmentUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("nexusMomentsUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("investmentCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("nexusMomentsCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("investmentUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("nexusMomentsUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("investmentCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("nexusMomentsCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
   @@map("nexusMoments")
@@ -148,19 +148,16 @@ model NexusSpaces {
   title             ILocaleString
   body              ILocaleString
 
-  purchaseValue     Float
-  settledValue      Float
-
-  userOwner         User?              @relation("investmentUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("nexusSpacesUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("investmentCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("nexusSpacesCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("investmentUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("nexusSpacesUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("investmentCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("nexusSpacesCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
   @@map("nexusSpaces")
@@ -176,49 +173,17 @@ model NexusContexts {
   title             ILocaleString
   body              ILocaleString
 
-  purchaseValue     Float
-  settledValue      Float
-
-  userOwner         User?              @relation("investmentUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("nexusContextsUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("investmentCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("nexusContextsCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("investmentUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("nexusContextsUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("investmentCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("nexusContextsCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
   @@map("nexusContexts")
-}
-
-
-// Settings
-model PrivacySettings {
-  id                String              @id @default(auto()) @map("_id") @db.ObjectId
-  name              ILocaleString
-  slug              String
-  description       ILocaleString
-
-  title             ILocaleString
-  body              ILocaleString
-
-  purchaseValue     Float
-  settledValue      Float
-
-  userOwner         User?              @relation("investmentUserOwner", fields: [userOwnerId], references: [id])
-  userOwnerId       String?             @db.ObjectId
-
-  communityOwner        Communities?             @relation("investmentCommunityOwner", fields: [communityOwnerId], references: [id])
-  communityOwnerId      String?             @db.ObjectId
-
-  userCreator       User?              @relation("investmentUserCreator", fields: [userCreatorId], references: [id])
-  userCreatorId     String?             @db.ObjectId
-
-  communityCreator      Communities?             @relation("investmentCommunityCreator", fields: [communityCreatorId], references: [id])
-  communityCreatorId    String?             @db.ObjectId
-
-  @@map("PrivacySettings")
 }

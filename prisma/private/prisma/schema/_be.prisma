@@ -17,19 +17,19 @@ model BeSocial {
   loggedFor         DateTime[]            @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         User?              @relation("beWithOthersUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("beSocialUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("beWithOthersCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("beSocialCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("beWithOthersUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("beSocialUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("beWithOthersCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("beSocialCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("beWithOthers")
+  @@map("beSocial")
 }
 
 // Your org social profile.

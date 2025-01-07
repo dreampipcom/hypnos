@@ -202,6 +202,12 @@ model User {
   ownedFeelSymptoms            FeelSymptoms[]          @relation("feelSymptomsUserOwner")
   createdFeelSymptoms          FeelSymptoms[]          @relation("feelSymptomsUserCreator")
 
+  ownedInvestTransactions            InvestTransactions[]          @relation("investTransactionsUserOwner")
+  createdInvestTransactions          InvestTransactions[]          @relation("investTransactionsUserCreator")
+
+  ownedInvestContracts            InvestContracts[]          @relation("investContractsUserOwner")
+  createdInvestContracts          InvestContracts[]          @relation("investContractsUserCreator")
+
   ownedInvestPositions          InvestPositions[]          @relation("investPositionsUserOwner")
   createdInvestPositions         InvestPositions[]          @relation("investPositionsUserCreator")
 
@@ -264,6 +270,27 @@ model User {
 
   ownedBeSocialCommunities            BeSocialCommunities[]          @relation("beSocialCommunitiesUserOwner")
   createdBeSocialCommunities          BeSocialCommunities[]          @relation("beSocialCommunitiesUserCreator")
+
+  ownedNexusDays            NexusDays[]          @relation("nexusDaysUserOwner")
+  createdNexusDays          NexusDays[]          @relation("nexusDaysUserCreator")
+
+  ownedNexusWeeks            NexusWeeks[]          @relation("nexusWeeksUserOwner")
+  createdNexusWeeks          NexusWeeks[]          @relation("nexusWeeksUserCreator")
+
+  ownedNexusQuarters            NexusQuarters[]          @relation("nexusQuartersUserOwner")
+  createdNexusQuarters          NexusQuarters[]          @relation("nexusQuartersUserCreator")
+
+  ownedNexusYears            NexusYears[]          @relation("nexusYearsUserOwner")
+  createdNexusYears          NexusYears[]          @relation("nexusYearsUserCreator")
+
+  ownedNexusMoments            NexusMoments[]          @relation("nexusMomentsUserOwner")
+  createdNexusMoments          NexusMoments[]          @relation("nexusMomentsUserCreator")
+
+  ownedNexusSpaces            NexusSpaces[]          @relation("nexusSpacesUserOwner")
+  createdNexusSpaces          NexusSpaces[]          @relation("nexusSpacesUserCreator")
+
+  ownedNexusContexts            NexusContexts[]          @relation("nexusContextsUserOwner")
+  createdNexusContexts          NexusContexts[]          @relation("nexusContextsUserCreator")
 
   ownedServices         Services[]      @relation("serviceUserOwner")
   createdServices       Services[]      @relation("serviceUserCreator")
@@ -380,6 +407,12 @@ model Communities {
   ownedMakeFunctions            MakeFunctions[]          @relation("makeFunctionsCommunityOwner")
   createdMakeFunctions          MakeFunctions[]          @relation("makeFunctionsCommunityCreator")
 
+  ownedInvestTransactions            InvestTransactions[]          @relation("investTransactionsCommunityOwner")
+  createdInvestTransactions          InvestTransactions[]          @relation("investTransactionsCommunityCreator")
+
+  ownedInvestContracts            InvestContracts[]          @relation("investContractsCommunityOwner")
+  createdInvestContracts          InvestContracts[]          @relation("investContractsCommunityCreator")
+
   ownedInvestPositions          InvestPositions[]          @relation("investPositionsCommunityOwner")
   createdInvestPositions         InvestPositions[]          @relation("investPositionsCommunityCreator")
 
@@ -442,6 +475,27 @@ model Communities {
 
   ownedBeSocialCommunities            BeSocialCommunities[]          @relation("beSocialCommunitiesCommunityOwner")
   createdBeSocialCommunities          BeSocialCommunities[]          @relation("beSocialCommunitiesCommunityCreator")
+
+  ownedNexusDays            NexusDays[]          @relation("nexusDaysCommunityOwner")
+  createdNexusDays          NexusDays[]          @relation("nexusDaysCommunityCreator")
+
+  ownedNexusWeeks            NexusWeeks[]          @relation("nexusWeeksCommunityOwner")
+  createdNexusWeeks          NexusWeeks[]          @relation("nexusWeeksCommunityCreator")
+
+  ownedNexusQuarters            NexusQuarters[]          @relation("nexusQuartersCommunityOwner")
+  createdNexusQuarters          NexusQuarters[]          @relation("nexusQuartersCommunityCreator")
+
+  ownedNexusYears            NexusYears[]          @relation("nexusYearsCommunityOwner")
+  createdNexusYears          NexusYears[]          @relation("nexusYearsCommunityCreator")
+
+  ownedNexusMoments            NexusMoments[]          @relation("nexusMomentsCommunityOwner")
+  createdNexusMoments          NexusMoments[]          @relation("nexusMomentsCommunityCreator")
+
+  ownedNexusSpaces            NexusSpaces[]          @relation("nexusSpacesCommunityOwner")
+  createdNexusSpaces          NexusSpaces[]          @relation("nexusSpacesCommunityCreator")
+
+  ownedNexusContexts            NexusContexts[]          @relation("nexusContextsCommunityOwner")
+  createdNexusContexts          NexusContexts[]          @relation("nexusContextsCommunityCreator")
 
   roles                 Roles[]           @relation("communityRoles", fields: [rolesIds], references: [id])
   rolesIds              String[]          @db.ObjectId
@@ -626,6 +680,34 @@ model Features {
   communityCreatorId      String?         @db.ObjectId
 
   @@map("features")
+}
+
+// Settings
+model PrivacySettings {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  purchaseValue     Float
+  settledValue      Float
+
+  userOwner         User?              @relation("privacySettingsUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("privacySettingsCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("privacySettingsUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("privacySettingsCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("PrivacySettings")
 }
 
 // globals
