@@ -3,7 +3,7 @@
 // 
 // Be
 // Your personal social profile.
-model BeWithOthers {
+model BeSocial {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String

@@ -121,9 +121,6 @@ model User {
   ownedMessages         Messages[]        @relation("messageUserOwner")
   createdMessages       Messages[]        @relation("messageUserCreator")
 
-  ownedMoods            FeelMoods[]          @relation("feelMoodUserOwner")
-  createdMoods          FeelMoods[]          @relation("feelMoodUserCreator")
-
   ownedWriteIdeas            WriteIdeas[]          @relation("writeIdeasUserOwner")
   createdWriteIdeas          WriteIdeas[]          @relation("writeIdeasUserCreator")
 
@@ -252,6 +249,21 @@ model User {
 
   ownedDoReports         DoReports[]          @relation("doReportsUserOwner")
   createdDoReports       DoReports[]          @relation("doReportsUserCreator")
+
+  ownedBeCharacters            BeCharacters[]          @relation("beCharactersUserOwner")
+  createdBeCharacters          BeCharacters[]          @relation("beCharactersUserCreator")
+
+  ownedBeTopics            BeTopics[]          @relation("beTopicsUserOwner")
+  createdBeTopics          BeTopics[]          @relation("beTopicsUserCreator")
+
+  ownedBeAwards            BeAwards[]          @relation("beAwardsUserOwner")
+  createdBeAwards          BeAwards[]          @relation("beAwardsUserCreator")
+
+  ownedBeSocial            BeSocial[]          @relation("beSocialUserOwner")
+  createdBeSocial          BeSocial[]          @relation("beSocialUserCreator")
+
+  ownedBeSocialCommunities            BeSocialCommunities[]          @relation("beSocialCommunitiesUserOwner")
+  createdBeSocialCommunities          BeSocialCommunities[]          @relation("beSocialCommunitiesUserCreator")
 
   ownedServices         Services[]      @relation("serviceUserOwner")
   createdServices       Services[]      @relation("serviceUserCreator")
@@ -415,6 +427,21 @@ model Communities {
 
   ownedDoReports         DoReports[]          @relation("doReportsCommunityOwner")
   createdDoReports       DoReports[]          @relation("doReportsCommunityCreator")
+
+  ownedBeCharacters            BeCharacters[]          @relation("beCharactersCommunityOwner")
+  createdBeCharacters          BeCharacters[]          @relation("beCharactersCommunityCreator")
+
+  ownedBeTopics            BeTopics[]          @relation("beTopicsCommunityOwner")
+  createdBeTopics          BeTopics[]          @relation("beTopicsCommunityCreator")
+
+  ownedBeAwards            BeAwards[]          @relation("beAwardsCommunityOwner")
+  createdBeAwards          BeAwards[]          @relation("beAwardsCommunityCreator")
+
+  ownedBeSocial            BeSocial[]          @relation("beSocialCommunityOwner")
+  createdBeSocial          BeSocial[]          @relation("beSocialCommunityCreator")
+
+  ownedBeSocialCommunities            BeSocialCommunities[]          @relation("beSocialCommunitiesCommunityOwner")
+  createdBeSocialCommunities          BeSocialCommunities[]          @relation("beSocialCommunitiesCommunityCreator")
 
   roles                 Roles[]           @relation("communityRoles", fields: [rolesIds], references: [id])
   rolesIds              String[]          @db.ObjectId

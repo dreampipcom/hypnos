@@ -46,6 +46,9 @@ model InvestPositions {
   loggedFor         DateTime[]            @db.Date
   publishedOn       DateTime            @db.Date
 
+  relatedQuests                     DoQuests[]      @relation("doQuestPositions", fields: [relatedQuestsIds], references: [id])
+  relatedQuestsIds                  String[]        @db.ObjectId
+
   userOwner         User?              @relation("thoughtUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 

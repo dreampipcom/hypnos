@@ -195,7 +195,7 @@ model DoQuests {
 
   ticker            String
 
-  positions         InvestPositions[]           @relation("ticker")
+  positions         InvestPositions[]  @relation("doQuestPositions", fields: [positionsIds], references: [id])
   positionsIds      String[]          @db.ObjectId
 
   createdOn         DateTime            @db.Date
