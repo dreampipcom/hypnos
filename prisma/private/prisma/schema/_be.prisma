@@ -18,6 +18,7 @@ model BeMailbox {
   caldavs           String[]
   carddavs          String[]
   sambas            String[]
+  emails            IEmail[]
 
   title             ILocaleString
   body              ILocaleString
@@ -39,6 +40,16 @@ model BeMailbox {
   communityCreatorId    String?             @db.ObjectId
 
   @@map("beMailbox")
+}
+
+type IEmail {
+  title   String
+  from    String
+  to      String
+  cc      String
+  bcc     String
+  body    String
+  replyTo String
 }
 
 // Interests
