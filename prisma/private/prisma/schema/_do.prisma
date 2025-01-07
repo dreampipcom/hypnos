@@ -195,8 +195,8 @@ model DoQuests {
 
   ticker            String
 
-  investments         Investments[]           @relation("ticker")
-  investmentsIds            String[]          @db.ObjectId
+  positions         InvestPositions[]           @relation("ticker")
+  positionsIds      String[]          @db.ObjectId
 
   createdOn         DateTime            @db.Date
   updatedOn         DateTime[]          @db.Date

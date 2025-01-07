@@ -11,7 +11,7 @@ model DoYou {
 
   title             ILocaleString
   body              ILocaleString
-  role 							ERole
+  role 							EDoRole
 
   loggedOn          DateTime            @db.Date
   loggedFor         DateTime[]          @db.Date
@@ -86,4 +86,11 @@ model DoDirectories {
   communityCreatorId    String?             @db.ObjectId
 
   @@map("doDirectories")
+}
+
+enum EDoRole {
+	Doer
+	Lead
+	Director
+	Admin
 }

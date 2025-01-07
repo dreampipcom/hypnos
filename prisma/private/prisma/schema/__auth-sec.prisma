@@ -26,12 +26,12 @@ model Account {
 }
 
 model Session {
-  id              String     @id @default(auto()) @map("_id") @db.ObjectId
-  sessionToken    String     @unique
-  userId          String     @db.ObjectId
+  id              String          @id @default(auto()) @map("_id") @db.ObjectId
+  sessionToken    String          @unique
+  userId          String          @db.ObjectId
   expires         DateTime
-  user            User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  mailboxes       BeMailbox[]  @relation(fields: [mailboxId], references: [id], onDelete: Cascade)
+  user            User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  mailboxes       BeMailboxes[]   @relation(fields: [mailboxesTokens], references: [id], onDelete: Cascade)
   mailboxesTokens String[]
  
   createdAt DateTime @default(now())
@@ -115,23 +115,23 @@ model User {
   ownedCommunities           Communities[]          @relation("ownedCommunities")
   createdCommunities         Communities[]          @relation("createdCommunities")
 
-  ownedListings         MakeListings[]        @relation("listingUserOwner")
-  createdListings       MakeListings[]        @relation("listingUserCreator")
+  ownedListings         MakeListings[]        @relation("makeListingUserOwner")
+  createdListings       MakeListings[]        @relation("makeListingUserCreator")
 
   ownedMessages         Messages[]        @relation("messageUserOwner")
   createdMessages       Messages[]        @relation("messageUserCreator")
 
-  ownedMoods           FeelMoods[]          @relation("moodUserOwner")
-  createdMoods         FeelMoods[]          @relation("moodUserCreator")
+  ownedMoods            FeelMoods[]          @relation("feelMoodUserOwner")
+  createdMoods          FeelMoods[]          @relation("feelMoodUserCreator")
 
-  ownedActions           Dos[]          @relation("actionUserOwner")
-  createdActions         Dos[]          @relation("actionUserCreator")
+  ownedDos              Dos[]          @relation("doDosUserOwner")
+  createdDos            Dos[]          @relation("doDosUserCreator")
 
-  ownedThoughts           WriteIdeas[]          @relation("thoughtUserOwner")
-  createdThoughts         WriteIdeas[]          @relation("thoughtUserCreator")
+  ownedIdeas            WriteIdeas[]          @relation("writeIdeasUserOwner")
+  createdIdeas          WriteIdeas[]          @relation("writeIdeasUserCreator")
 
-  ownedQuests           DoQuests[]          @relation("projectUserOwner")
-  createdQuests         DoQuests[]          @relation("projectUserCreator")
+  ownedQuests           DoQuests[]          @relation("doQuestUserOwner")
+  createdQuests         DoQuests[]          @relation("doQuestUserCreator")
 
   ownedServices         Services[]      @relation("serviceUserOwner")
   createdServices       Services[]      @relation("serviceUserCreator")
@@ -150,7 +150,8 @@ model Communities {
   id                    String            @id @default(auto()) @map("_id") @db.ObjectId
   users                 User[]           @relation(fields: [usersIds], references: [id])
   usersIds              String[]          @db.ObjectId
-  status                ECommunitiestatus
+
+  status                ECommunitiesStatus
 
   name                  String
   description           String
@@ -181,20 +182,20 @@ model Communities {
   ownedAbilities        Abilities[]     @relation("abilityCommunityOwner")
   createdAbilities      Abilities[]     @relation("abilityCommunityCreator")
 
-  ownedMoods           FeelMoods[]          @relation("moodCommunityOwner")
-  createdMoods         FeelMoods[]          @relation("moodCommunityCreator")
+  ownedMoods            FeelMoods[]          @relation("moodCommunityOwner")
+  createdMoods          FeelMoods[]          @relation("moodCommunityCreator")
 
-  ownedActions           Dos[]          @relation("actionCommunityOwner")
-  createdActions         Dos[]          @relation("actionCommunityCreator")
+  ownedDos              Dos[]          @relation("doDosCommunityOwner")
+  createdDos            Dos[]          @relation("doDosCommunityCreator")
 
-  ownedThoughts           WriteIdeas[]          @relation("thoughtCommunityOwner")
-  createdThoughts         WriteIdeas[]          @relation("thoughtCommunityCreator")
+  ownedIdeas           WriteIdeas[]          @relation("ideaCommunityOwner")
+  createdIdeas         WriteIdeas[]          @relation("writeIdeaCommunityCreator")
 
-  ownedQuests           DoQuests[]          @relation("projectCommunityOwner")
-  createdQuests         DoQuests[]          @relation("projectCommunityCreator")
+  ownedQuests           DoQuests[]          @relation("questCommunityOwner")
+  createdQuests         DoQuests[]          @relation("doQuestCommunityCreator")
 
-  ownedInvestments           Investments[]          @relation("investmentCommunityOwner")
-  createdInvestments         Investments[]          @relation("investmentCommunityCreator")
+  ownedPositions          InvestPositions[]          @relation("investPositionCommunityOwner")
+  createdPosition         InvestPositions[]          @relation("investPositionCommunityCreator")
 
   roles                 Roles[]           @relation("communityRoles", fields: [rolesIds], references: [id])
   rolesIds              String[]          @db.ObjectId
@@ -485,6 +486,14 @@ enum ECadence {
   TWO_YEARS
   THREE_YEARS
   FIVE_YEARS
+}
+
+
+enum ECommunitiesStatus {
+  PRIVATE
+  INTERNAL
+  PUBLIC
+  DELETED
 }
 
 // taxonomies

@@ -147,7 +147,7 @@ model MakeInventories {
   @@map("makeInventories")
 }
 
-// Stashes
+// Stashes: Gifts
 model MakeItems {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString

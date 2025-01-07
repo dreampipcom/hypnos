@@ -13,7 +13,7 @@ model BeYou {
 
   legalFirstName    String?
   legalLastName     String?
-  citizenships      ICountry[]?
+  citizenships      ILocation[]
   fiscalResidencies ILocation?
   legalResidencies  ILocation?
   domiciles         ILocation?
@@ -22,25 +22,25 @@ model BeYou {
   contactProfiles                     BeContacts[]      @relation("beYouContactProfiles", fields: [contactProfilesIds], references: [id])
   contactProfilesIds                  String[]        @db.ObjectId
   
-  lastContactProfile       BeContact?              @relation("beYouPreferredContactProfile", fields: [lastContactProfileId], references: [id])
+  lastContactProfile       BeContacts?              @relation("beYouPreferredContactProfile", fields: [lastContactProfileId], references: [id])
   lastContactProfileId     String?             @db.ObjectId
 
-  preferredContactProfile       BeContact?              @relation("beYouPreferredContactProfile", fields: [preferredContactProfileId], references: [id])
+  preferredContactProfile       BeContacts?              @relation("beYouPreferredContactProfile", fields: [preferredContactProfileId], references: [id])
   preferredContactProfileId     String?             @db.ObjectId
 
   communities                     BeCommunities[]      @relation("beYouMembers", fields: [communitiesIds], references: [id])
   communitiesIds                  String[]        @db.ObjectId
 
-  preferredCommunity       BeCommunity?              @relation("beYouPreferredCommunity", fields: [preferredCommunityId], references: [id])
+  preferredCommunity       BeCommunities?              @relation("beYouPreferredCommunity", fields: [preferredCommunityId], references: [id])
   preferredCommunityId     String?             @db.ObjectId
 
-  lastCommunity       BeCommunity?              @relation("beYouPreferredCommunity", fields: [lastCommunityId], references: [id])
+  lastCommunity       BeCommunities?              @relation("beYouPreferredCommunity", fields: [lastCommunityId], references: [id])
   lastCommunityId     String?             @db.ObjectId
 
  // e.g. [Can Baro Tobacco Shop, Gracia, Genoa, Italy]
-  movingFrom        ILocation[]?
-  movingWithin      ILocation[]?
-  movingTo          ILocation[]?
+  movingFrom        ILocation[]
+  movingWithin      ILocation[]
+  movingTo          ILocation[]
 
   activeContracts                     InvestContracts[]      @relation("beYouActiveContracts", fields: [activeContractsIds], references: [id])
   activeContractsIds                  String[]        @db.ObjectId
@@ -56,7 +56,7 @@ model BeYou {
   walletsIds                  String[]        @db.ObjectId
 
   // portfolios
-  portfolios                     InvestPortfolio[]      @relation("beYouPortfolio", fields: [portfoliosIds], references: [id])
+  portfolios                     InvestPortfolios[]      @relation("beYouPortfolio", fields: [portfoliosIds], references: [id])
   portfoliosIds                  String[]        @db.ObjectId
 
   positions                InvestPositions[]      @relation("beYouPositions", fields: [positionsIds], references: [id])
@@ -91,12 +91,12 @@ model BeCommunities {
   legalName         String
   entityType        EEntityType
   
-  fiscalResidencies ILocation[]?
-  legalResidencies  ILocation[]?
-  socialResidencies ILocation[]?
-  offices           ILocation[]?
-  
-  socialRegistries  IRegisteredCompany[]?
+  fiscalResidencies ILocation[]
+  legalResidencies  ILocation[]
+  socialResidencies ILocation[]
+  offices           ILocation[]
+
+  socialRegistries  IRegisteredCompany[]
 
   members                     BeYou[]      @relation("beCommunitiesMembers", fields: [membersIds], references: [id])
   membersIds                  String[]        @db.ObjectId
@@ -107,10 +107,10 @@ model BeCommunities {
   contactProfiles                     BeContacts[]      @relation("beYouContactProfiles", fields: [contactProfilesIds], references: [id])
   contactProfilesIds                  String[]        @db.ObjectId
   
-  lastContactProfile       BeContact?              @relation("beYouPreferredContactProfile", fields: [lastContactProfileId], references: [id])
+  lastContactProfile       BeContacts?              @relation("beYouPreferredContactProfile", fields: [lastContactProfileId], references: [id])
   lastContactProfileId     String?             @db.ObjectId
 
-  preferredContactProfile       BeContact?              @relation("beYouPreferredContactProfile", fields: [preferredContactProfileId], references: [id])
+  preferredContactProfile       BeContacts?              @relation("beYouPreferredContactProfile", fields: [preferredContactProfileId], references: [id])
   preferredContactProfileId     String?             @db.ObjectId
 
   activeContracts                     InvestContracts[]      @relation("beYouActiveContracts", fields: [activeContractsIds], references: [id])
@@ -127,10 +127,10 @@ model BeCommunities {
   walletsIds                  String[]        @db.ObjectId
 
   // portfolios
-  portfolios                     InvestPortfolio[]      @relation("beCommunitiesPortfolio", fields: [portfoliosIds], references: [id])
+  portfolios                     InvestPortfolios[]      @relation("beCommunitiesPortfolio", fields: [portfoliosIds], references: [id])
   portfoliosIds                  String[]        @db.ObjectId
 
-  positions                InvestLongs[]      @relation("beCommunitiesPositions", fields: [receivedCareEulogiesIds], references: [id])
+  positions                InvestPositions[]      @relation("beCommunitiesPositions", fields: [positionsIds], references: [id])
   positionsIds             String[]        @db.ObjectId
 
   loggedOn          DateTime            @db.Date
@@ -170,7 +170,7 @@ model BeEvent {
   stamp             String
   freq              String
   until             DateTime            @db.Date
-  sequence          Integer
+  sequence          Float
   summary           ILocaleString
   location          String
   organizer         String
@@ -211,9 +211,7 @@ model BeCalendar {
 
   syncStrategy      ESyncStrategy
 
-  loggedOn          DateTime            @db.Date
-  loggedFor         DateTime[]          @db.Date
-  publishedOn       DateTime            @db.Date
+  published         DateTime            @db.Date
 
   userOwner         User?              @relation("actionUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
@@ -231,7 +229,7 @@ model BeCalendar {
 }
 
 // Your friendships and customer data.
-model BeContact {
+model BeContacts {
   emoji             String
   title             ILocaleString
   body              ILocaleString
@@ -254,6 +252,12 @@ model BeContact {
   positionsIds             String[]        @db.ObjectId
 
   // courtship
+  givenGifts                     MakeItems[]      @relation("beContactGivenGifts", fields: [givenGiftsIds], references: [id])
+  givenGiftsIds                  String[]        @db.ObjectId
+
+  receivedGifts                  MakeItems[]      @relation("beContactReceivedGifts", fields: [receivedGiftsIds], references: [id])
+  receivedGiftsIds                  String[]        @db.ObjectId
+
   likedTopics                     BeTopics[]      @relation("beContactLikedTopics", fields: [likedTopicsIds], references: [id])
   likedTopicsIds                  String[]        @db.ObjectId
 
@@ -304,6 +308,7 @@ model BeContact {
   // hydrate decorations: 
   // sharedInventories
   // sharedListings
+  // sharedDos/Quests
   inventories                   MakeInventories[]    @relation("beContactInventories", fields: [inventoriesIds], references: [id])
   inventoriesIds                String[]        @db.ObjectId
 
@@ -349,7 +354,7 @@ model BeContact {
   communityManager      Communities?             @relation("beContactCommunityManager", fields: [communityManagerId], references: [id])
   communityManagerId    String?             @db.ObjectId
 
-  @@map("beHumans")
+  @@map("beContact")
 }
 
 model BeRelations {
@@ -382,7 +387,7 @@ model BeRelations {
 
 // @dpip.cc
 // main handle, aliases, creds? api? back auth?
-model BeMailbox {
+model BeMailboxes {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String
@@ -614,14 +619,14 @@ type IRegisteredCompany {
 }
 
 enum EEntityType {
-  Sole-Personal
-  Sole-Propertor
-  LLC-Sole
-  LLC-Partnership
-  Corp-Subsidiary
-  Corp-Society
-  Corp-Non-profit
-  Corp-Cultural/Religious
+  SolePersonal
+  SolePropertor
+  LLCSole
+  LLCPartnership
+  CorpSubsidiary
+  CorpSociety
+  CorpNonProfit
+  CorpCulturalReligious
   Government
   Military
   International
