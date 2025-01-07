@@ -2,7 +2,6 @@
 // ---- @INT: Be: I am. ----
 // 
 // Be
-// Contacts
 // @dpip.cc
 // main handle, aliases, creds? api? back auth?
 model BeMailbox {

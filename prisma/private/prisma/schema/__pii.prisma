@@ -146,6 +146,7 @@ model BeRoles {
 }
 
 // Friendships
+// Contacts
 model BeHumans {
   // @PUBLIC: IF MADE PUBLIC
   // admin
@@ -370,6 +371,7 @@ model BeDeals {
   @@map("beDeals")
 }
 
+// Legal Docs
 model WriteDocs {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
