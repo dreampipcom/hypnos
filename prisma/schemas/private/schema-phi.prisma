@@ -1,15 +1,4 @@
 // to-do: schema-phi.prisma
-generator client {
-  provider = "prisma-client-js"
-  output = "../node_modules/@dreampipcom/db-phi/prisma-client"
-}
-
-datasource db {
-  provider        = "mongodb"
-  url             = env("PRISMA_PHI_URI")
-  directUrl       = env("MONGODB_PHI_URI")
-}
-
 // Private Health Data
 model BeHealth {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
@@ -75,3 +64,54 @@ model FeelSymptoms {
 
   @@map("feelLike")
 }
+
+type ISmartScales {
+  bodyMass        Float
+  bodyMassIndex   Float
+  unit            EWeightUnit
+  measurement     DateTime
+}
+
+type IHeartRates {
+  value                     Float
+  measurement               DateTime
+  motions                   String[]
+  workouts                  DoMovements[]
+  workoutsIds               String[]            @db.ObjectId
+}
+
+type ICardiograms {
+  measurement       DateTime
+
+  symptoms          FeelSymptoms[]
+  symptomsIds       String[]            @db.ObjectId
+
+  classification    E7Classification
+  leads             ICardiogram[]
+}
+
+type ICardiogram {
+  lead      Float
+  leadOne   Float
+}
+
+enum E7Classification {
+  Terrible
+  Poor
+  BelowAverage
+  Average
+  AboveAverage
+  Good
+  Awesome
+}
+
+enum EUnit {
+  METRIC
+  IMPERIAL
+}
+
+enum EWeightUnit {
+  KILO
+  POUND
+}
+

@@ -1,15 +1,4 @@
 // to-do: schema-feel.prisma
-generator client {
-  provider = "prisma-client-js"
-  output = "../node_modules/@dreampipcom/db-feel/prisma-client"
-}
-
-datasource db {
-  provider        = "mongodb"
-  url             = env("PRISMA_FEEL_URI")
-  directUrl       = env("MONGODB_FEEL_URI")
-}
-
 // ---- Feel: what's happening? ----
 // 
 // Log

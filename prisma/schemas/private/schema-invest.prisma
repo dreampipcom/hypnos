@@ -1,15 +1,4 @@
 // to-do: schema-invest.prisma
-generator client {
-  provider = "prisma-client-js"
-  output = "../node_modules/@dreampipcom/db-invest/prisma-client"
-}
-
-datasource db {
-  provider        = "mongodb"
-  url             = env("PRISMA_INVEST_URI")
-  directUrl       = env("MONGODB_INVEST_URI")
-}
-
 model InvestCareEulogy {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString

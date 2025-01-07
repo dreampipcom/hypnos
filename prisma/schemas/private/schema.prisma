@@ -1,6 +1,7 @@
 generator client {
   provider = "prisma-client-js"
   output = "../node_modules/@dreampipcom/db-auth/prisma-client"
+  previewFeatures = ["prismaSchemaFolder"]
 }
 
 datasource db {
@@ -144,9 +145,6 @@ model User {
 
   ownedProjects           Projects[]          @relation("projectUserOwner")
   createdProjects         Projects[]          @relation("projectUserCreator")
-
-  ownedInvestments           Investments[]          @relation("investmentUserOwner")
-  createdInvestments         Investments[]          @relation("investmentUserCreator")
 
   ownedServices         Services[]      @relation("serviceUserOwner")
   createdServices       Services[]      @relation("serviceUserCreator")
@@ -450,56 +448,6 @@ type ILocaleString {
   tr        String?
   fi        String?
   uk        String?
-}
-
-type ISmartScales {
-  bodyMass        Float
-  bodyMassIndex   Float
-  unit            EWeightUnit
-  measurement     DateTime
-}
-
-type IHeartRates {
-  value                     Float
-  measurement               DateTime
-  motions                   String[]
-  workouts                  DoMovements[]       @relation("heartRatesWorkouts", fields: [workoutsIds], references: [id])
-  workoutsIds               String[]            @db.ObjectId
-}
-
-type ICardiograms {
-  measurement       DateTime
-
-  symptoms          FeelSymptoms[]       @relation("cardiogramsSymptoms", fields: [symptomsIds], references: [id])
-  symptomsIds       String[]            @db.ObjectId
-
-  classification    E7Classification
-  leads             ICardiogram[]
-}
-
-type ICardiogram {
-  lead      Float
-  leadOne   Float
-}
-
-enum E7Classification {
-  Terrible
-  Poor
-  Below Average
-  Average
-  Above Average
-  Good
-  Awesome
-}
-
-enum EUnit {
-  METRIC
-  IMPERIAL
-}
-
-enum EWeightUnit {
-  KILO
-  POUND
 }
 
 enum ERating {

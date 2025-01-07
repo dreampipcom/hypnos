@@ -1,16 +1,3 @@
-// to-do: schema-be.prisma
-generator client {
-  provider = "prisma-client-js"
-  output = "../node_modules/@dreampipcom/db-be/prisma-client"
-}
-
-datasource db {
-  provider        = "mongodb"
-  url             = env("PRISMA_BE_URI")
-  directUrl       = env("MONGODB_BE_URI")
-}
-
-
 // ---- Be: who are we? ----
 //
 // Profiles

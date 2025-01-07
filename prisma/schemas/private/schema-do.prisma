@@ -1,15 +1,4 @@
 // to-do: schema-do.prisma
-generator client {
-  provider = "prisma-client-js"
-  output = "../node_modules/@dreampipcom/db-do/prisma-client"
-}
-
-datasource db {
-  provider        = "mongodb"
-  url             = env("PRISMA_DO_URI")
-  directUrl       = env("MONGODB_DO_URI")
-}
-
 // ---- Do: let's do it. ----
 // 
 // Actions
