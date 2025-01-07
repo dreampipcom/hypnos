@@ -30,17 +30,8 @@ model BeYou {
   portfolios                     InvestPortfolio[]      @relation("beYouPortfolio", fields: [portfoliosIds], references: [id])
   portfoliosIds                  String[]        @db.ObjectId
 
-  receivedLongs                InvestLongs[]      @relation("beYouReceivedLongs", fields: [receivedCareEulogiesIds], references: [id])
-  receivedLongsIds             String[]        @db.ObjectId
-
-  givenLongs                   InvestLongs[]      @relation("beYouGivenLongs", fields: [givenLongsIds], references: [id])
-  givenLongsIds                String[]        @db.ObjectId
-
-  receivedShorts                 InvestShorts[]      @relation("beYouReceivedShorts", fields: [receivedShortsIds], references: [id])
-  receivedShortsIds              String[]        @db.ObjectId
-
-  givenShorts                    InvestShorts[]      @relation("beYouGivenShorts", fields: [givenShortsIds], references: [id])
-  givenShortsIds                 String[]        @db.ObjectId
+  positions                InvestLongs[]      @relation("beYouPositions", fields: [positionsIds], references: [id])
+  positionsIds             String[]        @db.ObjectId
   
 
   slug              String

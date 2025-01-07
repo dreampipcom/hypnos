@@ -32,7 +32,7 @@ model InvestSharedPortfolios {
   @@map("investSharedPortfolios")
 }
 
-model InvestCommunityPortfolios {
+model InvestSharedPositions {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String
@@ -57,5 +57,5 @@ model InvestCommunityPortfolios {
   communityCreator      Communities?             @relation("thoughtCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("investCommunityPortfolios")
+  @@map("investSharedPortfolios")
 }
