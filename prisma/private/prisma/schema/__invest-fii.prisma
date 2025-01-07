@@ -186,13 +186,27 @@ model InvestIncomes {
 
 // Subscriptions
 model InvestContracts {
-  id                String              @id @default(auto()) @map("_id") @db.ObjectId
-  name              ILocaleString
-  slug              String
-  description       ILocaleString
+  id                      String              @id @default(auto()) @map("_id") @db.ObjectId
+  name                    ILocaleString
+  slug                    String
+  description             ILocaleString
 
-  title             ILocaleString
-  body              ILocaleString
+  title                   ILocaleString
+  body                    ILocaleString
+
+  investmentSignature     String
+
+  userAuthorities         User[]              @relation("investUserAuthorities", fields: [userAuthoritiesIds], references: [id])
+  userAuthoritiesIds       String[]             @db.ObjectId
+
+  communityAuthorities    Communities[]              @relation("investCommunityAuthorities", fields: [communityAuthoritiesIds], references: [id])
+  communityAuthoritiesIds  String[]             @db.ObjectId
+
+  userSignatures         User[]              @relation("investUserSignatures", fields: [userSignaturesIds], references: [id])
+  userSignaturesIds       String[]            @db.ObjectId
+
+  communitySignatures         Communities[]              @relation("investCommunitySignatures", fields: [communitySignaturesIds], references: [id])
+  communitySignaturesIds       String[]            @db.ObjectId
 
   loggedOn          DateTime            @db.Date
   loggedFor         DateTime[]            @db.Date
