@@ -1,7 +1,7 @@
 // to-do: __feel-phi.prisma
 // ---- @PRIVATE: Feel: u k, g? ----
 // 
-// Feel
+// Your headspace.
 // Fever, CSA, Roar soaring, ADHD, Ketosis, name it.
 model FeelSymptoms {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId

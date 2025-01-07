@@ -1,7 +1,7 @@
 // to-do: __be-pii.prisma
 // ---- @PRIVATE: Be: Personal Data, Contacts, etc. ----
 // 
-// Your private data
+// Your social profile and customer data.
 model BeYou {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              String

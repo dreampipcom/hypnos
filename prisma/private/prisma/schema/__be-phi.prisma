@@ -1,7 +1,7 @@
 // to-do: __be-phi.prisma
 // ---- @PRIVATE: Be: Private Health Data. ----
 //
-// Health Log
+// Your health profile.
 model BeHealth {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
