@@ -1,5 +1,8 @@
 // to-do: schema-fii.prisma
 // Welcome to FinCore. @™
+// ---- @PRIVATE: Private Financial Data. ----
+//
+// Positions
 model Investments {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
@@ -34,6 +37,7 @@ model Investments {
   @@map("investments")
 }
 
+// Wallets
 model InvestWallets {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString

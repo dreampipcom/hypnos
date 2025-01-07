@@ -1,5 +1,7 @@
 // to-do: schema-pii.prisma
-// Self
+// ---- @PRIVATE: Personal Data, Contacts, etc. ----
+// 
+// Your private data
 model BeYou {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString

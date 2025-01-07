@@ -1,0 +1,136 @@
+// to-do: schema-be.prisma
+// ---- @PUBLIC Be: who are we? ----
+//
+// Profiles
+// public visible profiles
+model BePublic {
+  // admin
+  // communities
+  emoji             String
+  title             ILocaleString
+  body              ILocaleString
+  slug              String
+
+  profilePictures   String[]
+  coverPictures     String[]
+  albumsPictures    String[]
+  wallPictures      String[]
+
+  profileVideos     String[]
+  coverVideos       String[]
+  albumsVideos      String[]
+  wallVideos        String[]
+
+  badges            String[]
+  
+  // space
+  publicSpace       ILocation
+
+  // contact
+  socialProfiles                  ISocial[]
+  websites                        String[]
+
+  // hydrate decorations: 
+  // sharedInventories
+  // sharedListings
+  inventories                   MakeInventories[]    @relation("beHumanInventories", fields: [inventoriesIds], references: [id])
+  inventoriesIds                String[]        @db.ObjectId
+
+  listings                   MakeListings[]    @relation("beHumanListings", fields: [listingsIds], references: [id])
+  listingsIds                String[]        @db.ObjectId
+
+  procurements                   MakeProcurements[]    @relation("beHumanProcurements", fields: [procurementsIds], references: [id])
+  procurementsIds                String[]        @db.ObjectId
+
+  quests                   DoQuests[]    @relation("beHumanQuests", fields: [questsIds], references: [id])
+  questsIds                String[]        @db.ObjectId
+
+  // @PRIVATE
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  description       ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]            @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("beHumansUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  userCreator       User?              @relation("beHumansUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  userManager       User?              @relation("beHumansUserManager", fields: [userManagerId], references: [id])
+  userManagerId     String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("beHumansCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("beHumansCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  communityManager      Communities?             @relation("beHumansCommunityManager", fields: [communityManagerId], references: [id])
+  communityManagerId    String?             @db.ObjectId
+
+  @@map("bePublic")
+}
+
+// Interests
+// public/reusable/fixed-options/clean up eventually
+model PublicBeTopics {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]          @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("actionUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("actionCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("actionUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("beTopics")
+}
+
+// Fantasy
+// public/re-usable/game/pip/goal
+model PublicBeCharacters {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]          @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("actionUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("actionCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("actionUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("beCharacters")
+}
