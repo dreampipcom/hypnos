@@ -42,16 +42,16 @@ model BeYou {
   loggedFor         DateTime[]            @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         User?              @relation("thoughtUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("beYouUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("thoughtCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("beYouCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("thoughtUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("beYouUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("thoughtCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("beYouCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
   @@map("beYou")
@@ -106,16 +106,16 @@ model BeCommunities {
   loggedFor         DateTime[]            @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         User?              @relation("thoughtUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("beCommunitiesUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("thoughtCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("beCommunitiesCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("thoughtUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("beCommunitiesUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("thoughtCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("beCommunitiesCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
   @@map("beYou")
