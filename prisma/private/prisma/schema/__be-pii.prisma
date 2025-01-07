@@ -37,7 +37,7 @@ model BeYou {
   lastCommunity       BeCommunity?              @relation("beYouPreferredCommunity", fields: [lastCommunityId], references: [id])
   lastCommunityId     String?             @db.ObjectId
 
-// e.g. [Can Baro Tobacco Shop, Gracia, Genoa, Italy]
+ // e.g. [Can Baro Tobacco Shop, Gracia, Genoa, Italy]
   movingFrom        ILocation[]?
   movingWithin      ILocation[]?
   movingTo          ILocation[]?
@@ -91,10 +91,10 @@ model BeCommunities {
   legalName         String
   entityType        EEntityType
   
-  fiscalResidencies ILocation?
-  legalResidencies  ILocation?
-  socialResidencies ILocation?
-  offices           ILocation?
+  fiscalResidencies ILocation[]?
+  legalResidencies  ILocation[]?
+  socialResidencies ILocation[]?
+  offices           ILocation[]?
   
   socialRegistries  ICompany[]?
 
@@ -411,17 +411,6 @@ model BeMailbox {
   @@map("beMailbox")
 }
 
-type IEmail {
-  title   String
-  from    String
-  to      String
-  cc      String
-  bcc     String
-  body    String
-  replyTo String
-  context String
-}
-
 // Your dating experience.
 // We're soul seeking.
 model BeCourtships {
@@ -482,7 +471,6 @@ model BeLetters {
 
   @@map("beLetters")
 }
-
 
 // Sales
 // We're selling.
@@ -572,4 +560,41 @@ model BeListens {
   communityCreatorId    String?             @db.ObjectId
 
   @@map("beListens")
+}
+
+type IEmail {
+  title   String
+  from    String
+  to      String
+  cc      String
+  bcc     String
+  body    String
+  replyTo String
+  context String
+}
+
+type ICompany {
+  name            String
+  legalName       String
+  legalAddress    ILocation
+  fiscalAddress   ILocation
+  offices         ILocation[]
+  socialAddresses ILocation[]
+  socialNumber    String
+  socialType      EEntityType
+  socialProfile   String // BeCommunities @id
+}
+
+enum EEntityType {
+  Sole-Personal
+  Sole-Propertor
+  LLC-Sole
+  LLC-Partnership
+  Corp-Subsidiary
+  Corp-Society
+  Corp-Non-profit
+  Corp-Cultural/Religious
+  Government
+  Military
+  International
 }
