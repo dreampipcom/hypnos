@@ -13,6 +13,7 @@ model BeYou {
   domiciles         ILocation?
   beAt              ILocation?
   movingTo          ILocation?
+  activeContracts   InvestContracts[]
 
   slug              String
   description       ILocaleString
