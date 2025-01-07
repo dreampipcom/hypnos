@@ -1,0 +1,94 @@
+// to-do: __phi.prisma
+// ---- @PRIVATE: Private Health Data. ----
+//
+// Health Log
+model BeHealth {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  heartRates        IHeartRates[]
+  motions           IMotion[]
+
+  workouts          DoMovements[]      @relation("beHealthWorkouts", fields: [workoutsIds], references: [id])
+  workoutsIds       String[]        @db.ObjectId
+
+  cardiograms       ICardiograms[]
+  vitalSigns        ISmartScales[]
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]            @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner             User?              @relation("thoughtUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId           String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("thoughtCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator           User?              @relation("thoughtUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId         String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("thoughtCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("beHealth")
+}
+
+type ISmartScales {
+  bodyMass        Float
+  bodyMassIndex   Float
+  unit            EWeightUnit
+  measurement     DateTime
+}
+
+type IHeartRates {
+  value                     Float
+  measurement               DateTime
+  motions                   String[]
+  workouts                  String[]
+}
+
+type ICardiograms {
+  measurement       DateTime
+
+  symptoms          String[]
+
+  classification    E7Classification
+  leads             ICardiogram[]
+}
+
+type ICardiogram {
+  lead      Float
+  leadOne   Float
+}
+
+type IMotion {
+  title         String
+  measurement   Float
+}
+
+enum E7Classification {
+  Terrible
+  Poor
+  BelowAverage
+  Average
+  AboveAverage
+  Good
+  Awesome
+}
+
+enum EUnit {
+  METRIC
+  IMPERIAL
+}
+
+enum EWeightUnit {
+  KILO
+  POUND
+}
+
