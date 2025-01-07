@@ -1,5 +1,5 @@
-// to-do: __phi.prisma
-// ---- @PRIVATE: Private Health Data. ----
+// to-do: __be-phi.prisma
+// ---- @PRIVATE: Be: Private Health Data. ----
 //
 // Health Log
 model BeHealth {

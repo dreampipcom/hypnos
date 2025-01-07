@@ -1,5 +1,5 @@
-// to-do: __pii.prisma
-// ---- @PRIVATE: Personal Data, Contacts, etc. ----
+// to-do: __be-pii.prisma
+// ---- @PRIVATE: Be: Personal Data, Contacts, etc. ----
 // 
 // Your private data
 model BeYou {
