@@ -1,8 +1,75 @@
 // to-do: __be-pii.prisma
 // ---- @PRIVATE: Be: Personal Data, Contacts, etc. ----
 // 
-// Your personal profile and customer data.
+// Your personal profile.
 model BeYou {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              String
+  legalFirstName    String?
+  legalLastName     String?
+  citizenships      ICountry[]?
+  fiscalResidencies ILocation?
+  legalResidencies  ILocation?
+  domiciles         ILocation?
+  beAt              ILocation?
+  movingTo          ILocation?
+
+  activeContracts   InvestContracts[]?
+  pendingContracts  InvestContracts[]?
+  finishedContracts InvestContracts[]?
+
+  // invest
+  fungibleWallets                     InvestWallets[]      @relation("beHumanFungibleWallets", fields: [fungibleWalletsIds], references: [id])
+  fungibleWalletsIds                  String[]        @db.ObjectId
+
+  nonFungibleWallets                  InvestWallets[]      @relation("beHumanNonFungibleWallets", fields: [nonFungibleWalletsIds], references: [id])
+  nonFungibleWalletsIds               String[]        @db.ObjectId
+
+
+  // portfolios
+  portfolios                     InvestPortfolio[]      @relation("beYouPortfolio", fields: [portfoliosIds], references: [id])
+  portfoliosIds                  String[]        @db.ObjectId
+
+  receivedLongs                InvestLongs[]      @relation("beYouReceivedLongs", fields: [receivedCareEulogiesIds], references: [id])
+  receivedLongsIds             String[]        @db.ObjectId
+
+  givenLongs                   InvestLongs[]      @relation("beYouGivenLongs", fields: [givenLongsIds], references: [id])
+  givenLongsIds                String[]        @db.ObjectId
+
+  receivedShorts                 InvestShorts[]      @relation("beYouReceivedShorts", fields: [receivedShortsIds], references: [id])
+  receivedShortsIds              String[]        @db.ObjectId
+
+  givenShorts                    InvestShorts[]      @relation("beYouGivenShorts", fields: [givenShortsIds], references: [id])
+  givenShortsIds                 String[]        @db.ObjectId
+  
+
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]            @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("thoughtUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("thoughtCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("thoughtUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("thoughtCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("beYou")
+}
+
+// Your org profile.
+model BeCommunities {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              String
   legalFirstName    String?
@@ -125,7 +192,7 @@ model BeCalendar {
   @@map("beCalendar")
 }
 
-// Contacts
+// Your friendships and customer data.
 model BeContact {
   emoji             String
   title             ILocaleString
@@ -345,7 +412,8 @@ type IEmail {
   context String
 }
 
-// Dating
+// Your dating experience.
+// We're soul seeking.
 model BeCourtships {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
@@ -374,7 +442,8 @@ model BeCourtships {
   @@map("beCourtships")
 }
 
-// User Messages
+// Messaging
+// We're chatting.
 // public/private/users1toM/groups1toM
 model BeLetters {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
@@ -404,7 +473,9 @@ model BeLetters {
   @@map("beLetters")
 }
 
+
 // Sales
+// We're selling.
 model BeDeals {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
@@ -434,6 +505,7 @@ model BeDeals {
 }
 
 // Legal Docs
+// We're invoincing.
 model WriteDocs {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString

@@ -32,7 +32,7 @@ model BeWithOthers {
   @@map("beWithOthers")
 }
 
-model BeCommunities {
+model BeSocialCommunities {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String
