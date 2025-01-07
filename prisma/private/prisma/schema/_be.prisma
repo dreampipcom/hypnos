@@ -12,7 +12,8 @@ model BeMailbox {
 
   aliases           String[]
 
-  authTokens        String[]
+  activeSessions    Session[]
+
   caldavs           String[]
   carddavs          String[]
   sambas            String[]
