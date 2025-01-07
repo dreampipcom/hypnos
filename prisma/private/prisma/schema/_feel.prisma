@@ -3,91 +3,7 @@
 // 
 // Feel
 // Public Moods
-model FeelLike {
-  id                String              @id @default(auto()) @map("_id") @db.ObjectId
-  name              ILocaleString
-  slug              String
-  description       ILocaleString
-
-  title             ILocaleString
-  body              ILocaleString
-
-  loggedOn          DateTime            @db.Date
-  loggedFor         DateTime[]          @db.Date
-  publishedOn       DateTime            @db.Date
-
-  userOwner         User?              @relation("moodUserOwner", fields: [userOwnerId], references: [id])
-  userOwnerId       String?             @db.ObjectId
-
-  communityOwner        Communities?             @relation("moodCommunityOwner", fields: [communityOwnerId], references: [id])
-  communityOwnerId      String?             @db.ObjectId
-
-  userCreator       User?              @relation("moodUserCreator", fields: [userCreatorId], references: [id])
-  userCreatorId     String?             @db.ObjectId
-
-  communityCreator      Communities?             @relation("moodCommunityCreator", fields: [communityCreatorId], references: [id])
-  communityCreatorId    String?             @db.ObjectId
-
-  @@map("feelLike")
-}
-
-model FeelDreams {
-  id                String              @id @default(auto()) @map("_id") @db.ObjectId
-  name              ILocaleString
-  slug              String
-  description       ILocaleString
-
-  title             ILocaleString
-  body              ILocaleString
-
-  loggedOn          DateTime            @db.Date
-  loggedFor         DateTime[]          @db.Date
-  publishedOn       DateTime            @db.Date
-
-  userOwner         User?              @relation("moodUserOwner", fields: [userOwnerId], references: [id])
-  userOwnerId       String?             @db.ObjectId
-
-  communityOwner        Communities?             @relation("moodCommunityOwner", fields: [communityOwnerId], references: [id])
-  communityOwnerId      String?             @db.ObjectId
-
-  userCreator       User?              @relation("moodUserCreator", fields: [userCreatorId], references: [id])
-  userCreatorId     String?             @db.ObjectId
-
-  communityCreator      Communities?             @relation("moodCommunityCreator", fields: [communityCreatorId], references: [id])
-  communityCreatorId    String?             @db.ObjectId
-
-  @@map("feelDreams")
-}
-
-model FeelConfessions {
-  id                String              @id @default(auto()) @map("_id") @db.ObjectId
-  name              ILocaleString
-  slug              String
-  description       ILocaleString
-
-  title             ILocaleString
-  body              ILocaleString
-
-  loggedOn          DateTime            @db.Date
-  loggedFor         DateTime[]          @db.Date
-  publishedOn       DateTime            @db.Date
-
-  userOwner         User?               @relation("moodUserOwner", fields: [userOwnerId], references: [id])
-  userOwnerId       String?             @db.ObjectId
-
-  communityOwner        Communities?    @relation("moodCommunityOwner", fields: [communityOwnerId], references: [id])
-  communityOwnerId      String?         @db.ObjectId
-
-  userCreator       User?               @relation("moodUserCreator", fields: [userCreatorId], references: [id])
-  userCreatorId     String?             @db.ObjectId
-
-  communityCreator      Communities?    @relation("moodCommunityCreator", fields: [communityCreatorId], references: [id])
-  communityCreatorId    String?         @db.ObjectId
-
-  @@map("confessions")
-}
-
-model FeelMoods {
+model FeelSharedMoods {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String
@@ -113,32 +29,4 @@ model FeelMoods {
   communityCreatorId    String?             @db.ObjectId
 
   @@map("feelMoods")
-}
-
-model FeelCravings {
-  id                String              @id @default(auto()) @map("_id") @db.ObjectId
-  name              ILocaleString
-  slug              String
-  description       ILocaleString
-
-  title             ILocaleString
-  body              ILocaleString
-
-  loggedOn          DateTime            @db.Date
-  loggedFor         DateTime[]          @db.Date
-  publishedOn       DateTime            @db.Date
-
-  userOwner         User?              @relation("moodUserOwner", fields: [userOwnerId], references: [id])
-  userOwnerId       String?             @db.ObjectId
-
-  communityOwner        Communities?             @relation("moodCommunityOwner", fields: [communityOwnerId], references: [id])
-  communityOwnerId      String?             @db.ObjectId
-
-  userCreator       User?              @relation("moodUserCreator", fields: [userCreatorId], references: [id])
-  userCreatorId     String?             @db.ObjectId
-
-  communityCreator      Communities?             @relation("moodCommunityCreator", fields: [communityCreatorId], references: [id])
-  communityCreatorId    String?             @db.ObjectId
-
-  @@map("feelCravings")
 }
