@@ -60,7 +60,7 @@ model FeelLike {
   @@map("feelLike")
 }
 
-// Did I dream last nihil?
+// 'Did I dream last nihil'?
 model FeelDreams {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
@@ -90,7 +90,7 @@ model FeelDreams {
 }
 
 
-// If I could improve me
+// If I could forgive myself,
 model FeelConfessions {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
@@ -148,7 +148,7 @@ model FeelMoods {
   @@map("feelMoods")
 }
 
-// Craving that something, or.
+// Craving that something, or?
 model FeelCravings {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString

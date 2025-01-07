@@ -505,7 +505,7 @@ model BeDeals {
 }
 
 // Legal Docs
-// We're invoincing.
+// We're invoicing.
 model WriteDocs {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
