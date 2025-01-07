@@ -2,7 +2,7 @@
 // ---- @PRIVATE: Do: with yourself? ----
 // 
 // Your To-Do PII meta companion.
-// Roles: Doer, Lead, Director.
+// Your business profile.
 model DoYou {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString

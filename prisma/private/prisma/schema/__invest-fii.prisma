@@ -3,6 +3,34 @@
 // ---- @PRIVATE: Place it: Private Financial Data. ----
 //
 // Your faith.
+// Portfolios
+model InvestPortfolios {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]            @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("thoughtUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("thoughtCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("thoughtUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("thoughtCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("investPortfolios")
+}
 // Asset: Long positions. +
 model InvestLongs {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
@@ -124,7 +152,6 @@ model InvestWallets {
 
   @@map("investWallets")
 }
-
 
 // Expenses. -
 model InvestExpenses {
