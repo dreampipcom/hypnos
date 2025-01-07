@@ -2344,7 +2344,7 @@ type ICardiograms {
   symptomsIds       String[]            @db.ObjectId
 
   classification    E7Classification
-  leads             ICardiogram
+  leads             ICardiogram[]
 }
 
 type ICardiogram {
