@@ -96,7 +96,7 @@ model BeCommunities {
   socialResidencies ILocation[]?
   offices           ILocation[]?
   
-  socialRegistries  ICompany[]?
+  socialRegistries  IRegisteredCompany[]?
 
   members                     BeYou[]      @relation("beCommunitiesMembers", fields: [membersIds], references: [id])
   membersIds                  String[]        @db.ObjectId
@@ -161,10 +161,25 @@ model BeEvent {
 
   title             ILocaleString
   body              ILocaleString
-
-  loggedOn          DateTime            @db.Date
-  loggedFor         DateTime[]          @db.Date
-  publishedOn       DateTime            @db.Date
+  
+  // .ics
+  start             DateTime            @db.Date
+  end               DateTime            @db.Date
+  tzid              String
+  tzname            String
+  stamp             String
+  freq              String
+  until             DateTime            @db.Date
+  sequence          Integer
+  summary           ILocaleString
+  location          String
+  organizer         String
+  attendee          String[]
+  attach            String
+  url               String
+  created           DateTime            @db.Date
+  status            String
+  published         DateTime            @db.Date
 
   userOwner         User?              @relation("actionUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
@@ -580,7 +595,7 @@ type ILegalData {
   photos  String[]
 }
 
-type ICompany {
+type IRegisteredCompany {
   name            String
   legalName       String
   legalAddress    ILocation
