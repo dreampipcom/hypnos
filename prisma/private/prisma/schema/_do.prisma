@@ -153,7 +153,7 @@ model DoRoutines {
   @@map("doRoutines")
 }
 
-// Priority Parsers: Difficulty
+// Priority Parsers: Difficulty: Take it easy? Full power?
 model DoDifficulties {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
@@ -182,7 +182,7 @@ model DoDifficulties {
   @@map("doDifficulties")
 }
 
-// Priority Parsers: Modes: Homeless, Married, With Children
+// Priority Parsers: Modes: Homeless, Married, With Children?
 model DoModes {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
