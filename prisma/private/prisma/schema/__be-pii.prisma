@@ -7,15 +7,15 @@ model BeYou {
   name              String
   legalFirstName    String?
   legalLastName     String?
-  citizenships      ICountry?
+  citizenships      ICountry[]?
   fiscalResidencies ILocation?
   legalResidencies  ILocation?
   domiciles         ILocation?
   beAt              ILocation?
   movingTo          ILocation?
-  activeContracts   InvestContracts[]
-  pendingContracts  InvestContracts[]
-  finishedContracts InvestContracts[]
+  activeContracts   InvestContracts[]?
+  pendingContracts  InvestContracts[]?
+  finishedContracts InvestContracts[]?
 
   slug              String
   description       ILocaleString
