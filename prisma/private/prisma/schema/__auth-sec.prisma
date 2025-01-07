@@ -130,6 +130,24 @@ model User {
   ownedIdeas            WriteIdeas[]          @relation("writeIdeasUserOwner")
   createdIdeas          WriteIdeas[]          @relation("writeIdeasUserCreator")
 
+  ownedPublications            WritePublications[]          @relation("writePublicationsUserOwner")
+  createdPublications          WritePublications[]          @relation("writePublicationsUserCreator")
+
+  ownedWits            WriteWits[]          @relation("writeWitsUserOwner")
+  createdWits          WriteWits[]          @relation("writeWitsUserCreator")
+
+  ownedCogitos            WriteCogitos[]          @relation("writeCogitosUserOwner")
+  createdCogitos          WriteCogitos[]          @relation("writeCogitosUserCreator")
+
+  ownedHopes            WriteHopes[]          @relation("writeHopesUserOwner")
+  createdHopes          WriteHopes[]          @relation("writeHopesUserCreator")
+
+  ownedOpinions            WriteOpinions[]          @relation("writeOpinionsUserOwner")
+  createdOpinions          WriteOpinions[]          @relation("writeOpinionsUserCreator")
+
+  ownedThreads            WriteThreads[]          @relation("writeThreadsUserOwner")
+  createdThreads          WriteThreads[]          @relation("writeThreadsUserCreator")
+
   ownedQuests           DoQuests[]          @relation("doQuestUserOwner")
   createdQuests         DoQuests[]          @relation("doQuestUserCreator")
 
@@ -188,8 +206,26 @@ model Communities {
   ownedDos              Dos[]          @relation("doDosCommunityOwner")
   createdDos            Dos[]          @relation("doDosCommunityCreator")
 
-  ownedIdeas           WriteIdeas[]          @relation("ideaCommunityOwner")
-  createdIdeas         WriteIdeas[]          @relation("writeIdeaCommunityCreator")
+  ownedIdeas            WriteIdeas[]          @relation("writeIdeasCommunityOwner")
+  createdIdeas          WriteIdeas[]          @relation("writeIdeasCommunityCreator")
+
+  ownedPublications            WritePublications[]          @relation("writePublicationsCommunityOwner")
+  createdPublications          WritePublications[]          @relation("writePublicationsCommunityCreator")
+
+  ownedWits            WriteWits[]          @relation("writeWitsCommunityOwner")
+  createdWits          WriteWits[]          @relation("writeWitsCommunityCreator")
+
+  ownedCogitos            WriteCogitos[]          @relation("writeCogitosCommunityOwner")
+  createdCogitos          WriteCogitos[]          @relation("writeCogitosCommunityCreator")
+
+  ownedHopes            WriteHopes[]          @relation("writeHopesCommunityOwner")
+  createdHopes          WriteHopes[]          @relation("writeHopesCommunityCreator")
+
+  ownedOpinions            WriteOpinions[]          @relation("writeOpinionsCommunityOwner")
+  createdOpinions          WriteOpinions[]          @relation("writeOpinionsCommunityCreator")
+
+  ownedThreads            WriteThreads[]          @relation("writeThreadsCommunityOwner")
+  createdThreads          WriteThreads[]          @relation("writeThreadsCommunityCreator")
 
   ownedQuests           DoQuests[]          @relation("questCommunityOwner")
   createdQuests         DoQuests[]          @relation("doQuestCommunityCreator")
