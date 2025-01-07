@@ -1468,6 +1468,7 @@ model BeCourtships {
   @@map("beCourtships")
 }
 
+// @dpip.cc
 model BeMailbox {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
