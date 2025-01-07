@@ -4,66 +4,6 @@
 // Be
 // @dpip.cc
 // main handle, aliases, creds? api? back auth?
-model BeMailbox {
-  id                String              @id @default(auto()) @map("_id") @db.ObjectId
-  name              ILocaleString
-  slug              String
-  description       ILocaleString
-
-  aliases           String[]
-
-  activeSession     Session
-  mailActiveToken   String
-
-  caldavs                 String[]
-  carddavs                String[]
-  sambas                  String[]
-
-  emailsSent              IEmail[]
-  emailsReceived          IEmail[]
-  emailsDrafts            IEmail[]
-
-  transactionalEmails     IEmail[]
-  importantEmails         IEmail[]
-  doEmails                IEmail[]
-  beEmails                IEmail[]
-  feelEmails              IEmail[]
-  writeEmails             IEmail[]
-  makeEmails              IEmail[]
-  investEmails            IEmail[]
-
-  title             ILocaleString
-  body              ILocaleString
-
-  loggedOn          DateTime            @db.Date
-  loggedFor         DateTime[]            @db.Date
-  publishedOn       DateTime            @db.Date
-
-  userOwner         User?              @relation("thoughtUserOwner", fields: [userOwnerId], references: [id])
-  userOwnerId       String?             @db.ObjectId
-
-  communityOwner        Communities?             @relation("thoughtCommunityOwner", fields: [communityOwnerId], references: [id])
-  communityOwnerId      String?             @db.ObjectId
-
-  userCreator       User?              @relation("thoughtUserCreator", fields: [userCreatorId], references: [id])
-  userCreatorId     String?             @db.ObjectId
-
-  communityCreator      Communities?             @relation("thoughtCommunityCreator", fields: [communityCreatorId], references: [id])
-  communityCreatorId    String?             @db.ObjectId
-
-  @@map("beMailbox")
-}
-
-type IEmail {
-  title   String
-  from    String
-  to      String
-  cc      String
-  bcc     String
-  body    String
-  replyTo String
-  context String
-}
 
 // Interests
 // public/private/reusable/fixed-options/clean up eventually
