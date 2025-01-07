@@ -42,9 +42,19 @@ model InvestPositions {
   title             ILocaleString
   body              ILocaleString
 
-  loggedOn          DateTime            @db.Date
-  loggedFor         DateTime[]            @db.Date
+  purchaseValue     Float
+  settledValue      Float
+  fees              Float
+  taxes             Float
+  currency          ECurrency
+
+  placedOn          DateTime            @db.Date
+  issuedOn          DateTime            @db.Date
+  settledOn         DateTime            @db.Date
   publishedOn       DateTime            @db.Date
+
+  wallet            InvestWallets              @relation("investWalletPositions", fields: [walletId], references: [id])
+  walletId          String?             @db.ObjectId
 
   relatedQuests                     DoQuests[]      @relation("doQuestPositions", fields: [relatedQuestsIds], references: [id])
   relatedQuestsIds                  String[]        @db.ObjectId
@@ -74,8 +84,6 @@ model InvestTypes {
   title             ILocaleString
   body              ILocaleString
 
-  loggedOn          DateTime            @db.Date
-  loggedFor         DateTime[]            @db.Date
   publishedOn       DateTime            @db.Date
 
   userOwner         User?              @relation("investTypesUserOwner", fields: [userOwnerId], references: [id])
@@ -103,15 +111,8 @@ model InvestWallets {
   title             ILocaleString
   body              ILocaleString
 
-  placedOn          DateTime            @db.Date
-  issuedOn          DateTime            @db.Date
-  settledOn         DateTime            @db.Date
-
-  ticker            DoQuests?           @relation("ticker", fields: [tickerId], references: [id])
-  tickerId          String?             @db.ObjectId
-
-  purchaseValue     Float
-  settledValue      Float
+  positions                     InvestPositions[]      @relation("investWalletPositions", fields: [positionsIds], references: [id])
+  positionsIds                  String[]        @db.ObjectId
 
   userOwner         User?              @relation("investWalletsUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
