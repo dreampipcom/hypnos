@@ -3,6 +3,8 @@
 // 
 // Do
 // Tasks
+
+// ::Ensure shared Bees::
 model Dos {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
