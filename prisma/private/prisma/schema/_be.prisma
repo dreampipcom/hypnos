@@ -4,7 +4,7 @@
 // Be
 // @dpip.cc
 // main handle, aliases, creds? api? back auth?
-// Internal Profile
+// Internal Social Profile
 model BeWithOthers {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
