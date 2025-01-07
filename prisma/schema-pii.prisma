@@ -1,0 +1,11 @@
+// to-do: schema-pii.prisma
+generator client {
+  provider = "prisma-client-js"
+  output = "../node_modules/@dreampipcom/db-pii/prisma-client"
+}
+
+datasource db {
+  provider        = "mongodb"
+  url             = env("PRISMA_PII_URI")
+  directUrl       = env("MONGODB_PII_URI")
+}

@@ -1296,7 +1296,7 @@ model BeYou {
   @@map("beYou")
 }
 
-// apple health compatible, shard per user, (WhoHealth document, series as arrays))
+// Private Health Data
 model BeHealth {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
@@ -1475,6 +1475,7 @@ model BeHumans {
   @@map("beHumans")
 }
 
+// Friendships
 model BeRelations {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
@@ -1503,6 +1504,7 @@ model BeRelations {
   @@map("beRelations")
 }
 
+// Sales
 model BeDeals {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
@@ -1531,7 +1533,7 @@ model BeDeals {
   @@map("beDeals")
 }
 
-// Google Calendar
+// Event / Calendar
 model BeOccasion {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
@@ -1588,7 +1590,7 @@ model BeCalendar {
   @@map("beCalendar")
 }
 
-// Tinder
+// Dating
 model BeCourtships {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
@@ -1647,6 +1649,7 @@ model BeMailbox {
   @@map("beMailbox")
 }
 
+// Messages
 model BeLetters {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
@@ -1675,6 +1678,7 @@ model BeLetters {
   @@map("beLetters")
 }
 
+// Interests
 model BeTopics {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
@@ -1703,6 +1707,7 @@ model BeTopics {
   @@map("beTopics")
 }
 
+// Fantasy
 model BeCharacters {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
@@ -1731,6 +1736,7 @@ model BeCharacters {
   @@map("beCharacters")
 }
 
+// Titles
 model BeRoles {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
@@ -1759,6 +1765,7 @@ model BeRoles {
   @@map("beRoles")
 }
 
+// Edibles
 model MakeRecipes {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
@@ -1787,6 +1794,7 @@ model MakeRecipes {
   @@map("makeRecipes")
 }
 
+// Geography or ambients
 model MakeSpaces {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
@@ -1815,6 +1823,7 @@ model MakeSpaces {
   @@map("makeSpaces")
 }
 
+// Groceries or shopping lists
 model MakeProcurements {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
@@ -1843,6 +1852,7 @@ model MakeProcurements {
   @@map("makeProcurements")
 }
 
+// Catalogues
 model MakeThings {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
@@ -1871,6 +1881,7 @@ model MakeThings {
   @@map("makeThings")
 }
 
+// Models
 model MakeInventories {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
@@ -1899,6 +1910,7 @@ model MakeInventories {
   @@map("makeInventories")
 }
 
+// Stashes
 model MakeItems {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
@@ -1927,6 +1939,7 @@ model MakeItems {
   @@map("makeItems")
 }
 
+// Listings
 model MakeListings {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
@@ -1955,6 +1968,7 @@ model MakeListings {
   @@map("makeListings")
 }
 
+// Things purpose
 model MakeFunction {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
@@ -2136,6 +2150,9 @@ model CareTypes {
   @@map("careTypes")
 }
 
+
+
+// Time view
 model TimeDays {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
