@@ -75,7 +75,7 @@ model BePublic {
   @@map("bePublic")
 }
 
-model BePublicCommunities {
+model PublicBeCommunities {
   // admin
   // communities
   emoji             String
