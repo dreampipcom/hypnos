@@ -14,6 +14,7 @@ datasource db {
 // ---- Be: who are we? ----
 //
 // Profiles
+// public visible profiles
 model BeHumans {
   // @PUBLIC: IF MADE PUBLIC
   // admin
@@ -155,6 +156,7 @@ model BeHumans {
 }
 
 // @dpip.cc
+// main handle, aliases, creds? api? back auth?
 model BeMailbox {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
@@ -185,6 +187,7 @@ model BeMailbox {
 }
 
 // Messages
+// public/private/users1toM/groups1toM
 model BeLetters {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
@@ -214,6 +217,7 @@ model BeLetters {
 }
 
 // Interests
+// public/private/reusable/fixed-options/clean up eventually
 model BeTopics {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
@@ -243,6 +247,7 @@ model BeTopics {
 }
 
 // Fantasy
+// public/private/re-usable/game/pip/goal
 model BeCharacters {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
