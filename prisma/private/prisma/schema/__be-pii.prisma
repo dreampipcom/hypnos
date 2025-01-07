@@ -12,12 +12,12 @@ model BeYou {
   legalResidencies  ILocation?
   domiciles         ILocation?
   beAt              ILocation?
-  
+
   // radius graph: 
   // r0 (hour movements) < 
-  // r1 (neighbourhood), < 
-  // r2 (city) < 
-  // r3 (country)
+  // r1 (h3/neighbourhood), < 
+  // r2 (h3/city) < 
+  // r3 (h3/country)
   // geofences.
 
   movingFrom        ILocation[]?
