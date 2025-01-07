@@ -34,35 +34,6 @@ model Dos {
   @@map("dos")
 }
 
-// Roles
-model DoRoles {
-  id                String              @id @default(auto()) @map("_id") @db.ObjectId
-  name              ILocaleString
-  slug              String
-  description       ILocaleString
-
-  title             ILocaleString
-  body              ILocaleString
-
-  loggedOn          DateTime            @db.Date
-  loggedFor         DateTime[]          @db.Date
-  publishedOn       DateTime            @db.Date
-
-  userOwner         User?              @relation("actionUserOwner", fields: [userOwnerId], references: [id])
-  userOwnerId       String?             @db.ObjectId
-
-  communityOwner        Communities?             @relation("actionCommunityOwner", fields: [communityOwnerId], references: [id])
-  communityOwnerId      String?             @db.ObjectId
-
-  userCreator       User?              @relation("actionUserCreator", fields: [userCreatorId], references: [id])
-  userCreatorId     String?             @db.ObjectId
-
-  communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
-  communityCreatorId    String?             @db.ObjectId
-
-  @@map("beRoles")
-}
-
 // Task Templates
 model DoTypes {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
@@ -92,9 +63,9 @@ model DoTypes {
   @@map("doTypes")
 }
 
-// Tasks Nexus
-// What context am I in?
-// Priority Parsers: Context
+// Nexus
+//
+// Priority Parsers: Context: Writing code and buying potatoes?
 model DoContexts {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
@@ -246,6 +217,7 @@ model DoQuests {
   @@map("doQuests")
 }
 
+// Projects Templates
 model DoQuestsTypes {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString

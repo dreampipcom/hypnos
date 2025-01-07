@@ -2,6 +2,36 @@
 // ---- @PRIVATE: Do: with yourself? ----
 // 
 // Your To-Do PII meta companion.
+// Roles: Doer, Lead, Director.
+model DoYou {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+  role 							ERole
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]          @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("actionUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("actionCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("actionUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("doYou")
+}
+
 model DoSquads {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
@@ -27,7 +57,7 @@ model DoSquads {
   communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("doCommunities")
+  @@map("doSquads")
 }
 
 model DoDirectories {
@@ -55,5 +85,5 @@ model DoDirectories {
   communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("doCommunities")
+  @@map("doDirectories")
 }
