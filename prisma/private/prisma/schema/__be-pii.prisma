@@ -125,7 +125,7 @@ model BeCalendar {
   @@map("beCalendar")
 }
 
-// Social Profiles
+// Contacts
 model BeContact {
   emoji             String
   title             ILocaleString
