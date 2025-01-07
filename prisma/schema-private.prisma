@@ -435,6 +435,34 @@ model FeelLike {
   @@map("feelLike")
 }
 
+model FeelSymptoms {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]          @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("moodUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("moodCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("moodUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("moodCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("feelLike")
+}
+
 model FeelDreams {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
@@ -1278,18 +1306,27 @@ model BeHealth {
   title             ILocaleString
   body              ILocaleString
 
+  heartRates        IHeartRates[]
+  motions           IMotions[]
+
+  workouts          DoMovements[]      @relation("beHealthWorkouts", fields: [workoutsIds], references: [id])
+  workoutsIds       String[]        @db.ObjectId
+
+  cardiograms       ICardiograms[]
+  vitalSigns        ISmartScales[]
+
   loggedOn          DateTime            @db.Date
   loggedFor         DateTime[]            @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         User?              @relation("thoughtUserOwner", fields: [userOwnerId], references: [id])
-  userOwnerId       String?             @db.ObjectId
+  userOwner             User?              @relation("thoughtUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId           String?             @db.ObjectId
 
   communityOwner        Communities?             @relation("thoughtCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("thoughtUserCreator", fields: [userCreatorId], references: [id])
-  userCreatorId     String?             @db.ObjectId
+  userCreator           User?              @relation("thoughtUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId         String?             @db.ObjectId
 
   communityCreator      Communities?             @relation("thoughtCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
@@ -2285,6 +2322,55 @@ type ILocaleString {
   uk        String?
 }
 
+type ISmartScales {
+  bodyMass        Float
+  bodyMassIndex   Float
+  unit            EWeightUnit
+  measurement     DateTime
+}
+
+type IHeartRates {
+  value                     Float
+  measurement               DateTime
+  motions                   String[]
+  workouts                  DoMovements[]       @relation("heartRatesWorkouts", fields: [workoutsIds], references: [id])
+  workoutsIds               String[]            @db.ObjectId
+}
+
+type ICardiograms {
+  measurement       DateTime
+
+  symptoms          FeelSymptoms[]       @relation("cardiogramsSymptoms", fields: [symptomsIds], references: [id])
+  symptomsIds       String[]            @db.ObjectId
+
+  classification    E7Classification
+  leads             ICardiogram
+}
+
+type ICardiogram {
+  lead      Float
+  leadOne   Float
+}
+
+enum E7Classification {
+  Terrible
+  Poor
+  Below Average
+  Average
+  Above Average
+  Good
+  Awesome
+}
+
+enum EUnit {
+  METRIC
+  IMPERIAL
+}
+
+enum EWeightUnit {
+  KILO
+  POUND
+}
 
 enum ERating {
   ZERO
