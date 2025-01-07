@@ -184,7 +184,7 @@ model InvestIncomes {
   @@map("investIncomes")
 }
 
-// Subscriptions
+// Bonafides
 model InvestContracts {
   id                      String              @id @default(auto()) @map("_id") @db.ObjectId
   name                    ILocaleString
