@@ -1268,6 +1268,7 @@ model BeYou {
   @@map("beYou")
 }
 
+// apple health compatible, shard per user, (WhoHealth document, series as arrays))
 model BeHealth {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
@@ -1465,6 +1466,35 @@ model BeCourtships {
   communityCreatorId    String?             @db.ObjectId
 
   @@map("beCourtships")
+}
+
+model BeMailbox {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+  aliases           String[]
+
+  title             ILocaleString
+  body              ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]            @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("thoughtUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("thoughtCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("thoughtUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("thoughtCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("beMailbox")
 }
 
 model BeLetters {
