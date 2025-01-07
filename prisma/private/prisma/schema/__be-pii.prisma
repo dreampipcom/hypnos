@@ -104,22 +104,22 @@ model BeCommunities {
   mailboxes                     BeMailboxes[]      @relation("beCommunitiesMailboxes", fields: [mailboxesIds], references: [id])
   mailboxesIds                  String[]        @db.ObjectId
 
-  contactProfiles                     BeContacts[]      @relation("beYouContactProfiles", fields: [contactProfilesIds], references: [id])
+  contactProfiles                     BeContacts[]      @relation("beCommunitiesContactProfiles", fields: [contactProfilesIds], references: [id])
   contactProfilesIds                  String[]        @db.ObjectId
   
-  lastContactProfile       BeContacts?              @relation("beYouLastContactProfile", fields: [lastContactProfileId], references: [id])
+  lastContactProfile       BeContacts?              @relation("beCommunitiesLastContactProfile", fields: [lastContactProfileId], references: [id])
   lastContactProfileId     String?             @db.ObjectId
 
-  preferredContactProfile       BeContacts?              @relation("beYouPreferredContactProfile", fields: [preferredContactProfileId], references: [id])
+  preferredContactProfile       BeContacts?              @relation("beCommunitiesPreferredContactProfile", fields: [preferredContactProfileId], references: [id])
   preferredContactProfileId     String?             @db.ObjectId
 
-  activeContracts                     InvestContracts[]      @relation("beYouActiveContracts", fields: [activeContractsIds], references: [id])
+  activeContracts                     InvestContracts[]      @relation("beCommunitiesActiveContracts", fields: [activeContractsIds], references: [id])
   activeContractsIds                  String[]        @db.ObjectId
 
-  pendingContracts                     InvestContracts[]      @relation("beYouPendingContracts", fields: [pendingContractsIds], references: [id])
+  pendingContracts                     InvestContracts[]      @relation("beCommunitiesPendingContracts", fields: [pendingContractsIds], references: [id])
   pendingContractsIds                  String[]        @db.ObjectId
 
-  finishedContracts                     InvestContracts[]      @relation("beYouFinishedContracts", fields: [finishedContractsIds], references: [id])
+  finishedContracts                     InvestContracts[]      @relation("beCommunitiesFinishedContracts", fields: [finishedContractsIds], references: [id])
   finishedContractsIds                  String[]        @db.ObjectId
 
   // invest
