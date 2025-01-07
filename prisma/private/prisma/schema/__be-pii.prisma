@@ -126,7 +126,7 @@ model BeCalendar {
 }
 
 // Social Profiles
-model BeSocial {
+model BeContact {
   emoji             String
   title             ILocaleString
   body              ILocaleString
