@@ -12,7 +12,20 @@ model BeYou {
   legalResidencies  ILocation?
   domiciles         ILocation?
   beAt              ILocation?
-  movingTo          ILocation?
+  
+  // radius graph: 
+  // r0 (hour movements) < 
+  // r1 (neighbourhood), < 
+  // r2 (city) < 
+  // r3 (country)
+  // geofences.
+
+  movingFrom        ILocation[]?
+
+  // predictions (latest movements, calendar movements, incident movements) 
+  // or intentions
+
+  movingTo          ILocation[]?
 
   activeContracts   InvestContracts[]?
   pendingContracts  InvestContracts[]?
