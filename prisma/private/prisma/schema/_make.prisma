@@ -176,7 +176,7 @@ model MakeItems {
   @@map("makeItems")
 }
 
-// Listings
+// Listing (Things, Occasions, Events). Time or space.
 model MakeListings {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
