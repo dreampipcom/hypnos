@@ -42,16 +42,18 @@ model BeYou {
   movingWithin      ILocation[]?
   movingTo          ILocation[]?
 
-  activeContracts   InvestContracts[]?
-  pendingContracts  InvestContracts[]?
-  finishedContracts InvestContracts[]?
+  activeContracts                     InvestContracts[]      @relation("beYouActiveContracts", fields: [activeContractsIds], references: [id])
+  activeContractsIds                  String[]        @db.ObjectId
+
+  pendingContracts                     InvestContracts[]      @relation("beYouActiveContracts", fields: [pendingContractsIds], references: [id])
+  pendingContractsIds                  String[]        @db.ObjectId
+
+  finishedContracts                     InvestContracts[]      @relation("beYouActiveContracts", fields: [finishedContractsIds], references: [id])
+  finishedContractsIds                  String[]        @db.ObjectId
 
   // invest
-  fungibleWallets                     InvestWallets[]      @relation("beHumanFungibleWallets", fields: [fungibleWalletsIds], references: [id])
-  fungibleWalletsIds                  String[]        @db.ObjectId
-
-  nonFungibleWallets                  InvestWallets[]      @relation("beHumanNonFungibleWallets", fields: [nonFungibleWalletsIds], references: [id])
-  nonFungibleWalletsIds               String[]        @db.ObjectId
+  wallets                     InvestWallets[]      @relation("beYouWallets", fields: [walletsIds], references: [id])
+  walletsIds                  String[]        @db.ObjectId
 
   // portfolios
   portfolios                     InvestPortfolio[]      @relation("beYouPortfolio", fields: [portfoliosIds], references: [id])
@@ -79,6 +81,11 @@ model BeYou {
 model BeCommunities {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              String
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
   handle            String
 
   legalName         String
@@ -94,32 +101,34 @@ model BeCommunities {
   members                     BeYou[]      @relation("beCommunitiesMembers", fields: [membersIds], references: [id])
   membersIds                  String[]        @db.ObjectId
 
-  activeContracts   InvestContracts[]?
-  pendingContracts  InvestContracts[]?
-  finishedContracts InvestContracts[]?
+  contactProfiles                     BeContacts[]      @relation("beYouContactProfiles", fields: [contactProfilesIds], references: [id])
+  contactProfilesIds                  String[]        @db.ObjectId
+  
+  lastContactProfile       BeContact?              @relation("beYouPreferredContactProfile", fields: [lastContactProfileId], references: [id])
+  lastContactProfileId     String?             @db.ObjectId
 
+  preferredContactProfile       BeContact?              @relation("beYouPreferredContactProfile", fields: [preferredContactProfileId], references: [id])
+  preferredContactProfileId     String?             @db.ObjectId
+
+  activeContracts                     InvestContracts[]      @relation("beYouActiveContracts", fields: [activeContractsIds], references: [id])
+  activeContractsIds                  String[]        @db.ObjectId
+
+  pendingContracts                     InvestContracts[]      @relation("beYouActiveContracts", fields: [pendingContractsIds], references: [id])
+  pendingContractsIds                  String[]        @db.ObjectId
+
+  finishedContracts                     InvestContracts[]      @relation("beYouActiveContracts", fields: [finishedContractsIds], references: [id])
+  finishedContractsIds                  String[]        @db.ObjectId
 
   // invest
-  fungibleWallets                     InvestWallets[]      @relation("beHumanFungibleWallets", fields: [fungibleWalletsIds], references: [id])
-  fungibleWalletsIds                  String[]        @db.ObjectId
-
-  nonFungibleWallets                  InvestWallets[]      @relation("beHumanNonFungibleWallets", fields: [nonFungibleWalletsIds], references: [id])
-  nonFungibleWalletsIds               String[]        @db.ObjectId
-
+  wallets                     InvestWallets[]      @relation("beCommunitiesWallets", fields: [walletsIds], references: [id])
+  walletsIds                  String[]        @db.ObjectId
 
   // portfolios
   portfolios                     InvestPortfolio[]      @relation("beCommunitiesPortfolio", fields: [portfoliosIds], references: [id])
   portfoliosIds                  String[]        @db.ObjectId
 
-  positions                InvestLongs[]      @relation("beCommunitiesReceivedLongs", fields: [receivedCareEulogiesIds], references: [id])
+  positions                InvestLongs[]      @relation("beCommunitiesPositions", fields: [receivedCareEulogiesIds], references: [id])
   positionsIds             String[]        @db.ObjectId
-  
-
-  slug              String
-  description       ILocaleString
-
-  title             ILocaleString
-  body              ILocaleString
 
   loggedOn          DateTime            @db.Date
   loggedFor         DateTime[]            @db.Date
