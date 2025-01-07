@@ -148,6 +148,15 @@ model BeHumans {
 
   publicPortfolios  InvestPortfolios[]
 
+  givenLongs             InvestLongs[]      @relation("beHumanGivenLongs", fields: [receivedLongsIds], references: [id])
+  receivedLongsIds             String[]        @db.ObjectId
+
+  receivedLongs          InvestLongs[]      @relation("beHumanReceivedLongs", fields: [receivedLongsIds], references: [id])
+  receivedLongsIds             String[]        @db.ObjectId
+
+  givenShorts            InvestShorts[]      @relation("beHumanGivenShorts", fields: [receivedShortsIds], references: [id])
+  receivedShortsIds              String[]        @db.ObjectId
+
 
   // courtship
   likedTopics                     BeTopics[]      @relation("beHumanLikedTopics", fields: [likedTopicsIds], references: [id])
