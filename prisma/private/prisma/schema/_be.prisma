@@ -15,10 +15,22 @@ model BeMailbox {
   activeSession     Session
   mailActiveToken   String
 
-  caldavs           String[]
-  carddavs          String[]
-  sambas            String[]
-  emails            IEmail[]
+  caldavs                 String[]
+  carddavs                String[]
+  sambas                  String[]
+
+  emailsSent              IEmail[]
+  emailsReceived          IEmail[]
+  emailsDrafts            IEmail[]
+
+  transactionalEmails     IEmail[]
+  importantEmails         IEmail[]
+  doEmails                IEmail[]
+  beEmails                IEmail[]
+  feelEmails              IEmail[]
+  writeEmails             IEmail[]
+  makeEmails              IEmail[]
+  investEmails            IEmail[]
 
   title             ILocaleString
   body              ILocaleString
@@ -50,6 +62,7 @@ type IEmail {
   bcc     String
   body    String
   replyTo String
+  context String
 }
 
 // Interests
