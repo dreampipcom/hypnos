@@ -9,7 +9,13 @@ model BeMailbox {
   name              ILocaleString
   slug              String
   description       ILocaleString
+
   aliases           String[]
+
+  authTokens        String[]
+  caldavs           String[]
+  carddavs          String[]
+  samba             String[]
 
   title             ILocaleString
   body              ILocaleString
