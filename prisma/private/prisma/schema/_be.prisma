@@ -15,7 +15,7 @@ model BeMailbox {
   authTokens        String[]
   caldavs           String[]
   carddavs          String[]
-  samba             String[]
+  sambas            String[]
 
   title             ILocaleString
   body              ILocaleString
