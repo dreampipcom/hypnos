@@ -1,8 +1,8 @@
-// to-do: schema-be.prisma
-// ---- @INT Be: who are we? ----
-//
-// Profiles
-// public visible profiles
+// to-do: _be.prisma
+// ---- @INT: Be: I am. ----
+// 
+// Be
+// Contacts
 model BeHumans {
   // @PUBLIC: IF MADE PUBLIC
   // admin

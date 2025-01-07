@@ -1,4 +1,8 @@
-// to-do: schema-invest.prisma
+// to-do: _invest.prisma
+// ---- @INT: Invest: place it. ----
+// 
+// Invest
+// Karunas
 model InvestCareEulogies {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString

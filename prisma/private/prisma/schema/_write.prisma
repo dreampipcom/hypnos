@@ -1,5 +1,6 @@
-// to-do: schema-write.prisma
-// ---- Write: Blogging ----
+// to-do: _do.prisma
+// ---- @INT: Write: just do it. ----
+// 
 // Wernicke, "vem cá véi" -- the hdgehg.mod@regroup
 // Organize
 model WriteIdeas {

@@ -1,7 +1,8 @@
-// to-do: schema-do.prisma
-// ---- Do: let's do it. ----
+// to-do: _do.prisma
+// ---- @INT: Do: just do it. ----
 // 
-// Actions
+// Do
+// Tasks
 model Dos {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString

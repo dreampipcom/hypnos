@@ -1,4 +1,7 @@
-// to-do: schema-views.prisma
+// to-do: _view.prisma
+// ---- @INT: View: UX. ----
+// 
+// View
 // Time view
 model TimeDays {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId

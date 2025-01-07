@@ -1,5 +1,8 @@
-// to-do: schema-make.prisma
-// Edibles
+// to-do: _make.prisma
+// ---- @INT: Make: a formula. ----
+// 
+// Make
+// Recipes
 model MakeRecipes {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString

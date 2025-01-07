@@ -1,8 +1,8 @@
-// to-do: schema-feel.prisma
-// ---- Feel: what's happening? ----
+// to-do: _feel.prisma
+// ---- @INT: Feel: u k, g? ----
 // 
-// Log
-
+// Feel
+// Public Moods
 model FeelLike {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
