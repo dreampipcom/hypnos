@@ -3,7 +3,7 @@ name: hypnos::deploy_gcp_prod
 on:
   push:
     branches:
-      - main
+      - gcp
 
 # on:
 #   pull_request:
