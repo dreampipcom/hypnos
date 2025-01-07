@@ -101,6 +101,9 @@ model BeCommunities {
   members                     BeYou[]      @relation("beCommunitiesMembers", fields: [membersIds], references: [id])
   membersIds                  String[]        @db.ObjectId
 
+  mailboxes                     BeMailboxes[]      @relation("beCommunitiesMailboxes", fields: [mailboxesIds], references: [id])
+  mailboxesIds                  String[]        @db.ObjectId
+
   contactProfiles                     BeContacts[]      @relation("beYouContactProfiles", fields: [contactProfilesIds], references: [id])
   contactProfilesIds                  String[]        @db.ObjectId
   
