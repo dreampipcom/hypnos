@@ -125,12 +125,8 @@ model BeCalendar {
   @@map("beCalendar")
 }
 
-// Friendships
-// Contacts
-model BeHumans {
-  // @PUBLIC: IF MADE PUBLIC
-  // admin
-  // communities
+// Social Profiles
+model BeSocial {
   emoji             String
   title             ILocaleString
   body              ILocaleString
@@ -146,16 +142,17 @@ model BeHumans {
   albumsVideos      String[]
   wallVideos        String[]
 
-  publicPortfolios  InvestPortfolios[]
+  portfolios             InvestPortfolios[]      @relation("beHumanPortfolios", fields: [portfoliosIds], references: [id])
+  portfoliosIds             String[]        @db.ObjectId
 
-  givenLongs             InvestLongs[]      @relation("beHumanGivenLongs", fields: [receivedLongsIds], references: [id])
-  receivedLongsIds             String[]        @db.ObjectId
+  givenLongs             InvestLongs[]      @relation("beHumanGivenLongs", fields: [givenLongsIds], references: [id])
+  givenLongsIds             String[]        @db.ObjectId
 
   receivedLongs          InvestLongs[]      @relation("beHumanReceivedLongs", fields: [receivedLongsIds], references: [id])
   receivedLongsIds             String[]        @db.ObjectId
 
-  givenShorts            InvestShorts[]      @relation("beHumanGivenShorts", fields: [receivedShortsIds], references: [id])
-  receivedShortsIds              String[]        @db.ObjectId
+  givenShorts            InvestShorts[]      @relation("beHumanGivenShorts", fields: [givenShortsIds], references: [id])
+  givenShortsIds              String[]        @db.ObjectId
 
 
   // courtship
