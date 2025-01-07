@@ -19,13 +19,20 @@ model BeYou {
   // r2 (h3/city) < 
   // r3 (h3/country)
   // geofences.
-
-  movingFrom        ILocation[]?
-
   // predictions (latest movements, calendar movements, incident movements) 
-  // or intentions
+  // or intentions: procurements, events
 
+// e.g. [Can Baro Tobacco Shop, Gracia, Genoa, Italy]
+  movingFrom        ILocation[]?
+// e.g. [My Home in Barcelona, Can Baro, Barcelona, Spain]
+  movingWithin      ILocation[]?
+// e.g. [Can Baro Church, Gracia, New York for Thanksgiving, United States]
   movingTo          ILocation[]?
+
+// Just curious with a fuzzy match approach leveraging these 
+// 3x3 vectors as a parameter for other data streams 
+// (music, songs, cultural reprimands, reminders of local customs and norms, 
+// prepare to travel, etc).
 
   activeContracts   InvestContracts[]?
   pendingContracts  InvestContracts[]?
