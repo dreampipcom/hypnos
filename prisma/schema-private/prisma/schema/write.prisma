@@ -1,15 +1,4 @@
 // to-do: schema-write.prisma
-generator client {
-  provider = "prisma-client-js"
-  output = "../node_modules/@dreampipcom/db-write/prisma-client"
-}
-
-datasource db {
-  provider        = "mongodb"
-  url             = env("PRISMA_WRITE_URI")
-  directUrl       = env("MONGODB_WRITE_URI")
-}
-
 // ---- Write: Blogging ----
 // Wernicke, "vem cá véi" -- the hdgehg.mod@regroup
 // Organize

@@ -13,7 +13,7 @@ model Investments {
   issuedOn          DateTime            @db.Date
   settledOn         DateTime            @db.Date
 
-  ticker            Projects?           @relation("ticker", fields: [tickerId], references: [id])
+  ticker            DoQuests?           @relation("ticker", fields: [tickerId], references: [id])
   tickerId          String?             @db.ObjectId
 
   purchaseValue     Float
@@ -47,7 +47,7 @@ model InvestWallets {
   issuedOn          DateTime            @db.Date
   settledOn         DateTime            @db.Date
 
-  ticker            Projects?           @relation("ticker", fields: [tickerId], references: [id])
+  ticker            DoQuests?           @relation("ticker", fields: [tickerId], references: [id])
   tickerId          String?             @db.ObjectId
 
   purchaseValue     Float

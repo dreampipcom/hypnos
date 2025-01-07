@@ -1,5 +1,5 @@
 // to-do: schema-invest.prisma
-model InvestCareEulogy {
+model InvestCareEulogies {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String
@@ -27,7 +27,7 @@ model InvestCareEulogy {
   @@map("investCareEulogy")
 }
 
-model InvestCareImprovementPlan {
+model InvestCareImprovementPlans {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String

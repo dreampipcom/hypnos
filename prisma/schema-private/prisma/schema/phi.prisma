@@ -10,7 +10,7 @@ model BeHealth {
   body              ILocaleString
 
   heartRates        IHeartRates[]
-  motions           IMotions[]
+  motions           IMotion[]
 
   workouts          DoMovements[]      @relation("beHealthWorkouts", fields: [workoutsIds], references: [id])
   workoutsIds       String[]        @db.ObjectId
@@ -62,7 +62,7 @@ model FeelSymptoms {
   communityCreator      Communities?             @relation("moodCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("feelLike")
+  @@map("feelSymptoms")
 }
 
 type ISmartScales {
@@ -76,15 +76,13 @@ type IHeartRates {
   value                     Float
   measurement               DateTime
   motions                   String[]
-  workouts                  DoMovements[]
-  workoutsIds               String[]            @db.ObjectId
+  workouts                  String[]
 }
 
 type ICardiograms {
   measurement       DateTime
 
-  symptoms          FeelSymptoms[]
-  symptomsIds       String[]            @db.ObjectId
+  symptoms          String[]
 
   classification    E7Classification
   leads             ICardiogram[]
@@ -93,6 +91,11 @@ type ICardiograms {
 type ICardiogram {
   lead      Float
   leadOne   Float
+}
+
+type IMotion {
+  title         String
+  measurement   Float
 }
 
 enum E7Classification {

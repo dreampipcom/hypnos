@@ -6,7 +6,7 @@
 model BeHumans {
   // @PUBLIC: IF MADE PUBLIC
   // admin
-  communities
+  // communities
   emoji             String
   title             ILocaleString
   body              ILocaleString
@@ -29,19 +29,16 @@ model BeHumans {
   nonFungibleWallets                  InvestWallets[]      @relation("beHumanNonFungibleWallets", fields: [nonFungibleWalletsIds], references: [id])
   nonFungibleWalletsIds               String[]        @db.ObjectId
 
-  receivedCareEulogies                InvestCareEulogy[]      @relation("beHumanReceivedCareEulogies", fields: [receivedCareEulogiesIds], references: [id])
+  receivedCareEulogies                InvestCareEulogies[]      @relation("beHumanReceivedCareEulogies", fields: [receivedCareEulogiesIds], references: [id])
   receivedCareEulogiesIds             String[]        @db.ObjectId
 
-  givenCareEulogies                   InvestCareEulogy[]      @relation("beHumanGivenCareEulogies", fields: [givenCareEulogiesIds], references: [id])
+  givenCareEulogies                   InvestCareEulogies[]      @relation("beHumanGivenCareEulogies", fields: [givenCareEulogiesIds], references: [id])
   givenCareEulogiesIds                String[]        @db.ObjectId
 
-  receivedCareImprovementPlans        String[]
-  givenCareImprovementPlans           String[]
-
-  receivedCareImprovementPlans                 InvestCareImprovementPlan[]      @relation("beHumanReceivedCareImprovementPlans", fields: [receivedCareImprovementPlansIds], references: [id])
+  receivedCareImprovementPlans                 InvestCareImprovementPlans[]      @relation("beHumanReceivedCareImprovementPlans", fields: [receivedCareImprovementPlansIds], references: [id])
   receivedCareImprovementPlansIds              String[]        @db.ObjectId
 
-  givenCareImprovementPlans                    InvestCareImprovementPlan[]      @relation("beHumanGivenCareImprovementPlans", fields: [givenCareImprovementPlansIds], references: [id])
+  givenCareImprovementPlans                    InvestCareImprovementPlans[]      @relation("beHumanGivenCareImprovementPlans", fields: [givenCareImprovementPlansIds], references: [id])
   givenCareImprovementPlansIds                 String[]        @db.ObjectId
   
   // courtship
@@ -57,7 +54,7 @@ model BeHumans {
   dateBirth                       DateTime    
   timeBirth                       DateTime
 
-  relationshipStatus              BeRelations?    @relation("beHumansRelationshipStatus", fields: [beHumansRelationshipStatusId], references: [id])
+  relationshipStatus              BeRelations?    @relation("beHumansRelationshipStatus", fields: [relationshipStatusId], references: [id])
   relationshipStatusId            String?         @db.ObjectId
 
   
@@ -128,7 +125,7 @@ model BeHumans {
   userCreator       User?              @relation("beHumansUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  userManager       User?              @relation("beHumansUserCreator", fields: [userCreatorId], references: [id])
+  userManager       User?              @relation("beHumansUserManager", fields: [userManagerId], references: [id])
   userManagerId     String?             @db.ObjectId
 
   communityOwner        Communities?             @relation("beHumansCommunityOwner", fields: [communityOwnerId], references: [id])
@@ -137,7 +134,7 @@ model BeHumans {
   communityCreator      Communities?             @relation("beHumansCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  communityManager      Communities?             @relation("beHumansCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityManager      Communities?             @relation("beHumansCommunityManager", fields: [communityManagerId], references: [id])
   communityManagerId    String?             @db.ObjectId
 
   @@map("beHumans")

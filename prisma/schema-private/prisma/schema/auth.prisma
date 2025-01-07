@@ -87,9 +87,6 @@ model User {
   communitiesIds             String[]          @db.ObjectId
   location              ILocation?
 
-  preferences           Taxonomies[]      @relation("preferences", fields: [preferencesIds], references: [id])
-  preferencesIds        String[]          @db.ObjectId
-
   services              Services[]      @relation("userServices", fields: [servicesIds], references: [id])
   servicesIds           String[]        @db.ObjectId
 
@@ -97,7 +94,7 @@ model User {
   abilitiesIds          String[]        @db.ObjectId
 
   // settings           String
-  favorites             Listings[]        @relation("favorites", fields: [favoritesIds], references: [id])
+  favorites             MakeListings[]        @relation("favorites", fields: [favoritesIds], references: [id])
   favoritesIds          String[]          @db.ObjectId
 
   favoritesStrings             String[] 
@@ -116,26 +113,23 @@ model User {
   ownedCommunities           Communities[]          @relation("ownedCommunities")
   createdCommunities         Communities[]          @relation("createdCommunities")
 
-  ownedListings         Listings[]        @relation("listingUserOwner")
-  createdListings       Listings[]        @relation("listingUserCreator")
-
-  ownedTaxonomies       Taxonomies[]      @relation("taxonomyUserOwner")
-  createdTaxonomies     Taxonomies[]      @relation("taxonomyUserCreator")
+  ownedListings         MakeListings[]        @relation("listingUserOwner")
+  createdListings       MakeListings[]        @relation("listingUserCreator")
 
   ownedMessages         Messages[]        @relation("messageUserOwner")
   createdMessages       Messages[]        @relation("messageUserCreator")
 
-  ownedMoods           Moods[]          @relation("moodUserOwner")
-  createdMoods         Moods[]          @relation("moodUserCreator")
+  ownedMoods           FeelMoods[]          @relation("moodUserOwner")
+  createdMoods         FeelMoods[]          @relation("moodUserCreator")
 
-  ownedActions           Actions[]          @relation("actionUserOwner")
-  createdActions         Actions[]          @relation("actionUserCreator")
+  ownedActions           Dos[]          @relation("actionUserOwner")
+  createdActions         Dos[]          @relation("actionUserCreator")
 
-  ownedThoughts           Thoughts[]          @relation("thoughtUserOwner")
-  createdThoughts         Thoughts[]          @relation("thoughtUserCreator")
+  ownedThoughts           WriteIdeas[]          @relation("thoughtUserOwner")
+  createdThoughts         WriteIdeas[]          @relation("thoughtUserCreator")
 
-  ownedProjects           Projects[]          @relation("projectUserOwner")
-  createdProjects         Projects[]          @relation("projectUserCreator")
+  ownedQuests           DoQuests[]          @relation("projectUserOwner")
+  createdQuests         DoQuests[]          @relation("projectUserCreator")
 
   ownedServices         Services[]      @relation("serviceUserOwner")
   createdServices       Services[]      @relation("serviceUserCreator")
@@ -161,17 +155,11 @@ model Communities {
   urls                  String[]
   image                 String?
 
-  favorites             Listings[]        @relation("communityFavorites", fields: [favoritesIds], references: [id])
+  favorites             MakeListings[]        @relation("communityFavorites", fields: [favoritesIds], references: [id])
   favoritesIds          String[]          @db.ObjectId
 
-  preferences           Taxonomies[]      @relation("communityPreferences", fields: [preferencesIds], references: [id])
-  preferencesIds        String[]          @db.ObjectId
-
-  ownedListings         Listings[]        @relation("listingCommunityOwner")
-  createdListings       Listings[]        @relation("listingCommunityCreator")
-
-  ownedTaxonomies       Taxonomies[]      @relation("taxonomyCommunityOwner")
-  createdTaxonomies     Taxonomies[]      @relation("taxonomyCommunityCreator")
+  ownedListings         MakeListings[]        @relation("listingCommunityOwner")
+  createdListings       MakeListings[]        @relation("listingCommunityCreator")
 
   ownedMessages         Messages[]        @relation("messageCommunityOwner")
   createdMessages       Messages[]        @relation("messageCommunityCreator")
@@ -191,17 +179,17 @@ model Communities {
   ownedAbilities        Abilities[]     @relation("abilityCommunityOwner")
   createdAbilities      Abilities[]     @relation("abilityCommunityCreator")
 
-  ownedMoods           Moods[]          @relation("moodCommunityOwner")
-  createdMoods         Moods[]          @relation("moodCommunityCreator")
+  ownedMoods           FeelMoods[]          @relation("moodCommunityOwner")
+  createdMoods         FeelMoods[]          @relation("moodCommunityCreator")
 
-  ownedActions           Actions[]          @relation("actionCommunityOwner")
-  createdActions         Actions[]          @relation("actionCommunityCreator")
+  ownedActions           Dos[]          @relation("actionCommunityOwner")
+  createdActions         Dos[]          @relation("actionCommunityCreator")
 
-  ownedThoughts           Thoughts[]          @relation("thoughtCommunityOwner")
-  createdThoughts         Thoughts[]          @relation("thoughtCommunityCreator")
+  ownedThoughts           WriteIdeas[]          @relation("thoughtCommunityOwner")
+  createdThoughts         WriteIdeas[]          @relation("thoughtCommunityCreator")
 
-  ownedProjects           Projects[]          @relation("projectCommunityOwner")
-  createdProjects         Projects[]          @relation("projectCommunityCreator")
+  ownedQuests           DoQuests[]          @relation("projectCommunityOwner")
+  createdQuests         DoQuests[]          @relation("projectCommunityCreator")
 
   ownedInvestments           Investments[]          @relation("investmentCommunityOwner")
   createdInvestments         Investments[]          @relation("investmentCommunityCreator")
@@ -254,7 +242,7 @@ model Messages {
   toCommunities          Communities[]            @relation("communityMessagesReceived", fields: [toCommunitiesIds], references: [id])
   toCommunitiesIds       String[]            @db.ObjectId
 
-  toListings        Listings[]          @relation("listingMessagesReceived", fields: [toCommunitiesIds], references: [id])
+  toListings        MakeListings[]          @relation("listingMessagesReceived", fields: [toCommunitiesIds], references: [id])
   toListingsIds     String[]            @db.ObjectId
 
   userOwner         User?              @relation("messageUserOwner", fields: [userOwnerId], references: [id])
@@ -713,4 +701,139 @@ type ILocation {
   geo            IPosix?
   address        IAddress?
   name           String
+}
+
+type AbilitiesName {
+  ar String?
+  bn String?
+  ca String?
+  cz String?
+  da String?
+  de String?
+  el String?
+  en String?
+  es String
+  et String?
+  eu String?
+  fi String?
+  fr String?
+  gl String?
+  he String?
+  hi String?
+  hu String?
+  it String?
+  ja String?
+  ms String?
+  nl String?
+  pa String?
+  pl String?
+  pt String?
+  ro String?
+  ru String?
+  sv String?
+  sw String?
+  tr String?
+  uk String?
+  zh String?
+}
+
+type FeaturesName {
+  es String
+}
+
+type ListingsDescription {
+  es String
+}
+
+type ListingsLocation {
+  address ListingsLocationAddress
+  geo     ListingsLocationGeo
+  name    String
+}
+
+type ListingsLocationAddress {
+  additional String
+  city       String
+  country    String
+  number     String
+  phone      String
+  province   String
+  street     String
+  zipCode    String
+}
+
+type ListingsLocationGeo {
+  lat    Float
+  lng    Float
+  radius Float
+}
+
+type ListingsTitle {
+  es String
+}
+
+type MessagesBody {
+  es String
+}
+
+type MessagesDescription {
+  es String
+}
+
+type MessagesName {
+  es String
+}
+
+type MessagesTitle {
+  es String
+}
+
+type RolesName {
+  es String
+}
+
+type ServicesName {
+  ar String?
+  bn String?
+  ca String?
+  cz String?
+  da String?
+  de String?
+  el String?
+  en String?
+  es String
+  et String?
+  eu String?
+  fi String?
+  fr String?
+  gl String?
+  he String?
+  hi String?
+  hu String?
+  it String?
+  ja String?
+  ms String?
+  nl String?
+  pa String?
+  pl String?
+  pt String?
+  ro String?
+  ru String?
+  sv String?
+  sw String?
+  tr String?
+  uk String?
+  zh String?
+}
+
+type TaxonomiesDescription {
+  es String
+}
+
+type TaxonomiesName {
+  es String
+}
+
+type UserLocation {
+  name String
 }
