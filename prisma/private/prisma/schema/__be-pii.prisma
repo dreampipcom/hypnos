@@ -30,7 +30,7 @@ model BeYou {
   movingTo          ILocation[]?
 
 // Just curious with a fuzzy match approach leveraging these 
-// 3x3 vectors as a parameter for other data streams 
+// 4x4 vectors as a parameter for other data streams 
 // (music, songs, cultural reprimands, reminders of local customs and norms, 
 // prepare to travel, etc).
 
