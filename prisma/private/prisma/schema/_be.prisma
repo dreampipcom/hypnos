@@ -13,7 +13,7 @@ model BeMailbox {
   aliases           String[]
 
   activeSession     Session
-  sessionToken      String
+  mailActiveToken   String
 
   caldavs           String[]
   carddavs          String[]
