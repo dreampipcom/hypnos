@@ -113,16 +113,16 @@ model InvestWallets {
   purchaseValue     Float
   settledValue      Float
 
-  userOwner         User?              @relation("investWalletUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("investWalletsUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("investWalletCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("investWalletsCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("investWalletUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("investWalletsUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("investWalletCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("investWalletsCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
   @@map("investWallets")

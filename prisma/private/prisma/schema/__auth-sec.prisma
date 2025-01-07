@@ -81,10 +81,6 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  firstName             String?
-  lastName              String?
-
-  birthday              DateTime?          @db.Date
   communities                Communities[]          @relation(fields: [communitiesIds], references: [id])
   communitiesIds             String[]          @db.ObjectId
   location              ILocation?
@@ -94,6 +90,12 @@ model User {
 
   abilities             Abilities[]     @relation("userAbilities", fields: [abilitiesIds], references: [id])
   abilitiesIds          String[]        @db.ObjectId
+
+  authorityOn           InvestContracts[]     @relation("investUserAuthorities", fields: [authorityOnIds], references: [id])
+  authorityOnIds          String[]        @db.ObjectId
+
+  signedOn                InvestContracts[]     @relation("investUserSignatures", fields: [signedOnIds], references: [id])
+  signedOnIds          String[]        @db.ObjectId
 
   // settings           String
   favorites             MakeListings[]        @relation("favorites", fields: [favoritesIds], references: [id])
@@ -204,6 +206,15 @@ model User {
 
   ownedInvestTransactions            InvestTransactions[]          @relation("investTransactionsUserOwner")
   createdInvestTransactions          InvestTransactions[]          @relation("investTransactionsUserCreator")
+
+  ownedInvestWallets            InvestWallets[]          @relation("investWalletsUserOwner")
+  createdInvestWallets          InvestWallets[]          @relation("investWalletsUserCreator")
+
+  ownedInvestIncomes            InvestIncomes[]          @relation("investIncomesUserOwner")
+  createdInvestIncomes          InvestIncomes[]          @relation("investIncomesUserCreator")
+
+  ownedInvestExpenses            InvestExpenses[]          @relation("investExpensesUserOwner")
+  createdInvestExpenses          InvestExpenses[]          @relation("investExpensesUserCreator")
 
   ownedInvestContracts            InvestContracts[]          @relation("investContractsUserOwner")
   createdInvestContracts          InvestContracts[]          @relation("investContractsUserCreator")
@@ -332,6 +343,12 @@ model Communities {
   abilities             Abilities[]     @relation("communityAbilities", fields: [abilitiesIds], references: [id])
   abilitiesIds          String[]        @db.ObjectId
 
+  authorityOn           InvestContracts[]     @relation("investCommunityAuthorities", fields: [authorityOnIds], references: [id])
+  authorityOnIds          String[]        @db.ObjectId
+
+  signedOn                InvestContracts[]     @relation("investCommunitySignatures", fields: [signedOnIds], references: [id])
+  signedOnIds          String[]        @db.ObjectId
+
   ownedServices         Services[]      @relation("serviceCommunityOwner")
   createdServices       Services[]      @relation("serviceCommunityCreator")
 
@@ -409,6 +426,15 @@ model Communities {
 
   ownedInvestTransactions            InvestTransactions[]          @relation("investTransactionsCommunityOwner")
   createdInvestTransactions          InvestTransactions[]          @relation("investTransactionsCommunityCreator")
+
+  ownedInvestWallets            InvestWallets[]          @relation("investWalletsCommunityOwner")
+  createdInvestWallets          InvestWallets[]          @relation("investWalletsCommunityCreator")
+
+  ownedInvestIncomes            InvestIncomes[]          @relation("investIncomesCommunityOwner")
+  createdInvestIncomes          InvestIncomes[]          @relation("investIncomesCommunityCreator")
+
+  ownedInvestExpenses            InvestExpenses[]          @relation("investExpensesCommunityOwner")
+  createdInvestExpenses          InvestExpenses[]          @relation("investExpensesCommunityCreator")
 
   ownedInvestContracts            InvestContracts[]          @relation("investContractsCommunityOwner")
   createdInvestContracts          InvestContracts[]          @relation("investContractsCommunityCreator")
