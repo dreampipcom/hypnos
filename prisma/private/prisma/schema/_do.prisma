@@ -19,16 +19,16 @@ model Dos {
   loggedFor         DateTime[]          @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         User?              @relation("actionUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("doDosUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("actionCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("doDosCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("actionUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("doDosUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("doDosCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
   @@map("dos")
@@ -48,16 +48,16 @@ model DoTypes {
   loggedFor         DateTime[]          @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         User?              @relation("actionUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("doTypesUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("actionCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("doTypesCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("actionUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("doTypesUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("doTypesCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
   @@map("doTypes")
@@ -79,16 +79,16 @@ model DoContexts {
   loggedFor         DateTime[]          @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         User?              @relation("actionUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("doContextsUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("actionCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("doContextsCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("actionUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("doContextsUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("doContextsCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
   @@map("doContexts")
@@ -109,16 +109,16 @@ model DoRoutines {
   loggedFor         DateTime[]          @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         User?              @relation("actionUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("doRoutinesUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("actionCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("doRoutinesCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("actionUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("doRoutinesUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("doRoutinesCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
   @@map("doRoutines")
@@ -138,16 +138,16 @@ model DoDifficulties {
   loggedFor         DateTime[]          @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         User?              @relation("actionUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("doDifficultiesUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("actionCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("doDifficultiesCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("actionUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("doDifficultiesUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("doDifficultiesCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
   @@map("doDifficulties")
@@ -167,16 +167,16 @@ model DoModes {
   loggedFor         DateTime[]          @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         User?              @relation("actionUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("doModesUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("actionCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("doModesCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("actionUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("doModesUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("doModesCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
   @@map("doModes")
@@ -202,16 +202,16 @@ model DoQuests {
   updatedOn         DateTime[]          @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         User?              @relation("projectUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("doQuestsUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("projectCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("doQuestsCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("projectUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("doQuestsUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("projectCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("doQuestsCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
   @@map("doQuests")
@@ -231,16 +231,16 @@ model DoQuestsTypes {
   loggedFor         DateTime[]          @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         User?              @relation("actionUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("doQuestsTypesUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("actionCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("doQuestsTypesCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("actionUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("doQuestsTypesUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("doQuestsTypesCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
   @@map("doQuestsTypes")
@@ -261,16 +261,16 @@ model DoProducts {
   loggedFor         DateTime[]          @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         User?              @relation("actionUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("doProductsUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("actionCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("doProductsCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("actionUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("doProductsUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("doProductsCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
   @@map("doProducts")
@@ -290,23 +290,23 @@ model DoScores {
   loggedFor         DateTime[]          @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         User?              @relation("actionUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("doScoresUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("actionCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("doScoresCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("actionUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("doScoresUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("doScoresCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
   @@map("doScores")
 }
 
 // Tasks Logs (for Reports)
-model DoLog {
+model DoLogs {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String
@@ -319,19 +319,19 @@ model DoLog {
   loggedFor         DateTime[]          @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         User?              @relation("actionUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("doLogsUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("actionCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("doLogsCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("actionUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("doLogsUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("doLogsCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("doLog")
+  @@map("doLogs")
 }
 
 // Automated Reporting.
@@ -348,16 +348,16 @@ model DoReports {
   loggedFor         DateTime[]          @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         User?              @relation("actionUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("doReportsUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("actionCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("doReportsCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("actionUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("doReportsUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("doReportsCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
   @@map("doReports")
