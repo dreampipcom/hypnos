@@ -33,7 +33,8 @@ model Dos {
   @@map("dos")
 }
 
-model DoCommunities {
+// Titles
+model DoRoles {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String
@@ -58,7 +59,7 @@ model DoCommunities {
   communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("doCommunities")
+  @@map("beRoles")
 }
 
 model DoTypes {
@@ -291,6 +292,7 @@ model DoQuestsTypes {
   @@map("doQuestsTypes")
 }
 
+// Products
 model DoProducts {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
@@ -319,6 +321,8 @@ model DoProducts {
   @@map("doProducts")
 }
 
+
+// Automated Reporting.
 model DoReports {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
@@ -347,6 +351,7 @@ model DoReports {
   @@map("doReports")
 }
 
+// Scoreboards
 model DoScores {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
@@ -373,89 +378,4 @@ model DoScores {
   communityCreatorId    String?             @db.ObjectId
 
   @@map("doScores")
-}
-
-// Last.fm
-model DoListens {
-  id                String              @id @default(auto()) @map("_id") @db.ObjectId
-  name              ILocaleString
-  slug              String
-  description       ILocaleString
-
-  title             ILocaleString
-  body              ILocaleString
-
-  loggedOn          DateTime            @db.Date
-  loggedFor         DateTime[]          @db.Date
-  publishedOn       DateTime            @db.Date
-
-  userOwner         User?              @relation("actionUserOwner", fields: [userOwnerId], references: [id])
-  userOwnerId       String?             @db.ObjectId
-
-  communityOwner        Communities?             @relation("actionCommunityOwner", fields: [communityOwnerId], references: [id])
-  communityOwnerId      String?             @db.ObjectId
-
-  userCreator       User?              @relation("actionUserCreator", fields: [userCreatorId], references: [id])
-  userCreatorId     String?             @db.ObjectId
-
-  communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
-  communityCreatorId    String?             @db.ObjectId
-
-  @@map("doListens")
-}
-
-model DoMovements {
-  id                String              @id @default(auto()) @map("_id") @db.ObjectId
-  name              ILocaleString
-  slug              String
-  description       ILocaleString
-
-  title             ILocaleString
-  body              ILocaleString
-
-  loggedOn          DateTime            @db.Date
-  loggedFor         DateTime[]          @db.Date
-  publishedOn       DateTime            @db.Date
-
-  userOwner         User?              @relation("actionUserOwner", fields: [userOwnerId], references: [id])
-  userOwnerId       String?             @db.ObjectId
-
-  communityOwner        Communities?             @relation("actionCommunityOwner", fields: [communityOwnerId], references: [id])
-  communityOwnerId      String?             @db.ObjectId
-
-  userCreator       User?              @relation("actionUserCreator", fields: [userCreatorId], references: [id])
-  userCreatorId     String?             @db.ObjectId
-
-  communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
-  communityCreatorId    String?             @db.ObjectId
-
-  @@map("doMovements")
-}
-
-model DoMovementsTypes {
-  id                String              @id @default(auto()) @map("_id") @db.ObjectId
-  name              ILocaleString
-  slug              String
-  description       ILocaleString
-
-  title             ILocaleString
-  body              ILocaleString
-
-  loggedOn          DateTime            @db.Date
-  loggedFor         DateTime[]          @db.Date
-  publishedOn       DateTime            @db.Date
-
-  userOwner         User?              @relation("actionUserOwner", fields: [userOwnerId], references: [id])
-  userOwnerId       String?             @db.ObjectId
-
-  communityOwner        Communities?             @relation("actionCommunityOwner", fields: [communityOwnerId], references: [id])
-  communityOwnerId      String?             @db.ObjectId
-
-  userCreator       User?              @relation("actionUserCreator", fields: [userCreatorId], references: [id])
-  userCreatorId     String?             @db.ObjectId
-
-  communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
-  communityCreatorId    String?             @db.ObjectId
-
-  @@map("doMovementsTypes")
 }
