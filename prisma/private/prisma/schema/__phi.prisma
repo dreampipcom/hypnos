@@ -67,7 +67,7 @@ model FeelSymptoms {
   @@map("feelSymptoms")
 }
 
-model FeelLike {
+model FeelWTF {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String
@@ -92,7 +92,7 @@ model FeelLike {
   communityCreator      Communities?             @relation("moodCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("feelLike")
+  @@map("feelWTF")
 }
 
 model FeelDreams {
