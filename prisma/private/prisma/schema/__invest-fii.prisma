@@ -13,8 +13,6 @@ model InvestYou {
   title             ILocaleString
   body              ILocaleString
 
-  wallets           I  
-
   wallets         InvestWallets[]              @relation("investYouWallets", fields: [walletsId], references: [id])
   walletsId       String?             @db.ObjectId    
 
