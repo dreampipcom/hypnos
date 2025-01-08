@@ -10,9 +10,13 @@ model Communities {
 
   status                ECommunitiesStatus
   /* wallets? 							InvestYou[]
-  		(own/manage/created? quest refund?)Wallets
+  		(own/manage/created?)Wallets
 
   		an adapter!
+
+  		quest refund?
+
+  		a decorator!
   */
 
   name                  String
