@@ -312,7 +312,7 @@ model Communities {
   /* mercy
   * or googles, filter mode, activate? fee? investments, un-noticed, pass cards, sometimes, clubs, yearly bills.
   optiocal projecions,
-  I see. */
+  We see, we report. */
 
   ownedViewCharts            ViewCharts[]          @relation("viewChartsCommunityOwner")
   createdViewCharts          ViewCharts[]          @relation("viewChartsCommunityCreator")
