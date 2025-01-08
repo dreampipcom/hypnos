@@ -1,0 +1,69 @@
+// to-do: __make-pii.prisma
+// ---- @PRIVATE: Make: slowly. ----
+//
+// Your private things.
+model MakeYou {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+  role              EDoRole
+
+  publishedOn       DateTime            @db.Date
+
+  dos                   Dos[]    @relation("makeYouDos", fields: [dosIds], references: [id])
+  dosIds                String[]        @db.ObjectId
+
+  deals                   BeDeals[]    @relation("beContactsDeals", fields: [dealsIds], references: [id])
+  dealsIds                String[]        @db.ObjectId
+
+  recipes                   MakeRecipes[]    @relation("makeYouRecipes", fields: [recipesIds], references: [id])
+  recipesIds                String[]        @db.ObjectId 
+
+  inventories                   MakeInventories[]    @relation("makeYouInventories", fields: [inventoriesIds], references: [id])
+  inventoriesIds                String[]        @db.ObjectId
+
+  listings                   MakeListings[]    @relation("makeYouListings", fields: [listingsIds], references: [id])
+  listingsIds                String[]        @db.ObjectId
+
+  procurements                   MakeProcurements[]    @relation("makeYouProcurements", fields: [procurementsIds], references: [id])
+  procurementsIds                String[]        @db.ObjectId
+
+  quests                   DoQuests[]    @relation("makeYouQuests", fields: [questsIds], references: [id])
+  questsIds                String[]        @db.ObjectId
+
+  functions                   MakeFunctions[]    @relation("makeYouFunctions", fields: [functionsIds], references: [id])
+  functionsIds                String[]        @db.ObjectId
+
+  items                   MakeItems[]    @relation("makeYouItems", fields: [itemsIds], references: [id])
+  itemsIds                String[]        @db.ObjectId
+
+  catalogue                   MakeThings[]    @relation("makeYouThings", fields: [catalogueIds], references: [id])
+  catalogueIds                String[]        @db.ObjectId
+
+  spaces                   MakeSpaces[]    @relation("makeYouSpaces", fields: [spacesIds], references: [id])
+  spacesIds                String[]        @db.ObjectId
+
+  reportsSent                   DoReports[]    @relation("beContactsReporters", fields: [reportsSentIds], references: [id])
+  reportsSentIds                String[]        @db.ObjectId
+
+  reportsReceived                   DoReports[]    @relation("beContactsReportees", fields: [reportsReceivedIds], references: [id])
+  reportsReceivedIds                String[]        @db.ObjectId
+
+  userOwner         User?              @relation("makeYouUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("makeYouCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("makeYouUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("makeYouCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("makeYou")
+}

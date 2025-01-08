@@ -9,6 +9,9 @@ model MakeRecipes {
   slug              String
   description       ILocaleString
 
+  makers         MakeYou[]  @relation("makeYouRecipes", fields: [makersIds], references: [id])
+  makersIds      String[]          @db.ObjectId
+
   title             ILocaleString
   body              ILocaleString
 
@@ -37,6 +40,9 @@ model MakeSpaces {
   name              ILocaleString
   slug              String
   description       ILocaleString
+
+  makers         MakeYou[]  @relation("makeYouSpaces", fields: [makersIds], references: [id])
+  makersIds      String[]          @db.ObjectId
 
   title             ILocaleString
   body              ILocaleString
@@ -70,9 +76,15 @@ model MakeProcurements {
   title             ILocaleString
   body              ILocaleString
 
+  makers         MakeYou[]  @relation("makeYouProcurements", fields: [makersIds], references: [id])
+  makersIds      String[]          @db.ObjectId
+
   loggedOn          DateTime            @db.Date
   loggedFor         DateTime[]          @db.Date
   publishedOn       DateTime            @db.Date
+
+  contacts          BeContacts[]        @relation("beContactsProcurements", fields: [contactsIds], references: [id])
+  contactsIds       String[]             @db.ObjectId
 
   userOwner         User?              @relation("makeProcurementsUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
@@ -95,6 +107,9 @@ model MakeThings {
   name              ILocaleString
   slug              String
   description       ILocaleString
+
+  makers         MakeYou[]  @relation("makeYouThings", fields: [makersIds], references: [id])
+  makersIds      String[]          @db.ObjectId
 
   title             ILocaleString
   body              ILocaleString
@@ -125,6 +140,9 @@ model MakeInventories {
   slug              String
   description       ILocaleString
 
+  makers         MakeYou[]  @relation("makeYouInventories", fields: [makersIds], references: [id])
+  makersIds      String[]          @db.ObjectId
+
   title             ILocaleString
   body              ILocaleString
 
@@ -153,6 +171,9 @@ model MakeItems {
   name              ILocaleString
   slug              String
   description       ILocaleString
+
+  makers         MakeYou[]  @relation("makeYouItems", fields: [makersIds], references: [id])
+  makersIds      String[]          @db.ObjectId
 
   title             ILocaleString
   body              ILocaleString
@@ -183,6 +204,9 @@ model MakeListings {
   slug              String
   description       ILocaleString
 
+  makers         MakeYou[]  @relation("makeYouListings", fields: [makersIds], references: [id])
+  makersIds      String[]          @db.ObjectId
+
   title             ILocaleString
   body              ILocaleString
 
@@ -211,6 +235,9 @@ model MakeFunctions {
   name              ILocaleString
   slug              String
   description       ILocaleString
+
+  makers         MakeYou[]  @relation("makeYouFunctions", fields: [makersIds], references: [id])
+  makersIds      String[]          @db.ObjectId
 
   title             ILocaleString
   body              ILocaleString
