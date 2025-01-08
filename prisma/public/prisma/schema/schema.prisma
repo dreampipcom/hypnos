@@ -1,6 +1,7 @@
 generator client {
   provider = "prisma-client-js"
-  output = "../node_modules/@dreampipcom/db-public/prisma-client"
+  output = "../../../../node_modules/@dreampipcom/db-public/prisma-client"
+  previewFeatures = ["prismaSchemaFolder"]
 }
 
 datasource db {

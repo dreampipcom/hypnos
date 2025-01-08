@@ -1,0 +1,90 @@
+// to-do: _make.prisma
+// ---- @PUBLIC Make: Marketplace ----
+//
+// Public Listings
+// Geography or ambients
+model PublicMakeSpaces {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]          @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("actionUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("actionCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("actionUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("makeSpaces")
+}
+
+// Groceries or shopping lists
+model PublicMakeProcurements {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]          @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("actionUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("actionCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("actionUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("makeProcurements")
+}
+
+// Listings
+model PublicMakeListings {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]          @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("actionUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("actionCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("actionUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("actionCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("makeListings")
+}

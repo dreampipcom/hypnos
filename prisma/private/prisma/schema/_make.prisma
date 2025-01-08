@@ -1,0 +1,308 @@
+// to-do: _make.prisma
+// ---- @INT: Make: a formula. ----
+// 
+// Make
+// Recipes
+model MakeSocial {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  makers         MakeYou[]  @relation("makeYouSocial", fields: [makersIds], references: [id])
+  makersIds      String[]          @db.ObjectId
+
+  title             ILocaleString
+  body              ILocaleString
+
+  beSocialProfiles  BeSocial[]              @relation("makeSocialBeSocialProfiles", fields: [beSocialProfilesIds], references: [id])
+  beSocialProfilesIds       String[]             @db.ObjectId
+
+  doSocialProfiles  DoSocial[]              @relation("makeSocialDoSocialProfiles", fields: [doSocialProfilesIds], references: [id])
+  doSocialProfilesIds       String[]             @db.ObjectId
+
+  investSocialProfiles  MakeSocial[]        @relation("makeSocialInvestSocialProfiles", fields: [investSocialProfilesIds], references: [id])
+  investSocialProfilesIds       String[]             @db.ObjectId
+
+  feelSocialProfiles  FeelSocial[]              @relation("makeSocialFeelSocialProfiles", fields: [feelSocialProfilesIds], references: [id])
+  feelSocialProfilesIds       String[]             @db.ObjectId
+
+  writeSocialProfiles  WriteSocial[]              @relation("makeSocialWriteSocialProfiles", fields: [writeSocialProfilesIds], references: [id])
+  writeSocialProfilesIds       String[]             @db.ObjectId
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]          @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("makeSocialUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("makeSocialCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("makeSocialUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("makeSocialCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("makeSocial")
+}
+
+model MakeRecipes {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  makers         MakeYou[]  @relation("makeYouRecipes", fields: [makersIds], references: [id])
+  makersIds      String[]          @db.ObjectId
+
+  title             ILocaleString
+  body              ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]          @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("makeRecipesUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("makeRecipesCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("makeRecipesUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("makeRecipesCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("makeRecipes")
+}
+
+// Geography or ambients
+model MakeSpaces {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  makers         MakeYou[]  @relation("makeYouSpaces", fields: [makersIds], references: [id])
+  makersIds      String[]          @db.ObjectId
+
+  title             ILocaleString
+  body              ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]          @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("makeSpacesUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("makeSpacesCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("makeSpacesUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("makeSpacesCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("makeSpaces")
+}
+
+// Groceries or shopping lists
+model MakeProcurements {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  makers         MakeYou[]  @relation("makeYouProcurements", fields: [makersIds], references: [id])
+  makersIds      String[]          @db.ObjectId
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]          @db.Date
+  publishedOn       DateTime            @db.Date
+
+  contacts          BeContacts[]        @relation("beContactsProcurements", fields: [contactsIds], references: [id])
+  contactsIds       String[]             @db.ObjectId
+
+  userOwner         User?              @relation("makeProcurementsUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("makeProcurementsCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("makeProcurementsUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("makeProcurementsCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("makeProcurements")
+}
+
+// Catalogues
+model MakeThings {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  makers         MakeYou[]  @relation("makeYouThings", fields: [makersIds], references: [id])
+  makersIds      String[]          @db.ObjectId
+
+  title             ILocaleString
+  body              ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]          @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("makeThingsUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("makeThingsCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("makeThingsUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("makeThingsCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("makeThings")
+}
+
+// Models
+model MakeInventories {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  makers         MakeYou[]  @relation("makeYouInventories", fields: [makersIds], references: [id])
+  makersIds      String[]          @db.ObjectId
+
+  title             ILocaleString
+  body              ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]          @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("makeInventoriesUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("makeInventoriesCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("makeInventoriesUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("makeInventoriesCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("makeInventories")
+}
+
+// Stashes: Gifts
+model MakeItems {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  makers         MakeYou[]  @relation("makeYouItems", fields: [makersIds], references: [id])
+  makersIds      String[]          @db.ObjectId
+
+  title             ILocaleString
+  body              ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]          @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("makeItemsUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("makeItemsCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("makeItemsUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("makeItemsCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("makeItems")
+}
+
+// Listing (Things, Occasions, Events). Time or space.
+model MakeListings {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  makers         MakeYou[]  @relation("makeYouListings", fields: [makersIds], references: [id])
+  makersIds      String[]          @db.ObjectId
+
+  title             ILocaleString
+  body              ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]          @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("makeListingsUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("makeListingsCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("makeListingsUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("makeListingsCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("makeListings")
+}
+
+// Things purpose
+model MakeFunctions {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  makers         MakeYou[]  @relation("makeYouFunctions", fields: [makersIds], references: [id])
+  makersIds      String[]          @db.ObjectId
+
+  title             ILocaleString
+  body              ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]          @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("makeFunctionsUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("makeFunctionsCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("makeFunctionsUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("makeFunctionsCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("makeFunctions")
+}

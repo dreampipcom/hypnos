@@ -1,0 +1,11 @@
+generator client {
+  provider        = "prisma-client-js"
+  output          = "../../../../node_modules/@dreampipcom/db-private/prisma-client"
+  previewFeatures = ["prismaSchemaFolder"]
+}
+
+datasource db {
+  provider  = "mongodb"
+  url       = env("PRISMA_PRIVATE_URI")
+  directUrl = env("MONGODB_PRIVATE_URI")
+}

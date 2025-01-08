@@ -1,0 +1,264 @@
+// to-do: __invest-fii.prisma
+// Welcome to FinCore. @™
+// ---- @PRIVATE: Place it: Private Financial Data. ----
+//
+// Your faith.
+// Portfolios
+model InvestYou {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  wallets         InvestWallets[]              @relation("investYouWallets", fields: [walletsId], references: [id])
+  walletsId       String?             @db.ObjectId    
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]            @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("investYouUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("investYouCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("investYouUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("investYouCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("investYou")
+}
+
+// Asset: Positions. +
+model InvestPositions {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  purchaseValue     Float
+  settledValue      Float
+  fees              Float
+  taxes             Float
+  currency          ECurrency
+
+  placedOn          DateTime            @db.Date
+  issuedOn          DateTime            @db.Date
+  settledOn         DateTime            @db.Date
+  publishedOn       DateTime            @db.Date
+
+  wallet            InvestWallets?             @relation("investWalletPositions", fields: [walletId], references: [id])
+  walletId          String?
+
+  relatedQuests                     DoQuests[]      @relation("doQuestPositions", fields: [relatedQuestsIds], references: [id])
+  relatedQuestsIds                  String[]        @db.ObjectId
+
+  userOwner         User?              @relation("investPositionsUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("investPositionsCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("investPositionsUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("investPositionsCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("investCareEulogy")
+}
+
+// Types of Assets (Portrait of asset: NFT, Promises, Fungible Derivatives: Curse Gossip: DPIP:D, Monetary Responsibility: 1,000.00 US Dollars investment: DPIP:O, etc.FX:EURUSD, FX:GBPUSD, DPIP:D, DPIP:H, KRN:O, DPIP:ETH)
+model InvestTypes {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("investTypesUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("investTypesCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("investTypesUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("investTypesCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("careTypes")
+}
+
+// Wallets
+model InvestWallets {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  positions                     InvestPositions[]      @relation("investWalletPositions")
+  positionsIds                  String[]        @db.ObjectId
+
+  userOwner         User?              @relation("investWalletsUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("investWalletsCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("investWalletsUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("investWalletsCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("investWallets")
+}
+
+// Expenses. -
+model InvestExpenses {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]            @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("investExpensesUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("investExpensesCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("investExpensesUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("investExpensesCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("investExpenses")
+}
+
+// Incomes. -
+model InvestIncomes {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]            @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("investIncomesUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("investIncomesCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("investIncomesUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("investIncomesCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("investIncomes")
+}
+
+// Bonafides
+model InvestContracts {
+  id                      String              @id @default(auto()) @map("_id") @db.ObjectId
+  name                    ILocaleString
+  slug                    String
+  description             ILocaleString
+
+  title                   ILocaleString
+  body                    ILocaleString
+
+  investmentSignature     String
+
+  userAuthorities         User[]              @relation("investUserAuthorities", fields: [userAuthoritiesIds], references: [id])
+  userAuthoritiesIds       String[]             @db.ObjectId
+
+  communityAuthorities    Communities[]              @relation("investCommunityAuthorities", fields: [communityAuthoritiesIds], references: [id])
+  communityAuthoritiesIds  String[]             @db.ObjectId
+
+  userSignatures         User[]              @relation("investUserSignatures", fields: [userSignaturesIds], references: [id])
+  userSignaturesIds       String[]            @db.ObjectId
+
+  communitySignatures         Communities[]              @relation("investCommunitySignatures", fields: [communitySignaturesIds], references: [id])
+  communitySignaturesIds       String[]            @db.ObjectId
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]            @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("investContractsUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("investContractsCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("investContractsUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("investContractsCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("investContracts")
+}
+
+// Raw OCR / Import / Integration Transient Data
+model InvestTransactions {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]            @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("investTransactionsUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("investTransactionsCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("investTransactionsUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("investTransactionsCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("investTransactions")
+}
+

@@ -1,0 +1,26 @@
+// to-do: __feel-phi.prisma
+// ---- @PRIVATE: Feel: u k, g? ----
+// 
+// Your headspace.
+// Who do you feel?
+model FeelYou {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]          @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("feelYouUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  userCreator       User?              @relation("feelYouUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  @@map("feelYou")
+}

@@ -1,0 +1,368 @@
+// to-do: _do.prisma
+// ---- @INT: Do: just do it. ----
+// 
+// Do
+// Tasks
+
+// ::Ensure shared Bees::
+// Tasks
+model DoSocial {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+  role              EDoRole
+
+  reportsSent                   DoReports[]    @relation("doSocialReporters", fields: [reportsSentIds], references: [id])
+  reportsSentIds                String[]        @db.ObjectId
+
+  reportsReceived                   DoReports[]    @relation("doSocialReportees", fields: [reportsReceivedIds], references: [id])
+  reportsReceivedIds                String[]        @db.ObjectId
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]          @db.Date
+  publishedOn       DateTime            @db.Date
+
+  beSocialProfiles  BeSocial[]              @relation("makeSocialBeSocialProfiles", fields: [beSocialProfilesIds], references: [id])
+  beSocialProfilesIds       String[]             @db.ObjectId
+
+  makeSocialProfiles  MakeSocial[]              @relation("makeSocialMakeSocialProfiles", fields: [makeSocialProfilesIds], references: [id])
+  makeSocialProfilesIds       String[]             @db.ObjectId
+
+  investSocialProfiles  MakeSocial[]        @relation("makeSocialInvestSocialProfiles", fields: [investSocialProfilesIds], references: [id])
+  investSocialProfilesIds       String[]             @db.ObjectId
+
+  feelSocialProfiles  FeelSocial[]              @relation("makeSocialFeelSocialProfiles", fields: [feelSocialProfilesIds], references: [id])
+  feelSocialProfilesIds       String[]             @db.ObjectId
+
+  writeSocialProfiles  WriteSocial[]              @relation("makeSocialWriteSocialProfiles", fields: [writeSocialProfilesIds], references: [id])
+  writeSocialProfilesIds       String[]             @db.ObjectId
+
+  assignments       Dos[]              @relation("doDosAssignees", fields: [assignmentsId], references: [id])
+  assignmentsId       String[]             @db.ObjectId
+
+  watchers       Dos[]              @relation("doDosWatchers", fields: [watchersId], references: [id])
+  watchersId       String[]             @db.ObjectId
+
+  userOwner         User?              @relation("doSocialUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("doSocialCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("doSocialUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("doSocialCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("doSocial")
+}
+
+model Dos {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  assignees          DoYou[]             @relation("doDosAssignees", fields: [assigneesId], references: [id])
+  assigneesId        String[]             @db.ObjectId
+
+  watchers          DoYou[]             @relation("doDosWatchers", fields: [watchersId], references: [id])
+  watchersId        String[]             @db.ObjectId
+
+  title             ILocaleString
+  body              ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]          @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("doDosUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("doDosCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("doDosUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("doDosCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("dos")
+}
+
+// Task Templates
+model DoTypes {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]          @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("doTypesUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("doTypesCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("doTypesUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("doTypesCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("doTypes")
+}
+
+// Nexus
+//
+// Priority Parsers: Context: Writing code and buying potatoes?
+model DoContexts {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]          @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("doContextsUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("doContextsCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("doContextsUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("doContextsCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("doContexts")
+}
+
+// Daily Routines
+// Priority Parsers: Routines: Time of the day, day of the week.
+model DoRoutines {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]          @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("doRoutinesUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("doRoutinesCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("doRoutinesUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("doRoutinesCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("doRoutines")
+}
+
+// Priority Parsers: Difficulty: Take it easy? Full power?
+model DoDifficulties {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]          @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("doDifficultiesUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("doDifficultiesCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("doDifficultiesUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("doDifficultiesCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("doDifficulties")
+}
+
+// Priority Parsers: Modes: Homeless, Married, With Children?
+model DoModes {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]          @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("doModesUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("doModesCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("doModesUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("doModesCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("doModes")
+}
+
+// Projects
+// Priority Parsers: Quests, Summer Camp, Client Payment Date.
+model DoQuests {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  ticker            String
+
+  positions         InvestPositions[]  @relation("doQuestPositions", fields: [positionsIds], references: [id])
+  positionsIds      String[]          @db.ObjectId
+
+  createdOn         DateTime            @db.Date
+  updatedOn         DateTime[]          @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("doQuestsUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("doQuestsCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("doQuestsUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("doQuestsCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("doQuests")
+}
+
+// Projects Templates
+model DoQuestTypes {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]          @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("doQuestTypesUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("doQuestTypesCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("doQuestTypesUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("doQuestTypesCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("doQuestTypes")
+}
+
+// Products
+// Priority Parsers: Aspects, Income Sources, Feedback.
+model DoProducts {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]          @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("doProductsUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("doProductsCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("doProductsUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("doProductsCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("doProducts")
+}
+
+// Scoreboards: Employee of the month, Duke of the street.
+model DoScores {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]          @db.Date
+  publishedOn       DateTime            @db.Date
+
+  userOwner         User?              @relation("doScoresUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("doScoresCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("doScoresUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("doScoresCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("doScores")
+}
