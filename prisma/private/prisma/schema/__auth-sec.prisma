@@ -246,9 +246,6 @@ model Settings {
   vpnProxyUrl          String
   vpnProxyToken        IJWT
 
-  purchaseValue     Float
-  settledValue      Float
-
   userOwner         User?              @relation("settingsUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
