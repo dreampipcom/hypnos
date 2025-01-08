@@ -12,6 +12,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   // ownedWallets, ownedBeSocial, pwned yourself first, high score next Strava.
+  //me hapost:carlo@dpip.cc/sch
   // Optional for WebAuthn support
   Authenticator Authenticator[]
  
