@@ -249,19 +249,19 @@ model Settings {
   purchaseValue     Float
   settledValue      Float
 
-  userOwner         User?              @relation("privacySettingsUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("settingsUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("privacySettingsCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("settingsCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("privacySettingsUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("settingsUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("privacySettingsCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("settingsCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("PrivacySettings")
+  @@map("Settings")
 }
 
 type IJWT {
