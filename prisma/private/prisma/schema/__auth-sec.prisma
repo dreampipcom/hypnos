@@ -291,6 +291,12 @@ model User {
   ownedDoDirectories            DoDirectories[]          @relation("doDirectoriesUserOwner")
   createdDoDirectories          DoDirectories[]          @relation("doDirectoriesUserCreator")
 
+  ownedBeYou            BeYou[]          @relation("beYouUserOwner")
+  createdBeYou          BeYou[]          @relation("beYouUserCreator")
+
+  ownedBeCommunities            BeCommunities[]          @relation("beCommunitiesUserOwner")
+  createdBeCommunities          BeCommunities[]          @relation("beCommunitiesUserCreator")
+
   ownedBeCharacters            BeCharacters[]          @relation("beCharactersUserOwner")
   createdBeCharacters          BeCharacters[]          @relation("beCharactersUserCreator")
 
@@ -553,6 +559,12 @@ model Communities {
 
   ownedDoDirectories            DoDirectories[]          @relation("doDirectoriesCommunityOwner")
   createdDoDirectories          DoDirectories[]          @relation("doDirectoriesCommunityCreator")
+
+  ownedBeYou            BeYou[]          @relation("beYouCommunityOwner")
+  createdBeYou          BeYou[]          @relation("beYouCommunityCreator")
+
+  ownedBeCommunities            BeCommunities[]          @relation("beCommunitiesCommunityOwner")
+  createdBeCommunities          BeCommunities[]          @relation("beCommunitiesCommunityCreator")
 
   ownedBeCharacters            BeCharacters[]          @relation("beCharactersCommunityOwner")
   createdBeCharacters          BeCharacters[]          @relation("beCharactersCommunityCreator")
