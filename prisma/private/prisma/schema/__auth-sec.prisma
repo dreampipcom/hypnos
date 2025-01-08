@@ -245,6 +245,7 @@ model Settings {
 
   vpnProxyUrl          String
   vpnProxyToken        IJWT
+  vpnIPAllowList       String[]
 
   userOwner         User?              @relation("settingsUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
