@@ -62,7 +62,7 @@ model BeYou {
   walletsIds                  String[]        @db.ObjectId
 
   // portfolios
-  portfolios                     InvestPortfolios[]      @relation("beYouPortfolio", fields: [portfoliosIds], references: [id])
+  portfolios                     InvestYou[]      @relation("beYouPortfolio", fields: [portfoliosIds], references: [id])
   portfoliosIds                  String[]        @db.ObjectId
 
   positions                InvestPositions[]      @relation("beYouPositions", fields: [positionsIds], references: [id])
@@ -109,7 +109,7 @@ model BeContacts {
   procurements             MakeProcurements[]      @relation("beContactsProcurements", fields: [procurementsIds], references: [id])
   procurementsIds             String[]        @db.ObjectId
 
-  portfolios             InvestPortfolios[]      @relation("beContactsPortfolios", fields: [portfoliosIds], references: [id])
+  portfolios             InvestYou[]      @relation("beContactsPortfolios", fields: [portfoliosIds], references: [id])
   portfoliosIds             String[]        @db.ObjectId
 
   positions          InvestPositions[]      @relation("beContactsPositions", fields: [positionsIds], references: [id])
@@ -245,7 +245,7 @@ model BeCommunities {
   walletsIds                  String[]        @db.ObjectId
 
   // portfolios
-  portfolios                     InvestPortfolios[]      @relation("beCommunitiesPortfolio", fields: [portfoliosIds], references: [id])
+  portfolios                     InvestYou[]      @relation("beCommunitiesPortfolio", fields: [portfoliosIds], references: [id])
   portfoliosIds                  String[]        @db.ObjectId
 
   positions                InvestPositions[]      @relation("beCommunitiesPositions", fields: [positionsIds], references: [id])

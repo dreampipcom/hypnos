@@ -243,8 +243,8 @@ model User {
   ownedInvestSharedPositions          InvestSharedPositions[]          @relation("investSharedPositionsUserOwner")
   createdInvestSharedPositions         InvestSharedPositions[]          @relation("investSharedPositionsUserCreator")
 
-  ownedInvestPortfolios          InvestPortfolios[]          @relation("investPortfoliosUserOwner")
-  createdInvestPortfolios         InvestPortfolios[]          @relation("investPortfoliosUserCreator")
+  ownedInvestYou          InvestYou[]          @relation("investPortfoliosUserOwner")
+  createdInvestYou         InvestYou[]          @relation("investPortfoliosUserCreator")
 
   ownedDoYou            DoYou[]          @relation("doYouUserOwner")
   createdDoYou          DoYou[]          @relation("doYouUserCreator")
@@ -509,11 +509,11 @@ model Communities {
   ownedInvestSharedPositions          InvestSharedPositions[]          @relation("investSharedPositionsCommunityOwner")
   createdInvestSharedPositions         InvestSharedPositions[]          @relation("investSharedPositionsCommunityCreator")
 
-  ownedInvestPortfolios          InvestPortfolios[]          @relation("investPortfoliosCommunityOwner")
-  createdInvestPortfolios         InvestPortfolios[]          @relation("investPortfoliosCommunityCreator")
+  ownedInvestYou          InvestYou[]          @relation("investPortfoliosCommunityOwner")
+  createdInvestYou         InvestYou[]          @relation("investPortfoliosCommunityCreator")
 
-  ownedInvestSharedPortfolios          InvestSharedPortfolios[]          @relation("investSharedPortfoliosCommunityOwner")
-  createdInvestSharedPortfolios         InvestSharedPortfolios[]          @relation("investSharedPortfoliosCommunityCreator")
+  ownedInvestSocial          InvestSocial[]          @relation("investSocialCommunityOwner")
+  createdInvestSocial         InvestSocial[]          @relation("investSocialCommunityCreator")
 
   ownedDoDos            Dos[]          @relation("doDosCommunityOwner")
   createdDoDos          Dos[]          @relation("doDosCommunityCreator")

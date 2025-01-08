@@ -27,7 +27,6 @@ model FeelSocial {
   writeSocialProfiles  WriteSocial[]              @relation("feelSocialWriteSocialProfiles", fields: [writeSocialProfilesIds], references: [id])
   writeSocialProfilesIds       String[]             @db.ObjectId
 
-
   loggedOn          DateTime            @db.Date
   loggedFor         DateTime[]          @db.Date
   publishedOn       DateTime            @db.Date
