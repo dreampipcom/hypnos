@@ -3,7 +3,7 @@
 // 
 // Feel
 // Public Moods
-model FeelSharedMoods {
+model FeelYou {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String
@@ -16,11 +16,11 @@ model FeelSharedMoods {
   loggedFor         DateTime[]          @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         User?              @relation("feelSharedMoodsUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("feelYouUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  userCreator       User?              @relation("feelSharedMoodsUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("feelYouUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  @@map("feelSharedMoods")
+  @@map("feelYou")
 }
