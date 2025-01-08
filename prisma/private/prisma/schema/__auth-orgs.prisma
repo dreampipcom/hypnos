@@ -17,6 +17,20 @@ model Communities {
   		quest refund?
 
   		a decorator!
+
+  		hydration lagend?
+
+  		stored procedure?
+
+  		redisindex?
+
+  		what's a shard?
+
+  		a yard?
+
+  		cron jobs?
+
+  		learning legens?
   */
 
   name                  String
