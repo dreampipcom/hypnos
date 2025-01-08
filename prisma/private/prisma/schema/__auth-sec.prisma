@@ -123,6 +123,9 @@ model User {
   ownedMessages         Messages[]        @relation("messageUserOwner")
   createdMessages       Messages[]        @relation("messageUserCreator")
 
+  ownedWriteYou            WriteYou[]          @relation("writeYouUserOwner")
+  createdWriteYou          WriteYou[]          @relation("writeYouUserCreator")
+
   ownedWriteIdeas            WriteIdeas[]          @relation("writeIdeasUserOwner")
   createdWriteIdeas          WriteIdeas[]          @relation("writeIdeasUserCreator")
 
@@ -153,20 +156,8 @@ model User {
   ownedWriteMedDocs            WriteMedDocs[]          @relation("writeMedDocsUserOwner")
   createdWriteMedDocs          WriteMedDocs[]          @relation("writeMedDocsUserCreator")
 
-  ownedViewTime            ViewTime[]          @relation("viewTimeUserOwner")
-  createdViewTime          ViewTime[]          @relation("viewTimeUserCreator")
-
-  ownedViewSpaces            ViewSpaces[]          @relation("viewSpacesUserOwner")
-  createdViewSpaces          ViewSpaces[]          @relation("viewSpacesUserCreator")
-
-  ownedViewCharts            ViewCharts[]          @relation("viewChartsUserOwner")
-  createdViewCharts          ViewCharts[]          @relation("viewChartsUserCreator")
-
-  ownedViewDashboards            ViewDashboards[]          @relation("viewDashboardsUserOwner")
-  createdViewDashboards          ViewDashboards[]          @relation("viewDashboardsUserCreator")
-
-  ownedViewListings            ViewListings[]          @relation("viewListingsUserOwner")
-  createdViewListings          ViewListings[]          @relation("viewListingsUserCreator")
+  ownedMakeYou            MakeYou[]          @relation("makeYouUserOwner")
+  createdMakeYou          MakeYou[]          @relation("makeYouUserCreator")
 
   ownedMakeRecipes            MakeRecipes[]          @relation("makeRecipesUserOwner")
   createdMakeRecipes          MakeRecipes[]          @relation("makeRecipesUserCreator")
@@ -192,17 +183,14 @@ model User {
   ownedMakeFunctions            MakeFunctions[]          @relation("makeFunctionsUserOwner")
   createdMakeFunctions          MakeFunctions[]          @relation("makeFunctionsUserCreator")
 
-  ownedMakeProfiles            MakeYou[]          @relation("makeYouUserOwner")
-  createdMakeProfiles          MakeYou[]          @relation("makeYouUserCreator")
+  ownedFeelYou            FeelYou[]          @relation("feelYouUserOwner")
+  createdFeelYou          FeelYou[]          @relation("feelYouUserCreator")
 
   ownedFeelLike            FeelLike[]          @relation("feelLikeUserOwner")
   createdFeelLike          FeelLike[]          @relation("feelLikeUserCreator")
 
   ownedFeelMoods            FeelMoods[]          @relation("feelMoodsUserOwner")
   createdFeelMoods          FeelMoods[]          @relation("feelMoodsUserCreator")
-
-  ownedFeelYou            FeelYou[]          @relation("feelYouUserOwner")
-  createdFeelYou          FeelYou[]          @relation("feelYouUserCreator")
 
   ownedFeelConfessions            FeelConfessions[]          @relation("feelConfessionsUserOwner")
   createdFeelConfessions          FeelConfessions[]          @relation("feelConfessionsUserCreator")
@@ -242,9 +230,6 @@ model User {
 
   ownedInvestSharedPositions          InvestSharedPositions[]          @relation("investSharedPositionsUserOwner")
   createdInvestSharedPositions         InvestSharedPositions[]          @relation("investSharedPositionsUserCreator")
-
-  ownedInvestYou          InvestYou[]          @relation("investPortfoliosUserOwner")
-  createdInvestYou         InvestYou[]          @relation("investPortfoliosUserCreator")
 
   ownedDoYou            DoYou[]          @relation("doYouUserOwner")
   createdDoYou          DoYou[]          @relation("doYouUserCreator")
@@ -357,6 +342,21 @@ model User {
 
   ownedNexusContexts            NexusContexts[]          @relation("nexusContextsUserOwner")
   createdNexusContexts          NexusContexts[]          @relation("nexusContextsUserCreator")
+
+  ownedViewTime            ViewTime[]          @relation("viewTimeUserOwner")
+  createdViewTime          ViewTime[]          @relation("viewTimeUserCreator")
+
+  ownedViewSpaces            ViewSpaces[]          @relation("viewSpacesUserOwner")
+  createdViewSpaces          ViewSpaces[]          @relation("viewSpacesUserCreator")
+
+  ownedViewCharts            ViewCharts[]          @relation("viewChartsUserOwner")
+  createdViewCharts          ViewCharts[]          @relation("viewChartsUserCreator")
+
+  ownedViewDashboards            ViewDashboards[]          @relation("viewDashboardsUserOwner")
+  createdViewDashboards          ViewDashboards[]          @relation("viewDashboardsUserCreator")
+
+  ownedViewListings            ViewListings[]          @relation("viewListingsUserOwner")
+  createdViewListings          ViewListings[]          @relation("viewListingsUserCreator")
 
   ownedServices         Services[]      @relation("serviceUserOwner")
   createdServices       Services[]      @relation("serviceUserCreator")
