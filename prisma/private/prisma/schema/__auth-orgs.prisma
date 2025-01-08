@@ -9,7 +9,9 @@ model Communities {
   usersIds              String[]          @db.ObjectId
 
   status                ECommunitiesStatus
-  wallets 							InvestYou[]
+  /* wallets? 							InvestYou[]
+  		(own/manage/created)Wallets
+  */
 
   name                  String
   description           String
