@@ -26,6 +26,21 @@ model DoSocial {
   loggedFor         DateTime[]          @db.Date
   publishedOn       DateTime            @db.Date
 
+  beSocialProfiles  BeSocial[]              @relation("makeSocialBeSocialProfiles", fields: [beSocialProfilesIds], references: [id])
+  beSocialProfilesIds       String[]             @db.ObjectId
+
+  makeSocialProfiles  MakeSocial[]              @relation("makeSocialMakeSocialProfiles", fields: [makeSocialProfilesIds], references: [id])
+  makeSocialProfilesIds       String[]             @db.ObjectId
+
+  investSocialProfiles  MakeSocial[]        @relation("makeSocialInvestSocialProfiles", fields: [investSocialProfilesIds], references: [id])
+  investSocialProfilesIds       String[]             @db.ObjectId
+
+  feelSocialProfiles  FeelSocial[]              @relation("makeSocialFeelSocialProfiles", fields: [feelSocialProfilesIds], references: [id])
+  feelSocialProfilesIds       String[]             @db.ObjectId
+
+  writeSocialProfiles  WriteSocial[]              @relation("makeSocialWriteSocialProfiles", fields: [writeSocialProfilesIds], references: [id])
+  writeSocialProfilesIds       String[]             @db.ObjectId
+
   assignments       Dos[]              @relation("doDosAssignees", fields: [assignmentsId], references: [id])
   assignmentsId       String[]             @db.ObjectId
 
