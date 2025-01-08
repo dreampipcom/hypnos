@@ -52,11 +52,12 @@ model Communities {
   		(owned)BeSocial?
   		We're sharing a flat, not starting a business?
   */
-
+  legalEntity						IRegisteredCompany
   name                  String
   description           String
   urls                  String[]
   image                 String?
+
 
   favorites             MakeListings[]        @relation("communityFavorites", fields: [favoritesIds], references: [id])
   favoritesIds          String[]          @db.ObjectId
