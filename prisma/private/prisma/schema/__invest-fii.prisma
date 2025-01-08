@@ -4,7 +4,7 @@
 //
 // Your faith.
 // Portfolios
-model InvestPortfolios {
+model InvestYou {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String
@@ -17,19 +17,19 @@ model InvestPortfolios {
   loggedFor         DateTime[]            @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         User?              @relation("investPortfoliosUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("investYouUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("investPortfoliosCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("investYouCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("investPortfoliosUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("investYouUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("investPortfoliosCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("investYouCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("investPortfolios")
+  @@map("investYou")
 }
 
 // Asset: Positions. +

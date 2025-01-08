@@ -4,7 +4,7 @@
 // Invest
 // KRN Asset: Karuna: Compliments, Witnessing. +
 // DPIP Asset: Pip: Criticism, Feedback. -
-model InvestYou {
+model InvestSocial {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String

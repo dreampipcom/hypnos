@@ -6,6 +6,47 @@
 
 // ::Ensure shared Bees::
 // Tasks
+model DoSocial {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  name              ILocaleString
+  slug              String
+  description       ILocaleString
+
+  title             ILocaleString
+  body              ILocaleString
+  role              EDoRole
+
+  reportsSent                   DoReports[]    @relation("doSocialReporters", fields: [reportsSentIds], references: [id])
+  reportsSentIds                String[]        @db.ObjectId
+
+  reportsReceived                   DoReports[]    @relation("doSocialReportees", fields: [reportsReceivedIds], references: [id])
+  reportsReceivedIds                String[]        @db.ObjectId
+
+  loggedOn          DateTime            @db.Date
+  loggedFor         DateTime[]          @db.Date
+  publishedOn       DateTime            @db.Date
+
+  assignments       Dos[]              @relation("doDosAssignees", fields: [assignmentsId], references: [id])
+  assignmentsId       String[]             @db.ObjectId
+
+  watchers       Dos[]              @relation("doDosWatchers", fields: [watchersId], references: [id])
+  watchersId       String[]             @db.ObjectId
+
+  userOwner         User?              @relation("doSocialUserOwner", fields: [userOwnerId], references: [id])
+  userOwnerId       String?             @db.ObjectId
+
+  communityOwner        Communities?             @relation("doSocialCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwnerId      String?             @db.ObjectId
+
+  userCreator       User?              @relation("doSocialUserCreator", fields: [userCreatorId], references: [id])
+  userCreatorId     String?             @db.ObjectId
+
+  communityCreator      Communities?             @relation("doSocialCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreatorId    String?             @db.ObjectId
+
+  @@map("doSocial")
+}
+
 model Dos {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
