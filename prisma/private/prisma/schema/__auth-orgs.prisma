@@ -35,6 +35,17 @@ model Communities {
   		learning
 
   		legans
+
+  		are we talking about
+  		communities?
+  		legends?
+  		thriveCrafting
+  		ETFWallets,
+  		GloogingFunds,
+  		UnicefGlasses,
+  		GreenPeace,
+  		MyWG,
+  		UnsererWG?
   */
 
   name                  String
