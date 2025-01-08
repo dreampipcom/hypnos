@@ -277,7 +277,7 @@ type IJWT {
 type ICertificates {
   name        String // ED25519, RSA, PEM
   value       String // .pem
-  authority   String
+  authority   String // CA
 }
 
 type IVPN {
