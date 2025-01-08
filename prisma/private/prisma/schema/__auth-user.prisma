@@ -246,9 +246,6 @@ model User {
   ownedBeAwards            BeAwards[]          @relation("beAwardsUserOwner")
   createdBeAwards          BeAwards[]          @relation("beAwardsUserCreator")
 
-  ownedBeSocial            BeSocial[]          @relation("beSocialUserOwner")
-  createdBeSocial          BeSocial[]          @relation("beSocialUserCreator")
-
   ownedBeDeals            BeDeals[]          @relation("beDealsUserOwner")
   createdBeDeals          BeDeals[]          @relation("beDealsUserCreator")
 
