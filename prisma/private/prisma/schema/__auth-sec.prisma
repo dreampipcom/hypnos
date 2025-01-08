@@ -243,6 +243,7 @@ model Settings {
   title             ILocaleString
   body              ILocaleString
 
+  // on-prem access level
   vpns              IVPN[]
 
   userOwner         User?              @relation("settingsUserOwner", fields: [userOwnerId], references: [id])
