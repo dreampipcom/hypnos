@@ -46,6 +46,11 @@ model Communities {
   		GreenPeace,
   		MyWG,
   		UnsererWG?
+  		OurBindingSlivers
+  		SocialSlivers
+
+  		(owned)BeSocial?
+  		We're sharing a flat, not starting a business?
   */
 
   name                  String
