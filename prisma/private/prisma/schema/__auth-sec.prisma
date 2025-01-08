@@ -274,12 +274,18 @@ type IJWT {
   value   String
 }
 
+type ICertificates {
+  name        String // ED25519, RSA, PEM
+  value       String // .pem
+}
+
 type IVPN {
   vpnProxyUrl                 String
   vpnProxyToken               IJWT
   vpnIPs                      String[]
   vpnHostnames                String[]
   vpnProtocols                EVPNProtocols
+  vpnCertificates             ICertificates[]
 }
 
 // globals
