@@ -311,7 +311,7 @@ model Communities {
   // View Office: Expense, Glasses, Tickets?
   /* mercy
   * or googles, filter mode, activate? fee? investments, un-noticed, pass cards, sometimes, clubs, yearly bills.
-  optional projecions,
+  optional projections,
   I see. */
 
   ownedViewCharts            ViewCharts[]          @relation("viewChartsCommunityOwner")
