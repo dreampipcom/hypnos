@@ -243,9 +243,7 @@ model Settings {
   title             ILocaleString
   body              ILocaleString
 
-  vpnProxyUrl          String
-  vpnProxyToken        IJWT
-  vpnIPAllowList       String[]
+  vpns              IVPN[]
 
   userOwner         User?              @relation("settingsUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
@@ -265,6 +263,12 @@ model Settings {
 type IJWT {
   name    String
   value   String
+}
+
+type IVPN {
+  vpnProxyUrl          String
+  vpnProxyToken        IJWT
+  vpnIPAllowList       String[]
 }
 
 // globals
