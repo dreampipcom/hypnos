@@ -265,7 +265,7 @@ enum EVPNProtocols {
   WIREGUARD
   OPEN
   S2S
-  DNS
+  ZEROTRUST
 }
 
 type IJWT {
