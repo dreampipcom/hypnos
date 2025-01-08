@@ -274,10 +274,11 @@ type IJWT {
 }
 
 type IVPN {
-  vpnProxyUrl          String
-  vpnProxyToken        IJWT
-  vpnIPAllowList       String[]
-  vpnProtocols         EVPNProtocols
+  vpnProxyUrl                 String
+  vpnProxyToken               IJWT
+  vpnIPAllowList              String[]
+  vpnHostnamesAllowList       String[]
+  vpnProtocols                EVPNProtocols
 }
 
 // globals
