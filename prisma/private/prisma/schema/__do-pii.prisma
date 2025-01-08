@@ -13,6 +13,12 @@ model DoYou {
   body              ILocaleString
   role 							EDoRole
 
+  reportsSent                   DoReports[]    @relation("doYouReporters", fields: [reportsSentIds], references: [id])
+  reportsSentIds                String[]        @db.ObjectId
+
+  reportsReceived                   DoReports[]    @relation("doYouReportees", fields: [reportsReceivedIds], references: [id])
+  reportsReceivedIds                String[]        @db.ObjectId
+
   loggedOn          DateTime            @db.Date
   loggedFor         DateTime[]          @db.Date
   publishedOn       DateTime            @db.Date
@@ -130,10 +136,10 @@ model DoReports {
   slug              String
   description       ILocaleString
 
-  reporters         MakeYou[]              @relation("beContactsReporters", fields: [reportersId], references: [id])
+  reporters         DoYou[]              @relation("doYouReporters", fields: [reportersId], references: [id])
   reportersId       String[]             @db.ObjectId
 
-  reportees         MakeYou[]              @relation("beContactsReportees", fields: [reportersId], references: [id])
+  reportees         DoYou[]              @relation("doYouReportees", fields: [reportersId], references: [id])
   reporteesId       String[]             @db.ObjectId
 
   title             ILocaleString

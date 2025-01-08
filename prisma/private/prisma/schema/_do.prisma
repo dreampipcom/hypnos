@@ -15,8 +15,8 @@ model Dos {
   assignees          DoYou[]             @relation("doDosAssignees", fields: [assigneesId], references: [id])
   assigneesId        String[]             @db.ObjectId
 
-  makeProfiles       MakeYou[]            @relation("makeYouDos", fields: [makeProfilesId], references: [id])
-  makeProfilesId       String[]           @db.ObjectId
+  watchers          DoYou[]             @relation("doDosWatchers", fields: [watchersId], references: [id])
+  watchersId        String[]             @db.ObjectId
 
   title             ILocaleString
   body              ILocaleString
@@ -200,9 +200,6 @@ model DoQuests {
   body              ILocaleString
 
   ticker            String
-
-  makers         MakeYou[]  @relation("makeYouQuests", fields: [makersIds], references: [id])
-  makersIds      String[]          @db.ObjectId
 
   positions         InvestPositions[]  @relation("doQuestPositions", fields: [positionsIds], references: [id])
   positionsIds      String[]          @db.ObjectId

@@ -19,6 +19,12 @@ model BeYou {
   domiciles         ILocation?
   beAt              ILocation?
 
+  salesDeals          BeDeals[]             @relation("beYouSeller", fields: [salesDealsId], references: [id])
+  salesDealsId        String[]             @db.ObjectId
+
+  buyDeals          BeDeals[]             @relation("beYouBuyer", fields: [buyDealsId], references: [id])
+  buyDealsId        String[]             @db.ObjectId
+
   contactProfiles                     BeContacts[]      @relation("beYouContactProfiles", fields: [contactProfilesIds], references: [id])
   contactProfilesIds                  String[]        @db.ObjectId
   
@@ -491,6 +497,12 @@ model BeDeals {
 
   title             ILocaleString
   body              ILocaleString
+
+  sellers                   BeYou[]    @relation("beYouSeller", fields: [sellersIds], references: [id])
+  sellersIds                String[]        @db.ObjectId
+
+  buyers                   BeYou[]    @relation("beYouBuyer", fields: [buyersIds], references: [id])
+  buyersIds                String[]        @db.ObjectId
 
   loggedOn          DateTime            @db.Date
   loggedFor         DateTime[]            @db.Date

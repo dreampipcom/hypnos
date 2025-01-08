@@ -14,12 +14,6 @@ model MakeYou {
 
   publishedOn       DateTime            @db.Date
 
-  dos                   Dos[]    @relation("makeYouDos", fields: [dosIds], references: [id])
-  dosIds                String[]        @db.ObjectId
-
-  deals                   BeDeals[]    @relation("beContactsDeals", fields: [dealsIds], references: [id])
-  dealsIds                String[]        @db.ObjectId
-
   recipes                   MakeRecipes[]    @relation("makeYouRecipes", fields: [recipesIds], references: [id])
   recipesIds                String[]        @db.ObjectId 
 
@@ -32,9 +26,6 @@ model MakeYou {
   procurements                   MakeProcurements[]    @relation("makeYouProcurements", fields: [procurementsIds], references: [id])
   procurementsIds                String[]        @db.ObjectId
 
-  quests                   DoQuests[]    @relation("makeYouQuests", fields: [questsIds], references: [id])
-  questsIds                String[]        @db.ObjectId
-
   functions                   MakeFunctions[]    @relation("makeYouFunctions", fields: [functionsIds], references: [id])
   functionsIds                String[]        @db.ObjectId
 
@@ -46,12 +37,6 @@ model MakeYou {
 
   spaces                   MakeSpaces[]    @relation("makeYouSpaces", fields: [spacesIds], references: [id])
   spacesIds                String[]        @db.ObjectId
-
-  reportsSent                   DoReports[]    @relation("beContactsReporters", fields: [reportsSentIds], references: [id])
-  reportsSentIds                String[]        @db.ObjectId
-
-  reportsReceived                   DoReports[]    @relation("beContactsReportees", fields: [reportsReceivedIds], references: [id])
-  reportsReceivedIds                String[]        @db.ObjectId
 
   userOwner         User?              @relation("makeYouUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
