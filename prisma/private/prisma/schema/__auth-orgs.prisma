@@ -309,6 +309,8 @@ model Communities {
   ownedViewSpaces            ViewSpaces[]          @relation("viewSpacesCommunityOwner")
   createdViewSpaces          ViewSpaces[]          @relation("viewSpacesCommunityCreator")
   // View Office: Expense, Glasses, Tickets?
+  /* mercy
+  * googles, filter mode */
 
   ownedViewCharts            ViewCharts[]          @relation("viewChartsCommunityOwner")
   createdViewCharts          ViewCharts[]          @relation("viewChartsCommunityCreator")
