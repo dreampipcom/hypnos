@@ -11,7 +11,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  wallets 			InvestYou[]
+  // ownedWallets, ownedBeSocial, pwned yourself first, high score next Strava.
   // Optional for WebAuthn support
   Authenticator Authenticator[]
  
