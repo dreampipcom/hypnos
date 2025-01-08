@@ -266,6 +266,7 @@ enum EVPNProtocols {
   OPEN
   S2S
   ZEROTRUST
+  GATEWAY
 }
 
 type IJWT {
