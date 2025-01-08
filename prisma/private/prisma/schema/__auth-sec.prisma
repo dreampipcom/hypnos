@@ -584,6 +584,9 @@ model Communities {
 
   ownedBeLetters            BeLetters[]          @relation("beLettersCommunityOwner")
   createdBeLetters          BeLetters[]          @relation("beLettersCommunityCreator")
+  
+  ownedBeEvents            BeEvents[]          @relation("beEventsCommunityOwner")
+  createdBeEvents          BeEvents[]          @relation("beEventsCommunityCreator")
 
   ownedBeCalendars            BeCalendars[]          @relation("beCalendarsCommunityOwner")
   createdBeCalendars          BeCalendars[]          @relation("beCalendarsCommunityCreator")

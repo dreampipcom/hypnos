@@ -299,19 +299,19 @@ model BeEvents {
   status            String
   published         DateTime            @db.Date
 
-  userOwner         User?              @relation("beEventUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("beEventsUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("beEventCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("beEventsCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("beEventUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("beEventsUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("beEventCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("beEventsCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("beEvent")
+  @@map("beEvents")
 }
 
 model BeCalendars {
