@@ -11,6 +11,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  wallets 			InvestYou[]
   // Optional for WebAuthn support
   Authenticator Authenticator[]
  

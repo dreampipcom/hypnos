@@ -274,7 +274,7 @@ type IJWT {
   value   String
 }
 
-type ICertificates {
+type ICertificate {
   name        String // ED25519, RSA, PEM
   value       String // .pem
   authority   String // CA, Snakeoil, Penstake, Wallet
@@ -286,7 +286,7 @@ type IVPN {
   vpnIPs                      String[]
   vpnHostnames                String[]
   vpnProtocols                EVPNProtocols
-  vpnCertificates             ICertificates[]
+  vpnCertificates             ICertificate[]
 }
 
 // globals

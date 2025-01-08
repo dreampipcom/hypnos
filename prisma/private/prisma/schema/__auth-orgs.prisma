@@ -9,6 +9,7 @@ model Communities {
   usersIds              String[]          @db.ObjectId
 
   status                ECommunitiesStatus
+  wallets 							InvestYou[]
 
   name                  String
   description           String

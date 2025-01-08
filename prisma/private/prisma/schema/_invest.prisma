@@ -13,6 +13,9 @@ model InvestSocial {
   title             ILocaleString
   body              ILocaleString
 
+  wallets           InvestWallets[]              @relation("investSocialWallets", fields: [walletsId], references: [id])
+  walletsId       String?             @db.ObjectId  
+
   beSocialProfiles  BeSocial[]              @relation("investSocialBeSocialProfiles", fields: [beSocialProfilesIds], references: [id])
   beSocialProfilesIds       String[]             @db.ObjectId
 
