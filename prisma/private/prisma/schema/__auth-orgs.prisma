@@ -310,7 +310,9 @@ model Communities {
   createdViewSpaces          ViewSpaces[]          @relation("viewSpacesCommunityCreator")
   // View Office: Expense, Glasses, Tickets?
   /* mercy
-  * googles, filter mode, activate? fee? investments, un-noticed, pass cards, sometimes, clubs, yearly bills. */
+  * or googles, filter mode, activate? fee? investments, un-noticed, pass cards, sometimes, clubs, yearly bills.
+  optional projecions,
+  I see. */
 
   ownedViewCharts            ViewCharts[]          @relation("viewChartsCommunityOwner")
   createdViewCharts          ViewCharts[]          @relation("viewChartsCommunityCreator")
