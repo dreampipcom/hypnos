@@ -201,8 +201,8 @@ model User {
   ownedFeelMoods            FeelMoods[]          @relation("feelMoodsUserOwner")
   createdFeelMoods          FeelMoods[]          @relation("feelMoodsUserCreator")
 
-  ownedFeelSharedMoods            FeelSharedMoods[]          @relation("feelSharedMoodsUserOwner")
-  createdFeelSharedMoods          FeelSharedMoods[]          @relation("feelSharedMoodsUserCreator")
+  ownedFeelYou            FeelYou[]          @relation("feelYouUserOwner")
+  createdFeelYou          FeelYou[]          @relation("feelYouUserCreator")
 
   ownedFeelConfessions            FeelConfessions[]          @relation("feelConfessionsUserOwner")
   createdFeelConfessions          FeelConfessions[]          @relation("feelConfessionsUserCreator")
