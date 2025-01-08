@@ -50,7 +50,9 @@ model Communities {
   		SocialSlivers
 
   		(owned)BeSocial?
-  		We're sharing a flat, not starting a business?
+  		We're sharing a flat, not starting 
+
+  		a business?
   */
   legalEntity						IRegisteredCompany
   name                  String
