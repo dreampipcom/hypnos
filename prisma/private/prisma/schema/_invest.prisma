@@ -4,7 +4,7 @@
 // Invest
 // KRN Asset: Karuna: Compliments, Witnessing. +
 // DPIP Asset: Pip: Criticism, Feedback. -
-model InvestSharedPortfolios {
+model InvestYou {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String
@@ -17,19 +17,19 @@ model InvestSharedPortfolios {
   loggedFor         DateTime[]            @db.Date
   publishedOn       DateTime            @db.Date
 
-  userOwner         User?              @relation("investSharedPortfoliosUserOwner", fields: [userOwnerId], references: [id])
+  userOwner         User?              @relation("investYouUserOwner", fields: [userOwnerId], references: [id])
   userOwnerId       String?             @db.ObjectId
 
-  communityOwner        Communities?             @relation("investSharedPortfoliosCommunityOwner", fields: [communityOwnerId], references: [id])
+  communityOwner        Communities?             @relation("investYouCommunityOwner", fields: [communityOwnerId], references: [id])
   communityOwnerId      String?             @db.ObjectId
 
-  userCreator       User?              @relation("investSharedPortfoliosUserCreator", fields: [userCreatorId], references: [id])
+  userCreator       User?              @relation("investYouUserCreator", fields: [userCreatorId], references: [id])
   userCreatorId     String?             @db.ObjectId
 
-  communityCreator      Communities?             @relation("investSharedPortfoliosCommunityCreator", fields: [communityCreatorId], references: [id])
+  communityCreator      Communities?             @relation("investYouCommunityCreator", fields: [communityCreatorId], references: [id])
   communityCreatorId    String?             @db.ObjectId
 
-  @@map("investSharedPortfolios")
+  @@map("investYou")
 }
 
 model InvestSharedPositions {

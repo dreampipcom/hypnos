@@ -219,6 +219,9 @@ model User {
   ownedInvestTransactions            InvestTransactions[]          @relation("investTransactionsUserOwner")
   createdInvestTransactions          InvestTransactions[]          @relation("investTransactionsUserCreator")
 
+  ownedInvestYou          InvestYou[]          @relation("investYouUserOwner")
+  createdInvestYou         InvestYou[]          @relation("investYouUserCreator")
+
   ownedInvestWallets            InvestWallets[]          @relation("investWalletsUserOwner")
   createdInvestWallets          InvestWallets[]          @relation("investWalletsUserCreator")
 
@@ -243,8 +246,8 @@ model User {
   ownedInvestPortfolios          InvestPortfolios[]          @relation("investPortfoliosUserOwner")
   createdInvestPortfolios         InvestPortfolios[]          @relation("investPortfoliosUserCreator")
 
-  ownedInvestSharedPortfolios          InvestSharedPortfolios[]          @relation("investSharedPortfoliosUserOwner")
-  createdInvestSharedPortfolios         InvestSharedPortfolios[]          @relation("investSharedPortfoliosUserCreator")
+  ownedDoYou            DoYou[]          @relation("doYouUserOwner")
+  createdDoYou          DoYou[]          @relation("doYouUserCreator")
 
   ownedDoDos            Dos[]          @relation("doDosUserOwner")
   createdDoDos          Dos[]          @relation("doDosUserCreator")
@@ -281,9 +284,6 @@ model User {
 
   ownedDoReports         DoReports[]          @relation("doReportsUserOwner")
   createdDoReports       DoReports[]          @relation("doReportsUserCreator")
-
-  ownedDoYou            DoYou[]          @relation("doYouUserOwner")
-  createdDoYou          DoYou[]          @relation("doYouUserCreator")
 
   ownedDoSquads            DoSquads[]          @relation("doSquadsUserOwner")
   createdDoSquads          DoSquads[]          @relation("doSquadsUserCreator")
