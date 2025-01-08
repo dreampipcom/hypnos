@@ -234,7 +234,7 @@ model Features {
 }
 
 // Settings
-model PrivacySettings {
+model Settings {
   id                String              @id @default(auto()) @map("_id") @db.ObjectId
   name              ILocaleString
   slug              String
@@ -242,6 +242,9 @@ model PrivacySettings {
 
   title             ILocaleString
   body              ILocaleString
+
+  vpnProxyUrl          String
+  vpnProxyToken        IJWT
 
   purchaseValue     Float
   settledValue      Float
@@ -259,6 +262,11 @@ model PrivacySettings {
   communityCreatorId    String?             @db.ObjectId
 
   @@map("PrivacySettings")
+}
+
+type IJWT {
+  name    String
+  value   String
 }
 
 // globals
