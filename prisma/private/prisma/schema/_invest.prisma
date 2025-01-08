@@ -13,6 +13,21 @@ model InvestSocial {
   title             ILocaleString
   body              ILocaleString
 
+  beSocialProfiles  BeSocial[]              @relation("investSocialBeSocialProfiles", fields: [beSocialProfilesIds], references: [id])
+  beSocialProfilesIds       String[]             @db.ObjectId
+
+  doSocialProfiles  DoSocial[]              @relation("investSocialDoSocialProfiles", fields: [doSocialProfilesIds], references: [id])
+  doSocialProfilesIds       String[]             @db.ObjectId
+
+  makeSocialProfiles  MakeSocial[]              @relation("investSocialMakeSocialProfiles", fields: [makeSocialProfilesIds], references: [id])
+  makeSocialProfilesIds       String[]             @db.ObjectId
+
+  feelSocialProfiles  FeelSocial[]              @relation("investSocialFeelSocialProfiles", fields: [feelSocialProfilesIds], references: [id])
+  feelSocialProfilesIds       String[]             @db.ObjectId
+
+  writeSocialProfiles  WriteSocial[]              @relation("investSocialWriteSocialProfiles", fields: [writeSocialProfilesIds], references: [id])
+  writeSocialProfilesIds       String[]             @db.ObjectId
+
   loggedOn          DateTime            @db.Date
   loggedFor         DateTime[]            @db.Date
   publishedOn       DateTime            @db.Date
