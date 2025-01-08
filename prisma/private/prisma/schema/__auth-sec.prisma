@@ -276,8 +276,8 @@ type IJWT {
 type IVPN {
   vpnProxyUrl                 String
   vpnProxyToken               IJWT
-  vpnIPAllowList              String[]
-  vpnHostnamesAllowList       String[]
+  vpnIPs                      String[]
+  vpnHostnames                String[]
   vpnProtocols                EVPNProtocols
 }
 
