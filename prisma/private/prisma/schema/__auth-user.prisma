@@ -1,0 +1,325 @@
+// to-do: __auth-user.prisma
+// ---- @PRIVATE: User Governance. ----
+// 
+// @you stuff.
+// Users.
+model User {
+  id            String          @id @default(auto()) @map("_id") @db.ObjectId
+  name          String?
+  email         String?         @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  // Optional for WebAuthn support
+  Authenticator Authenticator[]
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  communities                Communities[]          @relation(fields: [communitiesIds], references: [id])
+  communitiesIds             String[]          @db.ObjectId
+  location              ILocation?
+
+  services              Services[]      @relation("userServices", fields: [servicesIds], references: [id])
+  servicesIds           String[]        @db.ObjectId
+
+  abilities             Abilities[]     @relation("userAbilities", fields: [abilitiesIds], references: [id])
+  abilitiesIds          String[]        @db.ObjectId
+
+  authorityOn           InvestContracts[]     @relation("investUserAuthorities", fields: [authorityOnIds], references: [id])
+  authorityOnIds          String[]        @db.ObjectId
+
+  signedOn                InvestContracts[]     @relation("investUserSignatures", fields: [signedOnIds], references: [id])
+  signedOnIds          String[]        @db.ObjectId
+
+  // settings           String
+  favorites             MakeListings[]        @relation("favorites", fields: [favoritesIds], references: [id])
+  favoritesIds          String[]          @db.ObjectId
+
+  favoritesStrings             String[] 
+
+  messagesSent          Messages[]        @relation("userMessagesSent")
+  messagesSentIds       String[]          @db.ObjectId
+
+  messagesReceived      Messages[]        @relation("userMessagesReceived", fields: [messagesReceivedIds], references: [id])
+  messagesReceivedIds   String[]          @db.ObjectId
+
+  roles                 Roles[]           @relation("roles", fields: [rolesIds], references: [id])
+  rolesIds              String[]          @db.ObjectId 
+
+  // user generated content
+
+  ownedCommunities           Communities[]          @relation("ownedCommunities")
+  createdCommunities         Communities[]          @relation("createdCommunities")
+
+  ownedListings         MakeListings[]        @relation("makeListingUserOwner")
+  createdListings       MakeListings[]        @relation("makeListingUserCreator")
+
+  ownedMessages         Messages[]        @relation("messageUserOwner")
+  createdMessages       Messages[]        @relation("messageUserCreator")
+
+  ownedWriteYou            WriteYou[]          @relation("writeYouUserOwner")
+  createdWriteYou          WriteYou[]          @relation("writeYouUserCreator")
+
+  ownedWriteSocial            WriteSocial[]          @relation("writeSocialUserOwner")
+  createdWriteSocial          WriteSocial[]          @relation("writeSocialUserCreator")
+
+  ownedWriteIdeas            WriteIdeas[]          @relation("writeIdeasUserOwner")
+  createdWriteIdeas          WriteIdeas[]          @relation("writeIdeasUserCreator")
+
+  ownedWritePublications            WritePublications[]          @relation("writePublicationsUserOwner")
+  createdWritePublications          WritePublications[]          @relation("writePublicationsUserCreator")
+
+  ownedWriteWits            WriteWits[]          @relation("writeWitsUserOwner")
+  createdWriteWits          WriteWits[]          @relation("writeWitsUserCreator")
+
+  ownedWriteCogitos            WriteCogitos[]          @relation("writeCogitosUserOwner")
+  createdWriteCogitos          WriteCogitos[]          @relation("writeCogitosUserCreator")
+
+  ownedWriteHopes            WriteHopes[]          @relation("writeHopesUserOwner")
+  createdWriteHopes          WriteHopes[]          @relation("writeHopesUserCreator")
+
+  ownedWriteOpinions            WriteOpinions[]          @relation("writeOpinionsUserOwner")
+  createdWriteOpinions          WriteOpinions[]          @relation("writeOpinionsUserCreator")
+
+  ownedWriteThreads            WriteThreads[]          @relation("writeThreadsUserOwner")
+  createdWriteThreads          WriteThreads[]          @relation("writeThreadsUserCreator")
+
+  ownedWriteLearnings            WriteLearnings[]          @relation("writeLearningsUserOwner")
+  createdWriteLearnings          WriteLearnings[]          @relation("writeLearningsUserCreator")
+
+  ownedWriteDocs            WriteDocs[]          @relation("writeDocsUserOwner")
+  createdWriteDocs          WriteDocs[]          @relation("writeDocsUserCreator")
+
+  ownedWriteMedDocs            WriteMedDocs[]          @relation("writeMedDocsUserOwner")
+  createdWriteMedDocs          WriteMedDocs[]          @relation("writeMedDocsUserCreator")
+
+  ownedMakeYou            MakeYou[]          @relation("makeYouUserOwner")
+  createdMakeYou          MakeYou[]          @relation("makeYouUserCreator")
+
+  ownedMakeSocial            MakeSocial[]          @relation("makeSocialUserOwner")
+  createdMakeSocial          MakeSocial[]          @relation("makeSocialUserCreator")
+
+  ownedMakeRecipes            MakeRecipes[]          @relation("makeRecipesUserOwner")
+  createdMakeRecipes          MakeRecipes[]          @relation("makeRecipesUserCreator")
+
+  ownedMakeListings            MakeListings[]          @relation("makeListingsUserOwner")
+  createdMakeListings          MakeListings[]          @relation("makeListingsUserCreator")
+
+  ownedMakeSpaces            MakeSpaces[]          @relation("makeSpacesUserOwner")
+  createdMakeSpaces          MakeSpaces[]          @relation("makeSpacesUserCreator")
+
+  ownedMakeProcurements            MakeProcurements[]          @relation("makeProcurementsUserOwner")
+  createdMakeProcurements          MakeProcurements[]          @relation("makeProcurementsUserCreator")
+
+  ownedMakeThings            MakeThings[]          @relation("makeThingsUserOwner")
+  createdMakeThings          MakeThings[]          @relation("makeThingsUserCreator")
+
+  ownedMakeInventories            MakeInventories[]          @relation("makeInventoriesUserOwner")
+  createdMakeInventories          MakeInventories[]          @relation("makeInventoriesUserCreator")
+
+  ownedMakeItems            MakeItems[]          @relation("makeItemsUserOwner")
+  createdMakeItems          MakeItems[]          @relation("makeItemsUserCreator")
+
+  ownedMakeFunctions            MakeFunctions[]          @relation("makeFunctionsUserOwner")
+  createdMakeFunctions          MakeFunctions[]          @relation("makeFunctionsUserCreator")
+
+  ownedFeelYou            FeelYou[]          @relation("feelYouUserOwner")
+  createdFeelYou          FeelYou[]          @relation("feelYouUserCreator")
+
+  ownedFeelSocial            FeelSocial[]          @relation("feelSocialUserOwner")
+  createdFeelSocial          FeelSocial[]          @relation("feelSocialUserCreator")
+
+  ownedFeelLike            FeelLike[]          @relation("feelLikeUserOwner")
+  createdFeelLike          FeelLike[]          @relation("feelLikeUserCreator")
+
+  ownedFeelMoods            FeelMoods[]          @relation("feelMoodsUserOwner")
+  createdFeelMoods          FeelMoods[]          @relation("feelMoodsUserCreator")
+
+  ownedFeelConfessions            FeelConfessions[]          @relation("feelConfessionsUserOwner")
+  createdFeelConfessions          FeelConfessions[]          @relation("feelConfessionsUserCreator")
+
+  ownedFeelDreams            FeelDreams[]          @relation("feelDreamsUserOwner")
+  createdFeelDreams          FeelDreams[]          @relation("feelDreamsUserCreator")
+
+  ownedFeelCravings            FeelCravings[]          @relation("feelCravingsUserOwner")
+  createdFeelCravings          FeelCravings[]          @relation("feelCravingsUserCreator")
+
+  ownedFeelSymptoms            FeelSymptoms[]          @relation("feelSymptomsUserOwner")
+  createdFeelSymptoms          FeelSymptoms[]          @relation("feelSymptomsUserCreator")
+
+  ownedInvestTransactions            InvestTransactions[]          @relation("investTransactionsUserOwner")
+  createdInvestTransactions          InvestTransactions[]          @relation("investTransactionsUserCreator")
+
+  ownedInvestYou          InvestYou[]          @relation("investYouUserOwner")
+  createdInvestYou         InvestYou[]          @relation("investYouUserCreator")
+
+  ownedInvestSocial          InvestSocial[]          @relation("investSocialUserOwner")
+  createdInvestSocial         InvestSocial[]          @relation("investSocialUserCreator")
+
+  ownedInvestWallets            InvestWallets[]          @relation("investWalletsUserOwner")
+  createdInvestWallets          InvestWallets[]          @relation("investWalletsUserCreator")
+
+  ownedInvestTypes            InvestTypes[]          @relation("investTypesUserOwner")
+  createdInvestTypes          InvestTypes[]          @relation("investTypesUserCreator")
+
+  ownedInvestIncomes            InvestIncomes[]          @relation("investIncomesUserOwner")
+  createdInvestIncomes          InvestIncomes[]          @relation("investIncomesUserCreator")
+
+  ownedInvestExpenses            InvestExpenses[]          @relation("investExpensesUserOwner")
+  createdInvestExpenses          InvestExpenses[]          @relation("investExpensesUserCreator")
+
+  ownedInvestContracts            InvestContracts[]          @relation("investContractsUserOwner")
+  createdInvestContracts          InvestContracts[]          @relation("investContractsUserCreator")
+
+  ownedInvestPositions          InvestPositions[]          @relation("investPositionsUserOwner")
+  createdInvestPositions         InvestPositions[]          @relation("investPositionsUserCreator")
+
+  ownedInvestSharedPositions          InvestSharedPositions[]          @relation("investSharedPositionsUserOwner")
+  createdInvestSharedPositions         InvestSharedPositions[]          @relation("investSharedPositionsUserCreator")
+
+  ownedDoYou            DoYou[]          @relation("doYouUserOwner")
+  createdDoYou          DoYou[]          @relation("doYouUserCreator")
+
+  ownedDoSocial            DoSocial[]          @relation("doSocialUserOwner")
+  createdDoSocial          DoSocial[]          @relation("doSocialUserCreator")
+
+  ownedDoDos            Dos[]          @relation("doDosUserOwner")
+  createdDoDos          Dos[]          @relation("doDosUserCreator")
+
+  ownedDoQuests         DoQuests[]          @relation("doQuestsUserOwner")
+  createdDoQuests       DoQuests[]          @relation("doQuestsUserCreator")
+
+  ownedDoTypes         DoTypes[]          @relation("doTypesUserOwner")
+  createdDoTypes       DoTypes[]          @relation("doTypesUserCreator")
+
+  ownedDoContexts         DoContexts[]          @relation("doContextsUserOwner")
+  createdDoContexts       DoContexts[]          @relation("doContextsUserCreator")
+
+  ownedDoRoutines         DoRoutines[]          @relation("doRoutinesUserOwner")
+  createdDoRoutines       DoRoutines[]          @relation("doRoutinesUserCreator")
+
+  ownedDoDifficulties         DoDifficulties[]          @relation("doDifficultiesUserOwner")
+  createdDoDifficulties       DoDifficulties[]          @relation("doDifficultiesUserCreator")
+
+  ownedDoModes         DoModes[]          @relation("doModesUserOwner")
+  createdDoModes       DoModes[]          @relation("doModesUserCreator")
+
+  ownedDoProducts         DoProducts[]          @relation("doProductsUserOwner")
+  createdDoProducts       DoProducts[]          @relation("doProductsUserCreator")
+
+  ownedDoQuestTypes         DoQuestTypes[]          @relation("doQuestTypesUserOwner")
+  createdDoQuestTypes       DoQuestTypes[]          @relation("doQuestTypesUserCreator")
+
+  ownedDoScores         DoScores[]          @relation("doScoresUserOwner")
+  createdDoScores       DoScores[]          @relation("doScoresUserCreator")
+
+  ownedDoLogs         DoLogs[]          @relation("doLogsUserOwner")
+  createdDoLogs       DoLogs[]          @relation("doLogsUserCreator")
+
+  ownedDoReports         DoReports[]          @relation("doReportsUserOwner")
+  createdDoReports       DoReports[]          @relation("doReportsUserCreator")
+
+  ownedDoSquads            DoSquads[]          @relation("doSquadsUserOwner")
+  createdDoSquads          DoSquads[]          @relation("doSquadsUserCreator")
+
+  ownedDoDirectories            DoDirectories[]          @relation("doDirectoriesUserOwner")
+  createdDoDirectories          DoDirectories[]          @relation("doDirectoriesUserCreator")
+
+  ownedBeYou            BeYou[]          @relation("beYouUserOwner")
+  createdBeYou          BeYou[]          @relation("beYouUserCreator")
+
+  ownedBeSocial            BeSocial[]          @relation("beSocialUserOwner")
+  createdBeSocial          BeSocial[]          @relation("beSocialUserCreator")
+
+  ownedBeCommunities            BeCommunities[]          @relation("beCommunitiesUserOwner")
+  createdBeCommunities          BeCommunities[]          @relation("beCommunitiesUserCreator")
+
+  ownedBeCharacters            BeCharacters[]          @relation("beCharactersUserOwner")
+  createdBeCharacters          BeCharacters[]          @relation("beCharactersUserCreator")
+
+  ownedBeTopics            BeTopics[]          @relation("beTopicsUserOwner")
+  createdBeTopics          BeTopics[]          @relation("beTopicsUserCreator")
+
+  ownedBeAwards            BeAwards[]          @relation("beAwardsUserOwner")
+  createdBeAwards          BeAwards[]          @relation("beAwardsUserCreator")
+
+  ownedBeSocial            BeSocial[]          @relation("beSocialUserOwner")
+  createdBeSocial          BeSocial[]          @relation("beSocialUserCreator")
+
+  ownedBeDeals            BeDeals[]          @relation("beDealsUserOwner")
+  createdBeDeals          BeDeals[]          @relation("beDealsUserCreator")
+
+  ownedBeContacts            BeContacts[]          @relation("beContactsUserOwner")
+  createdBeContacts          BeContacts[]          @relation("beContactsUserCreator")
+  managedBeContacts            BeContacts[]          @relation("beContactsUserManager")
+
+  ownedBeRelations            BeRelations[]          @relation("beRelationsUserOwner")
+  createdBeRelations          BeRelations[]          @relation("beRelationsUserCreator")
+
+  ownedBeCourtships            BeCourtships[]          @relation("beCourtshipsUserOwner")
+  createdBeCourtships          BeCourtships[]          @relation("beCourtshipsUserCreator")
+
+  ownedBeMailboxes            BeMailboxes[]          @relation("beMailboxesUserOwner")
+  createdBeMailboxes          BeMailboxes[]          @relation("beMailboxesUserCreator")
+
+  ownedBeLetters            BeLetters[]          @relation("beLettersUserOwner")
+  createdBeLetters          BeLetters[]          @relation("beLettersUserCreator")
+
+  ownedBeCalendars            BeCalendars[]          @relation("beCalendarsUserOwner")
+  createdBeCalendars          BeCalendars[]          @relation("beCalendarsUserCreator")
+
+  ownedBeEvents            BeEvents[]          @relation("beEventsUserOwner")
+  createdBeEvents          BeEvents[]          @relation("beEventsUserCreator")
+
+  ownedBeSocialCommunities            BeSocialCommunities[]          @relation("beSocialCommunitiesUserOwner")
+  createdBeSocialCommunities          BeSocialCommunities[]          @relation("beSocialCommunitiesUserCreator")
+
+  ownedNexusDays            NexusDays[]          @relation("nexusDaysUserOwner")
+  createdNexusDays          NexusDays[]          @relation("nexusDaysUserCreator")
+
+  ownedNexusWeeks            NexusWeeks[]          @relation("nexusWeeksUserOwner")
+  createdNexusWeeks          NexusWeeks[]          @relation("nexusWeeksUserCreator")
+
+  ownedNexusQuarters            NexusQuarters[]          @relation("nexusQuartersUserOwner")
+  createdNexusQuarters          NexusQuarters[]          @relation("nexusQuartersUserCreator")
+
+  ownedNexusYears            NexusYears[]          @relation("nexusYearsUserOwner")
+  createdNexusYears          NexusYears[]          @relation("nexusYearsUserCreator")
+
+  ownedNexusMoments            NexusMoments[]          @relation("nexusMomentsUserOwner")
+  createdNexusMoments          NexusMoments[]          @relation("nexusMomentsUserCreator")
+
+  ownedNexusSpaces            NexusSpaces[]          @relation("nexusSpacesUserOwner")
+  createdNexusSpaces          NexusSpaces[]          @relation("nexusSpacesUserCreator")
+
+  ownedNexusContexts            NexusContexts[]          @relation("nexusContextsUserOwner")
+  createdNexusContexts          NexusContexts[]          @relation("nexusContextsUserCreator")
+
+  ownedViewTime            ViewTime[]          @relation("viewTimeUserOwner")
+  createdViewTime          ViewTime[]          @relation("viewTimeUserCreator")
+
+  ownedViewSpaces            ViewSpaces[]          @relation("viewSpacesUserOwner")
+  createdViewSpaces          ViewSpaces[]          @relation("viewSpacesUserCreator")
+
+  ownedViewCharts            ViewCharts[]          @relation("viewChartsUserOwner")
+  createdViewCharts          ViewCharts[]          @relation("viewChartsUserCreator")
+
+  ownedViewDashboards            ViewDashboards[]          @relation("viewDashboardsUserOwner")
+  createdViewDashboards          ViewDashboards[]          @relation("viewDashboardsUserCreator")
+
+  ownedViewListings            ViewListings[]          @relation("viewListingsUserOwner")
+  createdViewListings          ViewListings[]          @relation("viewListingsUserCreator")
+
+  ownedServices         Services[]      @relation("serviceUserOwner")
+  createdServices       Services[]      @relation("serviceUserCreator")
+
+  ownedFeatures         Features[]      @relation("featureUserOwner")
+  createdFeatures       Features[]      @relation("featureUserCreator")
+
+  ownedAbilities        Abilities[]     @relation("abilityUserOwner")
+  createdAbilities      Abilities[]     @relation("abilityUserCreator")
+
+  @@map("user")
+}
