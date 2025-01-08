@@ -11,6 +11,8 @@ model Communities {
   status                ECommunitiesStatus
   /* wallets? 							InvestYou[]
   		(own/manage/created)Wallets
+
+  		an adapter!
   */
 
   name                  String
